@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<!-- 
+  This HTML file is a complete, single-file portfolio.
+  - It uses Tailwind CSS for styling (loaded via CDN).
+  - It uses vanilla JavaScript for all interactivity (dark mode, modal, animations).
+  - To add projects, just edit the `projects` array in the <script> tag at the bottom.
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Project Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 
+      This script block configures Tailwind to recognize the dark mode colors.
+      This is the fix for the dark mode toggle.
+    -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'light-bg': 'var(--color-light-bg)',
+                        'light-text': 'var(--color-light-text)',
+                        'light-card': 'var(--color-light-card)',
+                        'light-header': 'var(--color-light-header)',
+                        'light-accent': 'var(--color-light-accent)',
+                        'light-accent-hover': 'var(--color-light-accent-hover)',
+                        'light-border': 'var(--color-light-border)',
+                        'dark-bg': 'var(--color-dark-bg)',
+                        'dark-text': 'var(--color-dark-text)',
+                        'dark-card': 'var(--color-dark-card)',
+                        'dark-header': 'var(--color-dark-header)',
+                        'dark-accent': 'var(--color-dark-accent)',
+                        'dark-accent-hover': 'var(--color-dark-accent-hover)',
+                        'dark-border': 'var(--color-dark-border)',
+                    }
+                }
+            }
+        };
+    </script>
+    
+    <!-- Set fonts and color variables -->
+    <style>
+        :root {
+            /* Light Mode Colors */
+            --color-light-bg: #f9fafb; /* gray-50 */
+            --color-light-text: #1f2937; /* gray-800 */
+            --color-light-card: #ffffff; /* white */
+            --color-light-header: rgba(255, 255, 255, 0.8);
+            --color-light-accent: #3b82f6; /* blue-500 */
+            --color-light-accent-hover: #2563eb; /* blue-600 */
+            --color-light-border: #e5e7eb; /* gray-200 */
+
+            /* Dark Mode Colors */
+            --color-dark-bg: #111827; /* gray-900 */
+            --color-dark-text: #f9fafb; /* gray-50 */
+            --color-dark-card: #1f2937; /* gray-800 */
+            --color-dark-header: rgba(31, 41, 55, 0.8); /* gray-800 with transparency */
+            --color-dark-accent: #60a5fa; /* blue-400 */
+            --color-dark-accent-hover: #3b82f6; /* blue-500 */
+            --color-dark-border: #374151; /* gray-700 */
+        }
+
+        /* Use Inter font */
+        html {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            scroll-behavior: smooth;
+        }
+
+        /* Main background and text color */
+        body {
+            background-color: var(--color-light-bg);
+            color: var(--color-light-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dark body {
+            background-color: var(--color-dark-bg);
+            color: var(--color-dark-text);
+        }
+
+        /* --- Animations for scroll-in --- */
+        .scroll-fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .scroll-fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* --- Animation for initial page load --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* --- Dark mode icon toggling --- */
+        /* By default (light mode), show moon (to switch to dark) */
+        .sun-icon { display: none; }
+        .moon-icon { display: inline-block; }
+
+        /* In dark mode, show sun (to switch to light) */
+        .dark .sun-icon { display: inline-block; }
+        .dark .moon-icon { display: none; }
+    </style>
+</head>
+
+<body class="bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text transition-colors duration-300">
+
+    <!-- 
+      MODAL POPUP
+      Hidden by default, shown with JavaScript.
+    -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden" onclick="closeModal()"></div>
+    <div id="modal-content" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-3xl max-h-[85vh] bg-light-card dark:bg-dark-card rounded-xl shadow-2xl z-50 p-6 md:p-8 overflow-y-auto hidden transform transition-all duration-300 scale-95 opacity-0">
+        <!-- Close Button -->
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        
+        <!-- Modal Content (to be populated by JS) -->
+        <h2 id="modal-title" class="text-2xl md:text-3xl font-bold mb-4 pr-8"></h2>
+        <div id="modal-tags" class="flex flex-wrap gap-2 mb-4"></div>
+        <img id="modal-image" src="" alt="Project Image" class="w-full h-auto max-h-72 object-cover rounded-lg mb-6 border border-light-border dark:border-dark-border">
+        <div id="modal-description" class="text-base text-light-text dark:text-dark-text space-y-4"></div>
+        <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-light-accent text-white rounded-lg hover:bg-light-accent-hover dark:bg-dark-accent dark:hover:bg-dark-accent-hover transition-colors">
+            View Project
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+        </a>
+    </div>
+
+    <!-- 
+      STICKY HEADER (Mobile)
+      Acts as a persistent navigation bar on small screens.
+    -->
+    <header class="sticky top-0 z-30 w-full md:hidden px-4 py-3 bg-light-header dark:bg-dark-header backdrop-blur-md border-b border-light-border dark:border-dark-border transition-colors duration-300">
+        <div class="flex justify-between items-center">
+            <span class="text-lg font-bold">My Portfolio</span>
+            <div class="flex items-center gap-4">
+                <!-- Dark Mode Toggle (Mobile) -->
+                <button id="dark-mode-toggle-mobile" class="text-light-text dark:text-dark-text">
+                    <svg class="w-6 h-6 sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg class="w-6 h-6 moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+                
+                <!-- Hamburger Menu Button -->
+                <button id="menu-toggle-btn" class="text-light-text dark:text-dark-text">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 
+      FULL-SCREEN MOBILE MENU
+      Hidden by default, slides in from the right.
+    -->
+    <nav id="mobile-menu" class="fixed top-0 right-0 h-full w-full max-w-xs bg-light-card dark:bg-dark-card z-40 transform translate-x-full transition-transform duration-300 ease-in-out p-6 shadow-lg">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl font-semibold">Navigation</h2>
+            <button id="menu-close-btn" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-4">
+            <a href="#about" class="mobile-menu-link text-lg text-light-text dark:text-dark-text hover:text-light-accent dark:hover:text-dark-accent">About Me</a>
+            <a href="#featured" class="mobile-menu-link text-lg text-light-text dark:text-dark-text hover:text-light-accent dark:hover:text-dark-accent">Featured Projects</a>
+            <a href="#hardware" class="mobile-menu-link text-lg text-light-text dark:text-dark-text hover:text-light-accent dark:hover:text-dark-accent">Hardware & Robotics</a>
+            <a href="#software" class="mobile-menu-link text-lg text-light-text dark:text-dark-text hover:text-light-accent dark:hover:text-dark-accent">Software</a>
+            <a href="#research" class="mobile-menu-link text-lg text-light-text dark:text-dark-text hover:text-light-accent dark:hover:text-dark-accent">Research</a>
+            
+            <hr class="border-light-border dark:border-dark-border my-4">
+            
+            <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400">Projects</h3>
+            <div id="mobile-project-list" class="flex flex-col space-y-3 max-h-60 overflow-y-auto">
+                <!-- Project links will be injected here by JavaScript -->
+            </div>
+        </div>
+    </nav>
+    <div id="menu-backdrop" class="fixed inset-0 bg-black/30 z-30 hidden"></div>
+
+
+    <!-- 
+      MAIN CONTENT
+    -->
+    <div class="max-w-7xl mx-auto p-4 md:p-8">
+        
+        <!-- 
+          ABOUT ME SECTION
+          This section appears at the top.
+        -->
+        <section id="about" class="animate-fadeInUp mb-16 md:mb-24">
+            <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                <!-- Profile Image -->
+                <div class="flex-shrink-0">
+                    <img class="h-40 w-40 rounded-full object-cover shadow-lg border-4 border-white dark:border-dark-card" 
+                         src="https://placehold.co/400x400/a3e635/1f2937?text=Your+Photo" 
+                         alt="Your Name">
+                </div>
+                
+                <!-- Blurb & Links -->
+                <div class="text-center md:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-light-text dark:text-dark-text">Your Name</h1>
+                    <p class="text-lg text-light-text dark:text-dark-text mb-6 max-w-2xl">
+                        Welcome to my portfolio! I'm a passionate [Your Role, e.g., "robotics engineer", "software developer", "student"] 
+                        with a love for building creative solutions. This site showcases some of the projects I've built.
+                    </p>
+                    <!-- Contact Links -->
+                    <div class="flex justify-center md:justify-start gap-5">
+                        <!-- Resume -->
+                        <a href="Your_Resume.pdf" title="Download Resume" target="_blank" class="text-gray-400 hover:text-light-accent dark:hover:text-dark-accent transition-colors">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        </a>
+                        <!-- LinkedIn -->
+                        <a href="https://linkedin.com/in/your-username" title="LinkedIn" target="_blank" class="text-gray-400 hover:text-light-accent dark:hover:text-dark-accent transition-colors">
+                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.783-1.75-1.75s.784-1.75 1.75-1.75 1.75.783 1.75 1.75-.783 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                        </a>
+                        <!-- GitHub -->
+                        <a href="https://github.com/your-username" title="GitHub" target="_blank" class="text-gray-400 hover:text-light-accent dark:hover:text-dark-accent transition-colors">
+                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.379.202 2.398.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
+                        </a>
+                        <!-- Email -->
+                        <a href="mailto:your.email@example.com" title="Email" class="text-gray-400 hover:text-light-accent dark:hover:text-dark-accent transition-colors">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </a>
+                        <!-- Dark Mode Toggle (Desktop) -->
+                        <button id="dark-mode-toggle-desktop" class="text-gray-400 hover:text-light-accent dark:hover:text-dark-accent transition-colors ml-4">
+                            <svg class="w-7 h-7 sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                            <svg class="w-7 h-7 moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+          FEATURED PROJECTS SECTION
+        -->
+        <section id="featured" class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-light-text dark:text-dark-text">Featured Projects</h2>
+            <div id="featured-projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Project cards will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- 
+          HARDWARE & ROBOTICS PROJECTS SECTION
+        -->
+        <section id="hardware" class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-light-text dark:text-dark-text">Hardware & Robotics</h2>
+            <div id="hardware-projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project cards will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- 
+          SOFTWARE PROJECTS SECTION
+        -->
+        <section id="software" class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-light-text dark:text-dark-text">Software</h2>
+            <div id="software-projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project cards will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- 
+          RESEARCH PROJECTS SECTION
+        -->
+        <section id="research" class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-light-text dark:text-dark-text">Research</h2>
+            <div id="research-projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project cards will be injected here by JavaScript -->
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 
+      FOOTER
+    -->
+    <footer class="text-center p-8 border-t border-light-border dark:border-dark-border mt-16">
+        <p class="text-gray-500 dark:text-gray-400">&copy; 2024 Your Name. All rights reserved.</p>
+    </footer>
+
+
+    <!-- 
+      =================================
+      JAVASCRIPT
+      =================================
+    -->
+    <script>
+        // Use document.addEventListener to run code after the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- Project Data ---
+            // To add a new project, just copy one of these objects and change the values.
+            // - `id` must be unique.
+            // - `category` must be 'software', 'hardware', or 'research'.
+            // - `featured` (true/false) controls if it appears in the "Featured" section.
+            var projects = [
+                {
+                    id: 'proj1',
+                    category: 'software',
+                    featured: true,
+                    title: 'Full-Stack E-Commerce Site',
+                    imageUrl: 'https://placehold.co/600x400/3b82f6/ffffff?text=E-Commerce+Site',
+                    tags: ['React', 'Node.js', 'PostgreSQL', 'Tailwind'],
+                    shortDescription: 'A complete e-commerce platform built with a modern tech stack, featuring user auth and payments.',
+                    fullDescription: '<p>This project was a deep dive into full-stack development. I built a RESTful API using Node.js and Express, connected to a PostgreSQL database.</p><p class="mt-4">The frontend is a responsive React application styled with Tailwind CSS. I also integrated the Stripe API for secure payment processing and implemented JWT for user authentication.</p>',
+                    projectUrl: 'https://github.com/your-username/proj1'
+                },
+                {
+                    id: 'proj2',
+                    category: 'hardware',
+                    featured: true,
+                    title: 'Smart Home Automation (RPi)',
+                    imageUrl: 'https://placehold.co/600x400/10b981/ffffff?text=Smart+Home',
+                    tags: ['Raspberry Pi', 'Python', 'MQTT', 'PCB Design'],
+                    shortDescription: 'An embedded system using a Raspberry Pi to control lights and sensors in a home network.',
+                    fullDescription: '<p>This project involved both hardware and software. I designed a custom PCB to interface with a Raspberry Pi 4.</p><p class="mt-4">I wrote Python scripts to manage sensors and relays, and used the MQTT protocol to communicate between the Pi and a mobile app (which I also built!). It was a fantastic introduction to IoT principles.</p>',
+                    projectUrl: 'https://github.com/your-username/proj2'
+                },
+                {
+                    id: 'proj3',
+                    category: 'research',
+                    featured: false,
+                    title: 'Robotic Arm Pathfinding AI',
+                    imageUrl: 'https://placehold.co/600x400/f59e0b/ffffff?text=AI+Research',
+                    tags: ['Python', 'TensorFlow', 'Robotics', 'Simulation'],
+                    shortDescription: 'Research on using machine learning to optimize the pathfinding for a 6-DOF robotic arm.',
+                    fullDescription: '<p>As part of a university research group, I helped develop a simulation environment to train a reinforcement learning model.</p><p class="mt-4">The goal was to teach a robotic arm to pick and place objects with maximum efficiency, avoiding obstacles in its environment. I was responsible for data processing and assisting with model training in TensorFlow.</p>',
+                    projectUrl: 'https://github.com/your-username/proj3'
+                },
+                {
+                    id: 'proj4',
+                    category: 'software',
+                    featured: false,
+                    title: 'Mobile Recipe App',
+                    imageUrl: 'https://placehold.co/600x400/8b5cf6/ffffff?text=Mobile+App',
+                    tags: ['Flutter', 'Firebase', 'Mobile Dev'],
+                    shortDescription: 'A cross-platform mobile app for finding and saving recipes, built with Flutter and Firebase.',
+                    fullDescription: '<p>I wanted to learn cross-platform mobile development, so I chose Flutter. This app allows users to search for recipes from an external API, view details, and save their favorites.</p><p class="mt-4">I used Firebase (Firestore and Authentication) to handle all backend services, allowing for real-time data syncing and user accounts.</p>',
+                    projectUrl: 'https://github.com/your-username/proj4'
+                },
+                {
+                    id: 'proj5',
+                    category: 'hardware',
+                    featured: false,
+                    title: 'Autonomous Rover',
+                    imageUrl: 'https://placehold.co/600x400/ef4444/ffffff?text=Robotics',
+                    tags: ['Arduino', 'C++', 'Sensors', 'Robotics'],
+                    shortDescription: 'A small autonomous rover using ultrasonic sensors for obstacle avoidance.',
+                    fullDescription: '<p>My first robotics project! I built this rover from a kit and wrote the C++ code for an Arduino Uno.</p><p class="mt-4">It uses three ultrasonic sensors to detect obstacles in front and to the sides, and implements a simple algorithm to navigate around them. It was a great lesson in real-time programming and sensor integration.</p>',
+                    projectUrl: 'https://github.com/your-username/proj5'
+                },
+                {
+                    id: 'proj6',
+                    category: 'software',
+                    featured: false,
+                    title: 'Cloud-Based Data Dashboard',
+                    imageUrl: 'https://placehold.co/600x400/ec4899/ffffff?text=Data+Dashboard',
+                    tags: ['React', 'Firebase', 'D3.js', 'Auth'],
+                    shortDescription: 'A real-time data visualization dashboard using Firebase and D3.js.',
+                    fullDescription: '<p>This was a personal project to learn real-time data handling. I used Firebase Realtime Database to stream data to a React frontend.</p><p class="mt-4">The dashboard visualizes the data using D3.js, with several chart types. User authentication is handled by Firebase Auth.</p>',
+                    projectUrl: 'https://github.com/your-username/proj6'
+                },
+                {
+                    id: 'proj7',
+                    category: 'software',
+                    featured: false,
+                    title: 'Python Web Scraper',
+                    imageUrl: 'https://placehold.co/600x400/6366f1/ffffff?text=Web+Scraper',
+                    tags: ['Python', 'BeautifulSoup', 'Flask', 'Automation'],
+                    shortDescription: 'A backend automation script that scrapes websites and serves the data via a simple Flask API.',
+                    fullDescription: '<p>Built with Python, this script uses BeautifulSoup and Requests to gather data from various websites.</p><p class="mt-4">It then processes and cleans the data, and exposes it through a lightweight Flask API, which can be consumed by other applications.</p>',
+                    projectUrl: 'https://github.com/your-username/proj7'
+                }
+            ];
+
+            // --- Get Element References ---
+            var htmlElement = document.documentElement;
+            var darkModeToggles = document.querySelectorAll('#dark-mode-toggle-desktop, #dark-mode-toggle-mobile');
+            var modalBackdrop = document.getElementById('modal-backdrop');
+            var modalContent = document.getElementById('modal-content');
+            
+            var featuredGrid = document.getElementById('featured-projects-grid');
+            var softwareGrid = document.getElementById('software-projects-grid');
+            var hardwareGrid = document.getElementById('hardware-projects-grid');
+            var researchGrid = document.getElementById('research-projects-grid');
+            var mobileProjectList = document.getElementById('mobile-project-list');
+            
+            var menuToggleBtn = document.getElementById('menu-toggle-btn');
+            var menuCloseBtn = document.getElementById('menu-close-btn');
+            var mobileMenu = document.getElementById('mobile-menu');
+            var menuBackdrop = document.getElementById('menu-backdrop');
+            var mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+            // --- Dark Mode Logic ---
+            // This function sets the theme on initial load
+            var setInitialTheme = function() {
+                try {
+                    var userTheme = localStorage.getItem('theme');
+                    var systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    
+                    // Use saved theme if it exists, otherwise use system theme
+                    if (userTheme === 'dark' || (!userTheme && systemTheme)) {
+                        htmlElement.classList.add('dark');
+                    } else {
+                        htmlElement.classList.remove('dark');
+                    }
+                } catch (e) {
+                    console.warn('Could not access localStorage for theme setting. Falling back to system theme.');
+                    // Fallback if localStorage is disabled (e.g., private browsing)
+                    var systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    if (systemTheme) {
+                        htmlElement.classList.add('dark');
+                    } else {
+                        htmlElement.classList.remove('dark');
+                    }
+                }
+            };
+
+            // This function toggles the theme and saves the choice
+            var toggleTheme = function() {
+                if (htmlElement.classList.contains('dark')) {
+                    htmlElement.classList.remove('dark');
+                    try {
+                        localStorage.setItem('theme', 'light');
+                    } catch (e) {
+                        console.warn('Could not access localStorage to save theme.');
+                    }
+                } else {
+                    htmlElement.classList.add('dark');
+                    try {
+                        localStorage.setItem('theme', 'dark');
+                    } catch (e) {
+                        console.warn('Could not access localStorage to save theme.');
+                    }
+                }
+            };
+
+            // Attach toggle event to all toggle buttons
+            darkModeToggles.forEach(function(toggle) {
+                toggle.addEventListener('click', toggleTheme);
+            });
+
+            // Set the theme when the page loads
+            setInitialTheme();
+
+
+            // --- Mobile Menu Logic ---
+            var openMenu = function() {
+                mobileMenu.classList.remove('translate-x-full');
+                menuBackdrop.classList.remove('hidden');
+            };
+            
+            var closeMenu = function() {
+                mobileMenu.classList.add('translate-x-full');
+                menuBackdrop.classList.add('hidden');
+            };
+            
+            menuToggleBtn.addEventListener('click', openMenu);
+            menuCloseBtn.addEventListener('click', closeMenu);
+            menuBackdrop.addEventListener('click', closeMenu);
+            mobileMenuLinks.forEach(function(link) {
+                link.addEventListener('click', closeMenu);
+            });
+
+            
+            // --- Modal Logic ---
+            // We define these functions in the global scope so the `onclick` attributes can find them
+            window.showModal = function(projectId) {
+                var project = projects.find(function(p) { return p.id === projectId; });
+                if (!project) return;
+
+                document.getElementById('modal-title').textContent = project.title;
+                document.getElementById('modal-image').src = project.imageUrl;
+                document.getElementById('modal-image').alt = project.title;
+                document.getElementById('modal-description').innerHTML = project.fullDescription;
+                document.getElementById('modal-link').href = project.projectUrl;
+
+                // Create tags
+                var tagsContainer = document.getElementById('modal-tags');
+                tagsContainer.innerHTML = ''; // Clear old tags
+                project.tags.forEach(function(tag) {
+                    var tagElement = document.createElement('span');
+                    tagElement.className = 'px-3 py-1 bg-light-accent/10 text-light-accent dark:bg-dark-accent/20 dark:text-dark-accent text-sm rounded-full font-medium';
+                    tagElement.textContent = tag;
+                    tagsContainer.appendChild(tagElement);
+                });
+
+                modalBackdrop.classList.remove('hidden');
+                modalContent.classList.remove('hidden');
+                setTimeout(function() {
+                     modalContent.classList.remove('scale-95', 'opacity-0');
+                }, 10); // Start transition
+            };
+
+            window.closeModal = function() {
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(function() {
+                    modalBackdrop.classList.add('hidden');
+                    modalContent.classList.add('hidden');
+                }, 200); // Wait for animation
+            };
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+
+
+            // --- Project Card Creation ---
+            var createProjectCard = function(project, index) {
+                // Card container
+                var card = document.createElement('div');
+                card.className = 'scroll-fade-in-up bg-light-card dark:bg-dark-card rounded-xl shadow-lg overflow-hidden border border-light-border dark:border-dark-border transition-all duration-300 hover:shadow-xl hover:-translate-y-1';
+                card.style.transitionDelay = (index * 100) + 'ms'; // Staggered animation
+                
+                // Image
+                var img = document.createElement('img');
+                img.src = project.imageUrl;
+                img.alt = project.title;
+                img.className = 'w-full h-48 object-cover';
+                
+                // Text content
+                var contentDiv = document.createElement('div');
+                contentDiv.className = 'p-6';
+                
+                var title = document.createElement('h3');
+                title.className = 'text-xl font-bold mb-2';
+                title.textContent = project.title;
+                
+                var description = document.createElement('p');
+                description.className = 'text-gray-600 dark:text-gray-300 mb-4 text-sm';
+                description.textContent = project.shortDescription;
+                
+                // Tags
+                var tagsDiv = document.createElement('div');
+                tagsDiv.className = 'flex flex-wrap gap-2 mb-4';
+                project.tags.forEach(function(tag) {
+                    var tagSpan = document.createElement('span');
+                    tagSpan.className = 'px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-light-accent dark:text-dark-accent text-xs font-medium rounded-full';
+                    tagSpan.textContent = tag;
+                    tagsDiv.appendChild(tagSpan);
+                    // *** THIS IS THE FIX: Removed the stray "Two" from here ***
+                });
+                
+                // "See More" button
+                var button = document.createElement('button');
+                button.className = 'text-sm font-medium text-light-accent dark:text-dark-accent hover:underline';
+                button.textContent = 'See More...';
+                button.onclick = function() {
+                    showModal(project.id);
+                };
+
+                // Assemble card
+                contentDiv.appendChild(title);
+                contentDiv.appendChild(description);
+                contentDiv.appendChild(tagsDiv);
+                contentDiv.appendChild(button);
+                card.appendChild(img);
+                card.appendChild(contentDiv);
+                
+                return card;
+            };
+
+            // --- Populate Project Grids and Menus ---
+            var projectCardElements = []; // To store cards for the observer
+            
+            projects.forEach(function(project, index) {
+                var card = createProjectCard(project, index);
+                
+                // Add to the correct category grid
+                if (project.category === 'software') {
+                    softwareGrid.appendChild(card);
+                } else if (project.category === 'hardware') {
+                    hardwareGrid.appendChild(card);
+                } else if (project.category === 'research') {
+                    researchGrid.appendChild(card);
+                }
+                
+                // Add to Featured grid if applicable
+                if (project.featured) {
+                    // We clone the card so it can appear in both places
+                    var featuredCard = card.cloneNode(true);
+                    // Re-attach the event listener to the cloned button
+                    featuredCard.querySelector('button').onclick = function() {
+                        showModal(project.id);
+                    };
+                    featuredGrid.appendChild(featuredCard);
+                    projectCardElements.push(featuredCard); // Observe this one
+                }
+
+                projectCardElements.push(card); // Observe this one
+
+                // Add to mobile project list
+                var menuLink = document.createElement('a');
+                menuLink.href = '#';
+                menuLink.textContent = project.title;
+                menuLink.className = 'text-light-text dark:text-dark-text hover:text-light-accent dark:hover:text-dark-accent text-sm';
+                menuLink.onclick = function(e) {
+                    e.preventDefault();
+                    closeMenu();
+                    // Wait for menu to close before showing modal
+                    setTimeout(function() {
+                        showModal(project.id);
+                    }, 300); 
+                };
+                mobileProjectList.appendChild(menuLink);
+            });
+            
+            
+            // --- Scroll Animation Observer ---
+            // This logic adds a class to elements when they scroll into view
+            
+            // Check if IntersectionObserver is supported
+            if ('IntersectionObserver' in window) {
+                var observerCallback = function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target); // Animate only once
+                        }
+                    });
+                };
+
+                var observerOptions = {
+                    root: null, // relative to viewport
+                    threshold: 0.01 // 1% visible (changed from 0.1)
+                };
+                
+                var observer = new IntersectionObserver(observerCallback, observerOptions);
+
+                // Observe all the project cards we created
+                projectCardElements.forEach(function(el) {
+                    observer.observe(el);
+                });
+            } else {
+                // Fallback for older browsers: just show all cards immediately
+                projectCardElements.forEach(function(el) {
+                    el.classList.add('is-visible');
+                });
+            }
+
+        });
+    </script>
+
+</body>
+</html>
