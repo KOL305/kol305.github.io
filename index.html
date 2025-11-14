@@ -531,7 +531,7 @@
                 title: 'Techno-economic Analysis of Carbon Capture',
                 category: 'research',
                 featured: false,
-                date: '2023',
+                date: '2S023',
                 image: 'https://placehold.co/600x400/71717a/white?text=COSMOS',
                 descriptionShort: 'TEA of Point Source Capture vs. Direct Air Capture at COSMOS (UCLA).',
                 descriptionFull: `
@@ -724,6 +724,16 @@
 
             currentModalProjectId = projectId;
             
+            // --- FIX FOR SCROLLBAR SHIFT ---
+            const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+            const header = document.querySelector('header');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.body.style.paddingRight = `${scrollbarWidth}px`;
+            if (header) {
+                header.style.paddingRight = `${scrollbarWidth}px`;
+            }
+            // --- END FIX ---
+
             modalTitle.textContent = project.title;
             modalImage.src = project.image;
             modalImage.alt = project.title;
@@ -760,7 +770,6 @@
             }
             
             modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
             
             // Trigger transition
             setTimeout(() => {
@@ -775,7 +784,16 @@
             
             setTimeout(() => {
                 modal.classList.add('hidden');
+                
+                // --- FIX FOR SCROLLBAR SHIFT ---
+                const header = document.querySelector('header');
                 document.body.style.overflow = ''; // Restore scrolling
+                document.body.style.paddingRight = '';
+                if (header) {
+                    header.style.paddingRight = '';
+                }
+                // --- END FIX ---
+
                 currentModalProjectId = null;
             }, 300);
         }
