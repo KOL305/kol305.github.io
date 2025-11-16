@@ -99,6 +99,18 @@
         #sidebar-content::-webkit-scrollbar-track {
             background: transparent;
         }
+        
+        /* Custom styles for modal lists */
+        #modal-description ul {
+            list-style-type: disc; /* Adds bullet points */
+            padding-left: 1.5rem;  /* Indents the bullets (24px) */
+            margin-top: 1rem;      /* Space above the list */
+            margin-bottom: 1rem;   /* Space below the list */
+        }
+        #modal-description li {
+            margin-top: 0.5rem;    /* Adds vertical spacing between items */
+            margin-bottom: 0.5rem; /* Adds vertical spacing between items */
+        }
     </style>
 </head>
 <body class="theme-light">
@@ -324,7 +336,7 @@
     -->
     <footer class="py-10 mt-20 border-t border-primary">
         <div class="text-center text-secondary">
-            <p>&copy; 2024 Kadon Liang. All rights reserved.</p>
+            <p>&copy; 2025 Kadon Liang. All rights reserved.</p>
         </div>
     </footer>
 
@@ -333,10 +345,52 @@
         const projects = [
             // HARDWARE
             {
+                id: 'dashboard',
+                title: 'Dashboard PCB',
+                category: 'hardware',
+                featured: false,
+                date: 'Ongoing',
+                image: '../images/dashboard.png',
+                descriptionShort: 'PCB design with custom ESP32 dev board and I²C display for Gen 11 Solar Car.',
+                descriptionFull: `
+                    <p>Leading a team of 3 to design a dashboard PCB for the UC Berkeley Solar Car Racing Team's Gen 11 car.</p>
+                    <ul>
+                        <li>Finished product will house buttons, switches, and sliders for the driver that will control various car functionalities (solar arrays, fans, etc.) and an OLED display for persistent data (subsystem statuses, speedometer, etc.)</li>
+                        <li>Currently generating schematic and layout using KiCad. Ensuring proper integration between OLED display, switches and buttons, and ESP32 board.</li>
+                        <li>Worked cross-team to generate PCB requirements and criteria, documenting design details and setting deadlines on Confluence.</li>
+                    </ul>
+                `,
+                tags: ['PCB Design', 'I²C', 'ESP32', 'Embedded Systems', 'KiCad'],
+                linkPrimary: 'https://github.com/CalSol/Gen11-HW/tree/dashboard',
+                linkSecondary: null
+            },
+            {
+                id: 'motor-testing',
+                title: 'Previous Gen Solar Car Motor Integration',
+                category: 'hardware',
+                featured: true,
+                date: 'Ongoing',
+                image: '../images/motortesting.png',
+                descriptionShort: 'CAN Debugging NGMSCM150 motor integration WaveSculpter22 motor controller',
+                descriptionFull: `
+                    <p>Working directly with electrical team leads to get past-generation NGMSCM150 motors to spin using the WaveSculpter22 motor controller, with plans to integrate into the new Gen 11 solar car.</p>
+                    <ul>
+                        <li>Conducting much data sheet and documentation reading of motor/motor controller properties alongside onsite testing.</li>
+                        <li>Through CAN line debugging and various tests with an oscilloscope, have diagnosed a misalignment of the motor's internal hall-effect sensors' phase degree (60°) and the WaveSculpter22's expected phase degree (120°), which led to erroring values.</li>
+                        <li>Initially utilized a transistor and swapped wires into the motor controller to invert and swap hall outputs but still failed.</li>
+                        <li>Currently waiting on Dynamics team to disassemble motor for us to manually invert the sensors themselves.</li>
+
+                    </ul>
+                `,
+                tags: ['CAN Bus', 'WaveSculpter22', 'NGMSCM150', 'Embedded Systems', 'Motor Control'],
+                linkPrimary: null,
+                linkSecondary: null
+            },
+            {
                 id: 'smart-home',
                 title: 'Smart Home Automation System',
                 category: 'hardware',
-                featured: true,
+                featured: false,
                 date: 'Ongoing',
                 image: '../images/smarthome.jpg',
                 descriptionShort: 'A custom home automation system to control devices and reduce energy consumption.',
@@ -349,8 +403,8 @@
                         <li>Currently developing a mobile application to provide a user-friendly interface for monitoring and toggling devices, expanding the system's functionality and accessibility.</li>
                     </ul>
                 `,
-                tags: ['Embedded Systems', 'Raspberry Pi', 'MQTT', 'IoT', 'Python'],
-                linkPrimary: 'https://kol305.github.io',
+                tags: ['Raspberry Pi', 'MQTT', 'IoT', 'Embedded Systems', 'Python'],
+                linkPrimary: null,
                 linkSecondary: null
             },
             {
@@ -360,7 +414,7 @@
                 featured: false,
                 date: '2020-2024',
                 image: '../images/vex.png',
-                descriptionShort: 'Led a 6-member team to design, build, and program competition robots, achieving 3 State qualifications.',
+                descriptionShort: 'Led full design cycle for competition robots with manual and automonous control.',
                 descriptionFull: `
                     <p>Led a team of 6 as captain to design, build, and program robots for VEX competitions across California. Set project deadlines, coordinated manpower, and defined strategy to drive team success.</p>
                     <ul>
@@ -370,7 +424,7 @@
                         <li>Documented the entire engineering design process in detailed notebooks, effectively communicating concept ideas, prototypes, and design choices to competition judges.</li>
                     </ul>
                 `,
-                tags: ['Robotics', 'VEX', 'C++', 'PROS', 'CAD', 'Fusion 360', 'Project Management', 'Leadership'],
+                tags: ['Robotics', 'PROS C++', 'Fusion 360', 'Project Management'],
                 linkPrimary: 'https://drive.google.com/file/d/1Y262yHZ7NgvJ86ycZDFWL33HpLlogBLO/view?usp=sharing',
                 linkSecondary: null
             },
@@ -381,7 +435,7 @@
                 featured: false,
                 date: '2023',
                 image: '../images/eagleproject.png',
-                descriptionShort: 'Led a 21-volunteer team to build outdoor storage cabinets for the CHS Robotics Club.',
+                descriptionShort: 'Building outdoor storage cabinets for the CHS Robotics Club.',
                 descriptionFull: `
                     <p>Led a team of 21 volunteers to design, fundraise for, and construct two large outdoor storage cabinets for the California High Robotics Club, resulting in 300 hours of awarded community service.</p>
                     <ul>
@@ -389,7 +443,7 @@
                         <li>Utilized computer-aided design (CAD) to create detailed design proposals and <a href="https://drive.google.com/file/d/1mlDF2Wy1Y2oLxDHLs2jGJp9aAJVpId7l/view?usp=sharing">assembly manuals</a> for the project.</li>
                     </ul>
                 `,
-                tags: ['Project Management', 'Leadership', 'CAD', 'Community Service'],
+                tags: ['Onshape CAD', 'Design Proposal', 'Project Management', 'Assembly'],
                 linkPrimary: 'https://drive.google.com/file/d/1Naa6zMqsx5Fr_JJbQSE8ZOXwHcVA6yKB/view?usp=sharing',
                 linkSecondary: null
             },
@@ -426,7 +480,7 @@
                         <li>Designed a user-friendly dashboard that displays daily energy statistics and predicted savings, encouraging continuous mindful consumption.</li>
                     </ul>
                 `,
-                tags: ['Machine Learning', 'LightGBM', 'OpenAI', 'Python', 'Web App'],
+                tags: ['AI/ML', 'LightGBM', 'OpenAI', 'Python', 'Web App'],
                 linkPrimary: 'https://github.com/KOL305/smart-gen',
                 linkSecondary: 'https://youtu.be/Aekci3r5V8A?si=KYZFIJLS2oHUSIPP' // Demo Video
             },
@@ -445,7 +499,7 @@
                         <li>Designed an administrative dashboard that provided authorities with a geographical visualization of all reported issues, enabling them to create a more efficient and data-driven response.</li>
                     </ul>
                 `,
-                tags: ['Full-Stack', 'Open Source', 'Mobile App', 'Web App', 'Firebase'],
+                tags: ['Full-Stack', 'Mobile App', 'Web App', 'Firebase', 'Open Source'],
                 linkPrimary: 'https://github.com/KOL305/geo-repair',
                 linkSecondary: null
             },
@@ -476,7 +530,7 @@
                 featured: false,
                 date: '2022',
                 image: '../images/taskmanagerwithslimes.png',
-                descriptionShort: 'A web-based task manager that incentivized productivity with a virtual pet. (2nd Place)',
+                descriptionShort: 'A web-based task manager that incentivized productivity with a virtual pet.',
                 descriptionFull: `
                     <p>Developed a web-based task manager that incentivized productivity by allowing users to earn coins for a virtual pet, winning <strong>2nd place at the 2022 San Ramon Hackathon</strong>.</p>
                     <p>By completing tasks, users gained coins, which were used to purchase accessories and decorations for their slimes. A dashboard displays their metrics and enables users to better understand their work patterns.</p>
@@ -492,7 +546,7 @@
                 featured: false,
                 date: '2022',
                 image: '../images/wordcloud.png',
-                descriptionShort: 'A web GUI for generating word clouds with client and server-side options. (2nd Place)',
+                descriptionShort: 'A web GUI for generating word clouds with client and server-side options.',
                 descriptionFull: `
                     <p>Engineered a web-based word cloud generator GUI with both client-side (Javascript) and server-side (Python) functionality, earning <strong>2nd place at the 2022 AT&T Junior Labs Hackathon</strong>.</p>
                 `,
@@ -507,7 +561,7 @@
                 featured: false,
                 date: '2023',
                 image: '../images/overhaul.png',
-                descriptionShort: 'A p5.js game simulating fishery management to educate on overfishing. (3rd Place)',
+                descriptionShort: 'A p5.js game simulating fishery management to educate on overfishing.',
                 descriptionFull: `
                     <p>Created a web-based fishery management simulator using the p5.js library, highlighting the risks of overfishing, winning <strong>3rd place at the 2023 San Ramon Hackathon</strong>.</p>
                     <p>Random in-game events, such as rapid eutrophication, would cause players to decide between overfishing their pond or being unable to pay rent. Instructional messages accompanied events to reinforce the learning experience.</p>
@@ -523,7 +577,7 @@
                 featured: false,
                 date: '2022',
                 image: '../images/cloudnine.png',
-                descriptionShort: 'A sleep-tracking web application with a white noise collection and drawing pad. (Finalist)',
+                descriptionShort: 'A sleep-tracking web application with a white noise collection and drawing pad.',
                 descriptionFull: `
                     <p>Designed and built a sleep-tracking web application with features including a white noise collection and drawing pad, achieving <strong>finalist designation at the 2022 TeenTech SF Hackathon</strong>.</p>
                     <p>The app enabled users to log and track sleep patterns and sleep cycles, informing them to make better sleep decisions.</p>
@@ -538,7 +592,7 @@
                 title: 'Techno-economic Analysis of Carbon Capture',
                 category: 'research',
                 featured: false,
-                date: '2S023',
+                date: '2023',
                 image: '../images/pscvsdac.jpg',
                 descriptionShort: 'TEA of Point Source Capture vs. Direct Air Capture at COSMOS (UCLA).',
                 descriptionFull: `
