@@ -708,39 +708,89 @@
                 title: 'GreenGrade Sustainability Analyzer',
                 category: 'software',
                 featured: false,
-                date: '2024',
-                images: [img('../images/greengrade.png', 'App Interface')],
-                descriptionShort: 'Fuzzy logic analysis of company sustainability/ESG reports using the Gemini API.',
+                date: 'Aug. 2024',
+                // The 'video' property now takes precedence for the main header
+                video: 'https://drive.google.com/file/d/1LdoTDyLYITMIQiaGK1JF4PlKsopxlKss/preview', 
+                // Images are kept as fallback or for thumbnails
+                images: [
+                    img('../images/greengrade/greengrade.png', 'App Interface'),
+                    img('../images/greengrade/greengrade_visualization.png', 'System Architecture'),
+                    img('../images/greengrade/fuzzy_logic_ss.png', 'Fuzzy Logic Graphs')
+                ],
+                descriptionShort: 'GreenGrade is a cross-platform mobile application that empowers consumers to evaluate corporate environmental impact by analyzing company sustainability reports (ESGs). As Project Lead and Lead Programmer, I coordinated a team of 11 to integrate a fuzzy logic algorithm (C++) with a Flutter frontend and a Google Gemini AI.',
                 descriptionFull: `
-                    <p>For the 2024 Google Gemini API Competition, used fuzzy logic to determine a company’s sustainability interval index.</p>
+                    <h1>Overview</h1>
+                    <p>GreenGrade is a cross-platform mobile application that empowers consumers to evaluate corporate environmental impact by analyzing company sustainability reports (ESGs). As Project Lead and Lead Programmer, I coordinated a team of 11 to integrate a fuzzy logic algorithm (C++) with a Flutter frontend and a Google Gemini AI.</p>
+
+                    <h1>The Objective</h1>
+                    <p>Consumers often lack transparent data regarding the environmental practices of the brands they buy from. Our goal, in collaboration with the CEO of Hydrogen Engineering Research Company, was to democratize access to corporate sustainability reports (CSRs). We aimed to translate dense corporate data into a simple “Green Score” (0-100) and a natural-language explanation for the average shopper.</p>
+
+                    <h1>What I did</h1>
                     <ul>
-                        <li>Developed a fuzzy logic system that processes qualitative and quantitative data from sustainability reports to evaluate environmental, social, and governance (ESG) performance.</li>
-                        <li>Integrated Google Gemini API for advanced natural language processing, enabling the extraction of relevant information from unstructured text in sustainability reports.</li>
-                        <li>Implemented a mobile application interface that allows users to input company data and receive a comprehensive sustainability score along with a detailed breakdown analysis.</li>
+                        <li>Architected the mobile application using Flutter, designing a scalable state management system to handle real-time data streams.</li>
+                        <li>Orchestrated the integration of a C++ Fuzzy Logic algorithm (developed by a UCLA professor) into the Dart environment, debugging Foreign Function Interface (FFI) bindings to ensure thread-safe execution and proper memory allocation on mobile devices.</li>
+                        <li>Implemented the Google Gemini API to scrape complex PDF sustainability reports for algorithm input and to break down sustainability scores into bite-sized explanations for the user.</li>
+                        <li>Managed the project lifecycle, coordinating daily sprints, defining the product roadmap, and serving as the primary liaison with our industry mentor (CEO of Hydrogen Engineering Research Company).</li>
                     </ul>
 
-                    <!-- EMBED 1: Google Drive Video -->
-                    <h2 class="text-xl font-bold mt-6 mb-2 text-primary">Demo Video (Google Drive)</h2>
-                    <div class="w-full aspect-video my-4 rounded-lg overflow-hidden border border-primary shadow-sm">
-                        <iframe src="https://drive.google.com/file/d/144YSIiQVfv4mO7qh6bYnb1NyxOYBt7jo/preview" class="w-full h-full" allow="autoplay"></iframe>
+                    <h1>Technical Implementation</h1>
+                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden border border-primary group my-6 bg-secondary">
+                         <div class="inline-slides hidden">
+                             [
+                                {"src": "../images/greengrade/greengrade_visualization.png", "caption": ""},
+                                {"src": "../images/greengrade/fuzzy_logic_ss.png", "caption": "Fuzzy Logic Membership Functions"}
+                             ]
+                         </div>
+                         <div class="inline-carousel-track w-full h-full relative"></div>
+                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
                     </div>
 
-                    <!-- EMBED 2: YouTube Video -->
-                    <h2 class="text-xl font-bold mt-6 mb-2 text-primary">Demo Video (YouTube)</h2>
-                    <div class="w-full aspect-video my-4 rounded-lg overflow-hidden border border-primary shadow-sm">
-                        <iframe src="https://www.youtube.com/embed/oN9QqgT4V8g" class="w-full h-full" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <h2>Hybrid Tech Stack (Flutter ↔ C++)</h2>
+                    <p>I built the Frontend UI in Flutter to ensure cross-platform compatibility (iOS/Android), utilizing its vast library of widgets to build our application.</p>
+                    <p>The core challenge was connecting our high-performance C++ scoring engine to the Flutter UI. To resolve this, I implemented <strong>Dart:FFI (Foreign Function Interface)</strong> to bind the C++ functions directly to Dart.</p>
+                    <ul>
+                        <li>This required meticulous memory management—allocating pointers in Dart, passing them to C++, and freeing them after execution—to prevent memory leaks on devices.</li>
+                    </ul>
+
+                    <h2>The C++ Fuzzy Logic Algorithm</h2>
+                    <p>Unlike simple linear scoring, sustainability metrics are often ambiguous (e.g., “high” water usage vs. “moderate” carbon capture). We used Fuzzy Logic to model this uncertainty.</p>
+                    <p>The algorithm takes raw numerical inputs (extracted by Gemini) and converts them into membership functions (e.g., mapping a specific CO2 tonnage to a “Low/Medium/High” curve). It then applies a rule base to generate a crisp, deterministic sustainability score (0-100).</p>
+
+                    <h2>Generative AI Integration (Gemini)</h2>
+                    <p>We used Google Gemini to parse through sustainability data. When a user uploads a 50-page PDF report, Gemini scans the text to extract specific quantitative metrics (Scope 1, 2, 3 emissions, water usage, etc.) which are then fed into the C++ algorithm.</p>
+                    <p>After the C++ algorithm outputs the score, Gemini generates a score explanation, taking the raw score and report highlights to produce a consumer-friendly summary.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 w-10/12 mx-auto">
+                        <div>
+                            <video controls class="w-full rounded-lg shadow-md border border-primary">
+                                <source src="../images/greengrade/upload.webm" type="video/webm">
+                                // <source src="../images/greengrade/upload.webm" type="video/quicktime">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p class="text-sm text-secondary italic mt-1 text-center">Gemini Processing File</p>
+                        </div>
+                        <div>
+                            <video controls class="w-full rounded-lg shadow-md border border-primary">
+                                <source src="../images/greengrade/detailed_summary.webm" type="video/webm">
+                                // <source src="../images/greengrade/detailed_summary.webm" type="video/quicktime">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p class="text-sm text-secondary italic mt-1 text-center">Gemini Generating Score Breakdown</p>
+                        </div>
                     </div>
 
-                    <!-- EMBED 3: PDF Document -->
-                    <h2 class="text-xl font-bold mt-6 mb-2 text-primary">Research Paper (PDF)</h2>
-                    <div class="w-full h-96 my-4 rounded-lg overflow-hidden border border-primary shadow-sm">
-                        <!-- Note: Using Carbon Capture PDF link for demonstration as the user link was invalid -->
-                        <iframe src="https://drive.google.com/file/d/1DULSiS7sPJoN4xFQr06I3I-8t63uNmmP/preview" class="w-full h-full" frameborder="0"></iframe>
-                    </div>
+                    <h1>Key Takeaways</h1>
+                    <ul>
+                        <li><strong>Cross-Language Interoperability:</strong> Debugging the bridge between C++ and Dart was my steepest learning curve. I learned how to manage memory manually and handle asynchronous callbacks between managed (Dart) and unmanaged (C++) code.</li>
+                        <li><strong>Efficient AI Utilization:</strong> We used Gemini specifically for what it’s good at—unstructured data extraction—and fuzzy logic algorithms for deterministic scoring. This hybrid approach resulted in a more reliable system than using an LLM for math.</li>
+                        <li><strong>Project Management:</strong> Coordinating a multidisciplinary team (design, algorithm, frontend) taught me that clear communication is just as essential as code. By establishing a rigid timeline with our CEO mentor, we delivered a functional MVP in two weeks.</li>
+                    </ul>
                 `,
-                tags: ['AI/ML', 'Google Gemini', 'Fuzzy Logic', 'Mobile App', 'Sustainability'],
+                tags: ['Flutter', 'C++', 'Fuzzy Logic', 'Google Gemini', 'Dart:FFI'],
                 linkPrimary: 'https://github.com/KOL305/GreenGrade',
-                linkSecondary: 'https://drive.google.com/file/d/144YSIiQVfv4mO7qh6bYnb1NyxOYBt7jo/view?usp=sharing'
+                linkSecondary: 'https://drive.google.com/file/d/1LdoTDyLYITMIQiaGK1JF4PlKsopxlKss/preview'
             },
             {
                 id: 'smartgen',
