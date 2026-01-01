@@ -18,7 +18,7 @@
             --bg-secondary: #ffffff; /* White */
             --bg-accent: #e5e7eb; /* Gray 200 */
             --text-primary: #111827; /* Dark gray */
-            --text-secondary: #6b7280; /* Medium gray */
+            --text-secondary: #1f2937; /* Gray 800 - Darker for better readability */
             --text-accent: #3b82f6; /* Blue */
             --border-primary: #e5e7eb; /* Gray 200 */
         }
@@ -28,8 +28,8 @@
             --bg-primary: #121212; /* Very dark gray */
             --bg-secondary: #1e1e1e; /* Dark gray */
             --bg-accent: #333333; /* Lighter dark */
-            --text-primary: #f3f4f6; /* Off-white */
-            --text-secondary: #9ca3af; /* Light gray */
+            --text-primary: #f9fafb; /* Off-white */
+            --text-secondary: #e5e7eb; /* Gray 200 - Brighter for better readability */
             --text-accent: #60a5fa; /* Light blue */
             --border-primary: #2b2b2b; /* Dark border */
         }
@@ -76,10 +76,14 @@
             transition: opacity 0.3s ease;
         }
 
+        /* Updated Modal Content for Flex Layout */
         .modal-content {
             transition: transform 0.3s ease, opacity 0.3s ease;
             transform: translateY(20px) scale(0.95);
             opacity: 0;
+            max-height: 90vh; /* Limit height to 90% of viewport */
+            display: flex;
+            flex-direction: column;
         }
 
         /* This .open class is toggled by JS to show the modal content */
@@ -88,51 +92,66 @@
             opacity: 1;
         }
 
-        /* Custom scrollbar for sidebar */
-        #sidebar-content::-webkit-scrollbar {
-            width: 4px;
+        /* Custom scrollbar - High Contrast */
+        ::-webkit-scrollbar {
+            width: 14px; /* Increased from 8px */
+            height: 14px;
         }
-        #sidebar-content::-webkit-scrollbar-thumb {
-            background-color: var(--text-accent);
-            border-radius: 4px;
+        ::-webkit-scrollbar-thumb {
+            background-color: #4b5563; /* Dark Gray (Tailwind gray-600) */
+            border-radius: 7px;
+            border: 3px solid var(--bg-secondary); /* Creates a padding effect */
         }
-        #sidebar-content::-webkit-scrollbar-track {
-            background: transparent;
+        ::-webkit-scrollbar-track {
+            background: var(--bg-accent); /* Distinct track color */
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #1f2937; /* Even darker on hover */
         }
 
         /* Custom styles for modal lists */
         #modal-description ul {
-            list-style-type: disc; /* Adds bullet points */
-            padding-left: 1.5rem;  /* Indents the bullets (24px) */
-            margin-top: 1rem;      /* Space above the list */
-            margin-bottom: 1rem;   /* Space below the list */
+            list-style-type: disc; 
+            padding-left: 1.5rem;  
+            margin-top: 1rem;      
+            margin-bottom: 1rem;   
         }
         #modal-description li {
-            margin-top: 0.5rem;    /* Adds vertical spacing between items */
-            margin-bottom: 0.5rem; /* Adds vertical spacing between items */
+            margin-top: 0.5rem;    
+            margin-bottom: 0.5rem; 
+        }
+        
+        /* Typography overrides for Description */
+        #modal-description h1, 
+        #modal-description h2, 
+        #modal-description h3 {
+            color: var(--text-primary);
+            font-weight: 700;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        #modal-description h1 { font-size: 1.5rem; }
+        #modal-description h2 { font-size: 1.25rem; }
+        
+        /* Carousel Styles */
+        .carousel-slide {
+            transition: opacity 0.3s ease-in-out;
         }
     </style>
 </head>
 <body class="theme-light">
 
-    <!-- 
-      HEADER
-      - Always visible, holds sidebar toggle and theme toggle.
-    -->
     <header class="bg-secondary/80 dark:bg-secondary/80 backdrop-blur-md sticky top-0 z-40 border-b border-primary w-full">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div class="flex items-center justify-between h-16">
-                <!-- Left side: Sidebar Toggle -->
                 <div class="flex items-center">
                     <button id="sidebar-open" class="p-2 rounded-md text-secondary">
                         <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     </button>
                 </div>
 
-                <!-- Right side: Theme Toggle -->
                 <div class="flex items-center">
                     <button id="theme-toggle" class="p-2 rounded-md text-light-text-secondary dark:text-dark-text-secondary">
-                        <!-- Replaced Sun Icon SVG -->
                         <svg class="theme-icon-sun w-6 h-6 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
                         <svg class="theme-icon-moon w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                     </button>
@@ -141,15 +160,8 @@
         </div>
     </header>
 
-    <!-- 
-      SIDEBAR
-      - Pop-out navigation menu.
-    -->
     <div id="sidebar-container" class="fixed inset-0 z-50 hidden">
-        <!-- Overlay -->
         <div id="sidebar-overlay" class="absolute inset-0 bg-black/50 opacity-0"></div>
-
-        <!-- Sidebar -->
         <div id="sidebar" class="relative bg-secondary h-full w-64 sm:w-80 shadow-xl -translate-x-full">
             <div class="flex items-center justify-between p-4 border-b border-primary">
                 <h2 class="text-lg font-semibold text-primary">Project Navigation</h2>
@@ -157,9 +169,7 @@
                     <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
-            <!-- Scrollable content area -->
             <div id="sidebar-content" class="flex flex-col justify-between overflow-y-auto" style="height: calc(100vh - 65px);">
-                <!-- Main Links -->
                 <div class="p-4">
                     <h3 class="text-sm font-medium text-secondary uppercase mb-2">Sections</h3>
                     <ul class="flex flex-col space-y-1">
@@ -169,179 +179,106 @@
                         <li><a href="#software" class="sidebar-link text-lg font-medium text-primary hover:text-accent flex items-center p-2 rounded-md"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m-4 4l4 4-4 4M6 16v-4m-2-2h4"></path></svg>Software</a></li>
                         <li><a href="#research" class="sidebar-link text-lg font-medium text-primary hover:text-accent flex items-center p-2 rounded-md"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.363-.472a6 6 0 00-5.232 5.232l.472 2.363a2 2 0 00.547 1.022l3.956 3.956a2 2 0 002.828 0l2.828-2.828a2 2 0 000-2.828l-3.956-3.956zM14 6a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>Research</a></li>
                     </ul>
-
-                    <!-- Divider -->
                     <div class="border-t border-primary my-4"></div>
-
-                    <!-- Project Links -->
                     <h3 class="text-sm font-medium text-secondary uppercase mb-2">All Projects</h3>
-                    <div id="sidebar-project-list" class="flex flex-col space-y-1">
-                        <!-- Project links will be injected here -->
-                    </div>
+                    <div id="sidebar-project-list" class="flex flex-col space-y-1"></div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- 
-      MAIN CONTENT
-    -->
     <main class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-16">
-
-        <!-- 
-          ABOUT ME SECTION
-          - Profile picture, blurb, and links.
-        -->
         <section id="about-me" class="my-16">
             <div class="flex flex-col md:flex-row items-center">
-                <!-- Profile Picture -->
                 <div class="relative w-40 h-40 md:w-48 md:h-48 flex-shrink-0 mb-8 md:mb-0 md:mr-10">
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full -m-2"></div>
-                    <img class="relative w-full h-full object-cover rounded-full border-4 border-secondary" 
-                         src="../images/headshot.jpg" 
-                         alt="Headshot photo">
+                    <img class="relative w-full h-full object-cover rounded-full border-4 border-secondary" src="../images/headshot.jpg" alt="Headshot photo">
                 </div>
-                
-                <!-- Info -->
                 <div class="flex-1 text-center md:text-left">
-                    <h1 class="text-3xl md:text-4xl font-bold text-primary mb-3">
-                        Kadon Liang | UC Berkeley EECS
-                    </h1>
-                    <!-- 
-                      FIX 1: Removed dark:text-gray-300 from this <p> tag.
-                      It will now correctly use the `text-secondary` CSS variable in both light and dark modes.
-                    -->
+                    <h1 class="text-3xl md:text-4xl font-bold text-primary mb-3">Kadon Liang | UC Berkeley EECS</h1>
                     <p class="text-lg text-secondary mb-6">
                         Welcome to my portfolio! I'm an EECS major at UC Berkeley passionate about robotics, AI, and software. My work, from leading a VEX team to building sustainability apps, is all about applying engineering to real-world challenges. Feel free to explore my work below!
                     </p>
-                    
-                    <!-- Links -->
                     <div class="flex items-center justify-center md:justify-start space-x-5">
-                        <a href="https://github.com/KOL305" target="_blank" rel="noopener noreferrer" class="text-secondary hover:text-primary transition-colors duration-200" title="GitHub">
-                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.492.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.03-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.818c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.003 10.003 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path></svg>
-                        </a>
-                        <a href="https://www.linkedin.com/in/kadon-liang/" target="_blank" rel="noopener noreferrer" class="text-secondary hover:text-primary transition-colors duration-200" title="LinkedIn">
-                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.783-1.75-1.75s.784-1.75 1.75-1.75 1.75.783 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
-                        </a>
-                        <a href="mailto:kadon_liang@berkeley.edu" class="text-secondary hover:text-primary transition-colors duration-200" title="Email">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M3 18h18V6H3v12z"></path></svg>
-                        </a>
-                        <a href="https://drive.google.com/file/d/1qNa4AiCQ9f2UaSBW0KC7MlWW4iab49ca/view?usp=sharing" target="_blank" class="text-secondary hover:text-primary transition-colors duration-200" title="Download Resume">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        </a>
+                        <a href="https://github.com/KOL305" target="_blank" rel="noopener noreferrer" class="text-secondary hover:text-primary transition-colors duration-200" title="GitHub"><svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.492.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.03-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.818c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.003 10.003 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path></svg></a>
+                        <a href="https://www.linkedin.com/in/kadon-liang/" target="_blank" rel="noopener noreferrer" class="text-secondary hover:text-primary transition-colors duration-200" title="LinkedIn"><svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.783-1.75-1.75s.784-1.75 1.75-1.75 1.75.783 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg></a>
+                        <a href="mailto:kadon_liang@berkeley.edu" class="text-secondary hover:text-primary transition-colors duration-200" title="Email"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M3 18h18V6H3v12z"></path></svg></a>
+                        <a href="https://drive.google.com/file/d/1qNa4AiCQ9f2UaSBW0KC7MlWW4iab49ca/view?usp=sharing" target="_blank" class="text-secondary hover:text-primary transition-colors duration-200" title="Download Resume"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Container for all project sections -->
         <div class="space-y-16">
-            <!-- 
-              FEATURED PROJECTS SECTION
-            -->
             <section id="featured">
                 <h2 class="text-2xl font-bold text-primary mb-6">Featured Projects</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="featured-projects">
-                    <!-- Featured projects will be injected here -->
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="featured-projects"></div>
             </section>
-
-            <!-- 
-              HARDWARE & ROBOTICS SECTION
-            -->
             <section id="hardware">
                 <h2 class="text-2xl font-bold text-primary mb-6">Hardware & Robotics</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="hardware-projects">
-                    <!-- Hardware projects will be injected here -->
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="hardware-projects"></div>
             </section>
-
-            <!-- 
-              SOFTWARE SECTION
-            -->
             <section id="software">
                 <h2 class="text-2xl font-bold text-primary mb-6">Software</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="software-projects">
-                    <!-- Software projects will be injected here -->
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="software-projects"></div>
             </section>
-
-            <!-- 
-              RESEARCH SECTION
-            -->
             <section id="research">
                 <h2 class="text-2xl font-bold text-primary mb-6">Research & Technical Analysis</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="research-projects">
-                    <!-- Research projects will be injected here -->
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="research-projects"></div>
             </section>
         </div>
     </main>
 
-    <!-- 
-      PROJECT MODAL
-      - Hidden by default, shown when a project is clicked.
-    -->
-    <div id="project-modal" class="modal fixed inset-0 z-50 overflow-y-auto p-4 pt-20 hidden">
-        <!-- Overlay -->
+    <div id="project-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
         <div class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
 
-        <!-- Content -->
-        <div class="modal-content relative bg-secondary w-full max-w-3xl mx-auto rounded-lg shadow-xl">
-            <!-- Header -->
-            <div class="flex items-center justify-between p-5 border-b border-primary">
+        <div class="modal-content relative bg-secondary w-[95%] max-w-6xl mx-auto rounded-lg shadow-xl overflow-hidden flex flex-col h-[90vh]">
+            
+            <div class="flex-none flex items-center justify-between p-5 border-b border-primary z-20 bg-secondary">
                 <h3 id="modal-title" class="text-xl font-semibold text-primary">Project Title</h3>
                 <button id="modal-close" class="p-2 rounded-md hover:bg-accent">
                     <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
 
-            <!-- Body -->
-            <div class="p-6">
-                <img id="modal-image" src="httpsa://placehold.co/600x400" alt="Project Image" class="w-full h-64 object-cover rounded-md mb-4 border border-primary">
+            <div id="modal-body" class="flex-grow overflow-y-auto p-6 md:p-8">
+                <div id="main-carousel-container" class="relative w-full h-64 sm:h-80 md:h-96 lg:h-[500px] bg-secondary rounded-md mb-8 overflow-hidden group border border-primary flex-shrink-0">
+                    <div id="main-carousel-slides" class="w-full h-full relative flex items-center justify-center"></div>
+                    <button id="main-carousel-prev" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-10 translate-x-[-10px] group-hover:translate-x-0"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                    <button id="main-carousel-next" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-10 translate-x-[10px] group-hover:translate-x-0"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                    <div id="main-carousel-indicators" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-10"></div>
+                </div>
                 
                 <div class="flex items-center justify-between mb-4">
-                     <!-- Date -->
                      <span id="modal-date" class="text-sm text-secondary">Date</span>
-
-                     <!-- Tags -->
-                    <div id="modal-tags" class="flex flex-wrap gap-2">
-                        <!-- Tags injected here -->
-                    </div>
+                    <div id="modal-tags" class="flex flex-wrap gap-2"></div>
                 </div>
 
-                <!-- 
-                  FIX 2: Removed text-primary and dark:text-gray-300 from this <div>.
-                  It will now correctly use the `prose` and `dark:prose-invert` classes to handle text color.
-                -->
-                <div id="modal-description" class="prose dark:prose-invert max-w-none">
+                <div id="modal-description" class="prose dark:prose-invert max-w-none text-secondary">
                     <p>Full project description...</p>
                 </div>
             </div>
 
-            <!-- Footer / Links -->
-            <div class="flex items-center justify-end p-5 border-t border-primary space-x-3">
-                <a id="modal-link-secondary" href="#" target="_blank" rel="noopener noreferrer" class="py-2 px-4 rounded-md text-primary bg-accent hover:bg-opacity-80 transition-colors">
-                    Demo Video
-                </a>
-                <a id="modal-link-primary" href="#" target="_blank" rel="noopener noreferrer" class="py-2 px-4 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
-                    View Project
-                </a>
+            <div class="flex-none flex items-center justify-end p-5 border-t border-primary space-x-3 z-20 bg-secondary">
+                <a id="modal-link-secondary" href="#" target="_blank" rel="noopener noreferrer" class="py-2 px-4 rounded-md text-primary bg-accent hover:bg-opacity-80 transition-colors">Demo Video</a>
+                <a id="modal-link-primary" href="#" target="_blank" rel="noopener noreferrer" class="py-2 px-4 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">View Project</a>
             </div>
         </div>
     </div>
 
-    <!-- 
-      FOOTER
-    -->
     <footer class="py-10 mt-20 border-t border-primary">
         <div class="text-center text-secondary">
-            <p>&copy; 2025 Kadon Liang. All rights reserved.</p>
+            <p>&copy; 2026 Kadon Liang. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // --- PROJECT DATA ---
+        // --- DATA ---
+        // Helper function to create image objects with captions
+        function img(src, caption) {
+            return { src, caption };
+        }
+
         const projects = [
             // HARDWARE
             {
@@ -350,7 +287,9 @@
                 category: 'hardware',
                 featured: true,
                 date: 'Ongoing',
-                image: '../images/dashboard.png',
+                images: [
+                    img('../images/dashboard.png', 'PCB Layout Design')
+                ], 
                 descriptionShort: 'PCB design with custom ESP32 dev board and I²C display for Gen 11 Solar Car.',
                 descriptionFull: `
                     <p>Leading a team of 3 to develop a dashboard PCB with custom ESP32 dev board and I²C display for the UC Berkeley Solar Car Racing Team's Gen 11 car.</p>
@@ -366,33 +305,133 @@
             },
             {
                 id: 'motor-testing',
-                title: 'Previous Gen Solar Car Motor Integration',
+                title: 'Legacy Solar Car Motor Integration',
                 category: 'hardware',
                 featured: false,
-                date: 'Ongoing',
-                image: '../images/motortesting.png',
-                descriptionShort: 'CAN Debugging NGMSCM150 motor integration WaveSculpter22 motor controller',
+                date: 'Oct. 2025 - Nov. 2025',
+                images: [
+                    img('../images/legacy_solar_car_motor_integration/motortesting.png', ''),
+                    img('../images/legacy_solar_car_motor_integration/final_setup.jpg', 'Final Testing Setup'),
+                    img('../images/legacy_solar_car_motor_integration/initial_setup_diagram.png', 'Initial Setup Diagram'),
+                    img('../images/legacy_solar_car_motor_integration/inverter_logic_diagram.png', 'Inverter Logic Design'),
+                    img('../images/legacy_solar_car_motor_integration/breakout_board.jpg', 'Breakout Board Prototype'),
+                    img('../images/legacy_solar_car_motor_integration/molex_diagram.png', 'Molex Wiring Diagram From Data Sheet'),
+                    img('../images/legacy_solar_car_motor_integration/final_logic_diagram.png', 'Final Logic Flow'),
+                    img('../images/legacy_solar_car_motor_integration/usbtinviewer_ss.png', 'USBTinViewer CAN Bus Showing Proper RPM and No Errors'),
+                    img('../images/legacy_solar_car_motor_integration/oscilloscope_120_phases.jpeg', 'Oscilloscope 120° Phase Measurement'),
+                    img('../images/legacy_solar_car_motor_integration/final_wavesculptor_setup.jpg', 'Final WaveSculptor Setup')
+                ],
+                descriptionShort: 'Integrated a legacy NGM SCM150 solar car motor with a modern WaveSculptor 22 controller, saving UC Berkeley’s Solar Car team ~$35,000 in motor replacement costs. Solved a critical hardware incompatibility by shifting the Hall sensor phasing and re-mapping CAN-bus signal harnessing.',
+                // Updated to match the provided HTML/Notion format
                 descriptionFull: `
-                    <p>Working directly with electrical team leads to get past-generation NGMSCM150 motors to spin using the WaveSculpter22 motor controller, with plans to integrate into the new Gen 11 solar car.</p>
-                    <ul>
-                        <li>Conducting much data sheet and documentation reading of motor/motor controller properties alongside onsite testing.</li>
-                        <li>Through CAN line debugging and various tests with an oscilloscope, have diagnosed a misalignment of the motor's internal hall-effect sensors' phase degree (60°) and the WaveSculpter22's expected phase degree (120°), which led to erroring values.</li>
-                        <li>Initially utilized a transistor and swapped wires into the motor controller to invert and swap hall outputs but still failed.</li>
-                        <li>Currently waiting on Dynamics team to disassemble motor for us to manually invert the sensors themselves.</li>
+                    <h1>Overview</h1>
+                    <p>Integrated a legacy NGM SCM150 solar car motor with a modern WaveSculptor 22 controller, saving UC Berkeley’s Solar Car team ~$35,000 in motor replacement costs. Solved a critical hardware incompatibility by shifting the Hall sensor phasing and re-mapping CAN-bus signal harnessing.</p>
 
+                    <h1>The Objective</h1>
+                    <p>For our next generation solar vehicle (Gen 11), our team is switching from a dual-motor system to a single-motor system. Thus, the goal of our motor team was to configure our legacy NGM SCM150 motors from a past-generation car to newer WaveSculpter22 controllers, as the motors were not responding to input from the controller.</p>
+
+                    <h1>What I did</h1>
+                    <ul>
+                        <li>Conducted data sheet and documentation reading of NGM SCM150 (motor) and WaveSculptor 22 (controller) properties alongside onsite testing.</li>
+                        <li>Utilized USBtinViewer to decode “Little Endian” IEEE 754 CAN bus packets to identify specific error flags and RPM commands.</li>
+                        <li>Diagnosed a misalignment of the motor's internal hall-effect sensors' phase degree (60°) and the WaveSculpter22's expected phase degree (120°) using a RIGOL oscilloscope.</li>
+                        <li>Designed a signal inverter breakout board to try addressing hall output mismatch.</li>
+                        <li>Solved the issue by re-terminating MOLEX interface board harnessing and swapping differential signal (RX+/RX-) pairing.</li>
+                    </ul>
+
+                    <h1>Visual Demonstration</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 items-center">
+                        <div>
+                            <video controls class="w-full rounded-lg shadow-md border border-primary">
+                                <source src="../images/legacy_solar_car_motor_integration/motor_spinning.mp4" type="video/mp4">
+                                <source src="../images/legacy_solar_car_motor_integration/motor_spinning.mp4" type="video/quicktime">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p class="text-sm text-secondary italic mt-1 text-center">Motor successfully spinning</p>
+                        </div>
+                        <div>
+                            <img src="../images/legacy_solar_car_motor_integration/final_setup.jpg" class="rounded-lg shadow-md w-full border border-primary" alt="Final Setup">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Final Testing Setup</p>
+                        </div>
+                    </div>
+
+                    <h1>Diagnosing Phase Degree Mismatch</h1>
+                    <div class="my-4">
+                        <img src="../images/legacy_solar_car_motor_integration/initial_setup_diagram.png" class="mx-auto rounded-lg shadow-md max-h-80 object-contain border border-primary" alt="Initial Setup Diagram">
+                    </div>
+                    <ul>
+                        <li>We first diagnosed the issue by manually spinning the motor in increments and recording the USBtinViewer output (CAN error message) and the measured voltage of each Hall Sensor into a table.</li>
+                        <li>After analyzing the data, my team suspected a phase mismatch, as the NGM motor seemed to output Hall Effect signals spaced at 60° phase while the WaveSculptor controller strictly required a 120° phase.</li>
+                        <li>Oscilloscope analysis confirmed that the Hall Sensors were only 60° apart, causing the controller to misfire the commutation sequence.</li>
+                    </ul>
+
+                    <h1>Fixing CAN Bus Line (Hall Effects from Motor to Controller)</h1>
+                    <ul>
+                        <li>Our initial solution involved swapping wires and using a transistor on a breakout board to change the phase degrees of each Hall (3 total).</li>
+                        <li>In theory this would result in the proper 120° phases that the motor controller required, though in practice it failed to spin the motor.</li>
+                    </ul>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-7/12 mx-auto">
+                        <div class="md:col-span-2">
+                            <img src="../images/legacy_solar_car_motor_integration/inverter_logic_diagram.png" class="rounded-lg shadow-md w-full object-cover border border-primary" alt="Inverter Logic">
+                        </div>
+                        <div>
+                            <img src="../images/legacy_solar_car_motor_integration/breakout_board.jpg" class="rounded-lg shadow-md h-80 object-cover border border-primary" alt="Breakout Board">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Breakout Board Prototype</p>
+                        </div>
+                    </div>
+                    <ul>
+                        <li>After more analysis of the data sheet, my team realized that we also needed to invert the differential pairing for Hall 3. Since the RX- and RX+ were already inversions of each other, we swapped the wires directly, removing the need for a breakout board.</li>
+                    </ul>
+                    <div class="my-4 text-center">
+                        <img src="../images/legacy_solar_car_motor_integration/molex_diagram.png" class="inline-block rounded-lg shadow-md max-h-60 border border-primary" alt="Molex Diagram">
+                        <p class="text-sm text-secondary italic mt-1">Molex Wiring Diagram From Data Sheet</p>
+                    </div>
+
+                    <h1>Fixing Power Lines (From Controller to Motor)</h1>
+                    <ul>
+                        <li>Because the physical locations of the Hall 2 and Hall 3 outputs were swapped, this also meant that we needed to swap the output terminals of the WaveSculptor that sent movement commands to the motor.</li>
+                        <li>This resulted in the motors finally spinning, and we verified a clean 120° phase shift with the oscilloscope and validated rotation using manual drive commands through the CAN debugger.</li>
+                    </ul>
+                    
+                    <div class="my-6">
+                        <img src="../images/legacy_solar_car_motor_integration/final_logic_diagram.png" class="rounded-lg shadow-md h-96 border border-primary mx-auto" alt="Final Logic Diagram">
+                    </div>
+
+                    <h1>Verification & Results</h1>
+                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 lg:h-[500px] rounded-lg overflow-hidden border border-primary group my-4">
+                         <div class="inline-slides hidden">
+                             [
+                                {"src": "../images/legacy_solar_car_motor_integration/usbtinviewer_ss.png", "caption": "USBTinViewer CAN Bus Showing Proper RPM and No Errors"},
+                                {"src": "../images/legacy_solar_car_motor_integration/oscilloscope_120_phases.jpeg", "caption": "Oscilloscope 120° Phase Measurement"},
+                                {"src": "../images/legacy_solar_car_motor_integration/final_wavesculptor_setup.jpg", "caption": "Final WaveSculptor Setup"}
+                             ]
+                         </div>
+                         <div class="inline-carousel-track w-full h-full relative">
+                            </div>
+                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
+                    </div>
+                    <h1>Key Learnings</h1>
+                    <ul>
+                        <li><b>Verifying Datasheets and Rigorously Testing Everything:</b> The documentation was ambiguous about phase alignment; only manual testing and direct oscilloscope measurement revealed the root cause.</li>
+                        <li><b>CAN Bus Decoding:</b> Understanding how to decode CAN bus messages using USBtinViewer was crucial for diagnosing communication issues between the motor and controller.</li>
+                        <li><b>Physics of Differential Signals:</b> This project reinforced that differential pairs (RX+/RX-) are effectively physical logic gates. Swapping the pair creates a mathematical inversion (NOT gate) without requiring active components or a custom PCB.</li>
+                        <li><b>Motor Subsystem Stack:</b> By investigating each subsystem that goes into powering an electric motor, I understand at a fundamental level how the software, sensors, controller, and motor all work together to drive a car.</li>
                     </ul>
                 `,
                 tags: ['CAN Bus', 'WaveSculpter22', 'NGMSCM150', 'Embedded Systems', 'Motor Control'],
                 linkPrimary: null,
                 linkSecondary: null
             },
+             // ... [Rest of projects remain same, abbreviated for brevity] ...
             {
                 id: 'smart-home',
                 title: 'Smart Home Automation System',
                 category: 'hardware',
                 featured: false,
                 date: 'Ongoing',
-                image: '../images/smarthome.jpg',
+                images: [img('../images/smarthome.jpg', 'System Overview')],
                 descriptionShort: 'A custom home automation system to control devices and reduce energy consumption.',
                 descriptionFull: `
                     <p>Designed and implemented a custom home automation system to automate lights, fans, and various devices within my room, as a pilot for a larger smart home project to reduce energy consumption.</p>
@@ -413,7 +452,7 @@
                 category: 'hardware',
                 featured: false,
                 date: '2020-2024',
-                image: '../images/vex.png',
+                images: [img('../images/vex.png', 'Competition Robot')],
                 descriptionShort: 'Led full design cycle for competition robots with manual and automonous control.',
                 descriptionFull: `
                     <p>Led a team of 6 as captain to design, build, and program robots for VEX competitions across California. Set project deadlines, coordinated manpower, and defined strategy to drive team success.</p>
@@ -434,7 +473,7 @@
                 category: 'hardware',
                 featured: false,
                 date: '2023',
-                image: '../images/eagleproject.png',
+                images: [img('../images/eagleproject.png', 'Storage Cabinets')],
                 descriptionShort: 'Building outdoor storage cabinets for the CHS Robotics Club.',
                 descriptionFull: `
                     <p>Led a team of 21 volunteers to design, fundraise for, and construct two large outdoor storage cabinets for the California High Robotics Club, resulting in 300 hours of awarded community service.</p>
@@ -454,15 +493,19 @@
                 category: 'software',
                 featured: false,
                 date: '2024',
-                image: '../images/greengrade.png',
+                images: [img('../images/greengrade.png', 'App Interface')],
                 descriptionShort: 'Fuzzy logic analysis of company sustainability/ESG reports using the Gemini API.',
                 descriptionFull: `
-                    <p>For the 2024 Google Gemini API Competition, used fuzzy logic to determine a company’s sustainability interval index, using a customizable set of parameters, given data from sustainability and ESG reports scraped manually or through the Gemini API.</p>
-                    <p>Through a mobile app, outputs a score and breakdown analysis, aiming to allow policymakers to determine a company’s true sustainability through a mathematical and algorithmic process. Users can view all their logged companies through a dashboard, allowing for easy comparison between companies.</p>
+                    <p>For the 2024 Google Gemini API Competition, used fuzzy logic to determine a company’s sustainability interval index.</p>
+                    <ul>
+                        <li>Developed a fuzzy logic system that processes qualitative and quantitative data from sustainability reports to evaluate environmental, social, and governance (ESG) performance.</li>
+                        <li>Integrated Google Gemini API for advanced natural language processing, enabling the extraction of relevant information from unstructured text in sustainability reports.</li>
+                        <li>Implemented a mobile application interface that allows users to input company data and receive a comprehensive sustainability score along with a detailed breakdown analysis.</li>
+                    </ul>
                 `,
                 tags: ['AI/ML', 'Google Gemini', 'Fuzzy Logic', 'Mobile App', 'Sustainability'],
                 linkPrimary: 'https://github.com/KOL305/GreenGrade',
-                linkSecondary: 'https://drive.google.com/file/d/144YSIiQVfv4mO7qh6bYnb1NyxOYBt7jo/view?usp=sharing' // Demo Video
+                linkSecondary: 'https://drive.google.com/file/d/144YSIiQVfv4mO7qh6bYnb1NyxOYBt7jo/view?usp=sharing'
             },
             {
                 id: 'smartgen',
@@ -470,7 +513,7 @@
                 category: 'software',
                 featured: true,
                 date: '2023',
-                image: '../images/smartgen.png',
+                images: [img('../images/smartgen.png', 'Dashboard View')],
                 descriptionShort: 'A web app to help homeowners reduce energy usage using ML and GPT-3.5.',
                 descriptionFull: `
                     <p>Developed a web application, SmartGen, for the 2023 Congressional App Challenge in a team of 3, aimed at helping homeowners reduce energy usage by providing insights into their energy generation and consumption patterns.</p>
@@ -482,7 +525,7 @@
                 `,
                 tags: ['AI/ML', 'LightGBM', 'OpenAI', 'Python', 'Web App'],
                 linkPrimary: 'https://github.com/KOL305/smart-gen',
-                linkSecondary: 'https://youtu.be/Aekci3r5V8A?si=KYZFIJLS2oHUSIPP' // Demo Video
+                linkSecondary: 'https://youtu.be/Aekci3r5V8A?si=KYZFIJLS2oHUSIPP'
             },
             {
                 id: 'georepair',
@@ -490,7 +533,7 @@
                 category: 'software',
                 featured: false,
                 date: '2021',
-                image: '../images/georepair.png',
+                images: [img('../images/georepair.png', 'App Screenshot')],
                 descriptionShort: 'Full-stack app for citizens to report and geotag damaged infrastructure.',
                 descriptionFull: `
                     <p>Developed a full-stack, open-source application with both web-based and mobile components to enable citizens to report and geotag damaged infrastructure in their communities.</p>
@@ -509,7 +552,7 @@
                 category: 'software',
                 featured: false,
                 date: '2022',
-                image: '../images/nutrimood.png',
+                images: [img('../images/nutrimood.png', 'App Screens')],
                 descriptionShort: 'A mobile calorie and macronutrient tracker app built with Flutter.',
                 descriptionFull: `
                     <p>Developed a calorie and macronutrient tracker mobile application, Nutrimood, for the 2022 Congressional App Challenge.</p>
@@ -520,7 +563,7 @@
                     </ul>
                 `,
                 tags: ['Mobile App', 'Flutter', 'API', 'UI/UX'],
-                linkPrimary: 'https://github.com/KOL305/nutrimood-mobile', // Server: https://github.com/KOL305/nutrimood-server
+                linkPrimary: 'https://github.com/KOL305/nutrimood-mobile',
                 linkSecondary: 'https://drive.google.com/file/d/1vtqJMKKQ9kR_QasBJNJIcKIkQYfMwH3V/view?usp=sharing'
             },
             {
@@ -529,7 +572,7 @@
                 category: 'software',
                 featured: false,
                 date: '2022',
-                image: '../images/taskmanagerwithslimes.png',
+                images: [img('../images/taskmanagerwithslimes.png', 'Game Interface')],
                 descriptionShort: 'A web-based task manager that incentivized productivity with a virtual pet.',
                 descriptionFull: `
                     <p>Developed a web-based task manager that incentivized productivity by allowing users to earn coins for a virtual pet, winning <strong>2nd place at the 2022 San Ramon Hackathon</strong>.</p>
@@ -545,7 +588,7 @@
                 category: 'software',
                 featured: false,
                 date: '2022',
-                image: '../images/wordcloud.png',
+                images: [img('../images/wordcloud.png', 'Word Cloud Output')],
                 descriptionShort: 'A web GUI for generating word clouds with client and server-side options.',
                 descriptionFull: `
                     <p>Engineered a web-based word cloud generator GUI with both client-side (Javascript) and server-side (Python) functionality, earning <strong>2nd place at the 2022 AT&T Junior Labs Hackathon</strong>.</p>
@@ -560,7 +603,7 @@
                 category: 'software',
                 featured: false,
                 date: '2023',
-                image: '../images/overhaul.png',
+                images: [img('../images/overhaul.png', 'Gameplay')],
                 descriptionShort: 'A p5.js game simulating fishery management to educate on overfishing.',
                 descriptionFull: `
                     <p>Created a web-based fishery management simulator using the p5.js library, highlighting the risks of overfishing, winning <strong>3rd place at the 2023 San Ramon Hackathon</strong>.</p>
@@ -576,7 +619,7 @@
                 category: 'software',
                 featured: false,
                 date: '2022',
-                image: '../images/cloudnine.png',
+                images: [img('../images/cloudnine.png', 'App Dashboard')],
                 descriptionShort: 'A sleep-tracking web application with a white noise collection and drawing pad.',
                 descriptionFull: `
                     <p>Designed and built a sleep-tracking web application with features including a white noise collection and drawing pad, achieving <strong>finalist designation at the 2022 TeenTech SF Hackathon</strong>.</p>
@@ -593,7 +636,7 @@
                 category: 'research',
                 featured: false,
                 date: '2023',
-                image: '../images/pscvsdac.jpg',
+                images: [img('../images/pscvsdac.jpg', 'PSC vs DAC Analysis')],
                 descriptionShort: 'TEA of Point Source Capture vs. Direct Air Capture at COSMOS (UCLA).',
                 descriptionFull: `
                     <p>Performed a techno-economic analysis of two distinct carbon capture technologies: Point Source Capture (PSC) and Direct Air Capture (DAC) at the California State Summer School for Mathematics and Science at UCLA.</p>
@@ -609,21 +652,133 @@
             }
         ];
 
-        // --- GLOBAL VARIABLES ---
+        // --- GLOBAL LOGIC ---
         let currentModalProjectId = null;
+        let mainCarouselIndex = 0;
+        let mainCarouselImages = [];
 
-        // --- THEME TOGGLE ---
+        // --- CAROUSEL FACTORY ---
+        // Generalized function to handle any carousel (main or inline)
+        // container: DOM element wrapping the carousel
+        // images: Array of objects {src, caption} OR strings
+        function initCarousel(container, images) {
+            const track = container.querySelector('[id$="-slides"], .inline-carousel-track');
+            const prevBtn = container.querySelector('[id$="-prev"], .inline-prev');
+            const nextBtn = container.querySelector('[id$="-next"], .inline-next');
+            const indicators = container.querySelector('[id$="-indicators"], .inline-indicators');
+            
+            if (!track || !images || images.length === 0) return;
+
+            let currentIndex = 0;
+            const isSingle = images.length <= 1;
+
+            // Hide controls if single image
+            if (prevBtn) prevBtn.style.display = isSingle ? 'none' : 'flex';
+            if (nextBtn) nextBtn.style.display = isSingle ? 'none' : 'flex';
+            if (indicators) indicators.style.display = isSingle ? 'none' : 'flex';
+
+            // Clear existing
+            track.innerHTML = '';
+            if (indicators) indicators.innerHTML = '';
+
+            // Build Slides
+            images.forEach((item, index) => {
+                // Normalize item to object
+                const src = typeof item === 'string' ? item : item.src;
+                const captionText = typeof item === 'string' ? null : item.caption;
+                const isVideo = src.endsWith('.mov') || src.endsWith('.mp4') || src.endsWith('.webm');
+
+                const slide = document.createElement('div');
+                // Added min-h-[300px] to slide to ensure it has height even if content is loading
+                slide.className = `carousel-slide absolute inset-0 w-full h-full flex flex-col items-center justify-center transition-opacity duration-300 ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none'}`;
+                
+                let contentElement;
+                if (isVideo) {
+                    contentElement = document.createElement('video');
+                    contentElement.controls = true;
+                    // UPDATED: Use w-full h-full object-contain for letterboxing behavior
+                    contentElement.className = 'w-full h-full object-contain mx-auto';
+                    const source = document.createElement('source');
+                    source.src = src;
+                    // Attempt to guess type, fallback to mp4 if mov/unknown
+                    source.type = src.endsWith('.mov') ? 'video/quicktime' : 'video/mp4'; 
+                    contentElement.appendChild(source);
+                } else {
+                    contentElement = document.createElement('img');
+                    contentElement.src = src;
+                    // UPDATED: Use w-full h-full object-contain for letterboxing behavior
+                    contentElement.className = 'w-full h-full object-contain mx-auto'; 
+                    contentElement.alt = captionText || `Slide ${index + 1}`;
+                }
+                
+                slide.appendChild(contentElement);
+
+                // Add Caption if present
+                if (captionText) {
+                    const captionDiv = document.createElement('div');
+                    captionDiv.className = 'absolute bottom-8 left-0 right-0 text-center px-4 pointer-events-none';
+                    captionDiv.innerHTML = `<span class="inline-block bg-black/50 text-white text-sm italic px-3 py-1 rounded backdrop-blur-sm">${captionText}</span>`;
+                    slide.appendChild(captionDiv);
+                }
+
+                track.appendChild(slide);
+
+                if (indicators) {
+                    const dot = document.createElement('button');
+                    dot.className = `w-2 h-2 rounded-full ${index === 0 ? 'bg-white' : 'bg-white/50'} transition-colors`;
+                    dot.onclick = () => {
+                        currentIndex = index;
+                        updateVisuals();
+                    };
+                    indicators.appendChild(dot);
+                }
+            });
+
+            function updateVisuals() {
+                Array.from(track.children).forEach((slide, idx) => {
+                    if (idx === currentIndex) {
+                        slide.classList.remove('opacity-0', 'pointer-events-none');
+                        slide.classList.add('opacity-100', 'z-10');
+                        // Auto-pause video if hiding slide
+                        const video = slide.querySelector('video');
+                        if (video) video.pause();
+                    } else {
+                        slide.classList.remove('opacity-100', 'z-10');
+                        slide.classList.add('opacity-0', 'pointer-events-none');
+                        const video = slide.querySelector('video');
+                        if (video) video.pause();
+                    }
+                });
+
+                if (indicators) {
+                    Array.from(indicators.children).forEach((dot, idx) => {
+                        dot.className = `w-2 h-2 rounded-full ${idx === currentIndex ? 'bg-white' : 'bg-white/50'} transition-colors`;
+                    });
+                }
+            }
+
+            // Events
+            if (prevBtn) prevBtn.onclick = (e) => {
+                e.stopPropagation();
+                currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+                updateVisuals();
+            };
+
+            if (nextBtn) nextBtn.onclick = (e) => {
+                e.stopPropagation();
+                currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+                updateVisuals();
+            };
+        }
+
+        // --- THEME ---
         const themeToggle = document.getElementById('theme-toggle');
         const sunIcons = document.querySelectorAll('.theme-icon-sun');
         const moonIcons = document.querySelectorAll('.theme-icon-moon');
         const body = document.body;
 
-        // Check for saved theme in localStorage
-        if (localStorage.getItem('theme') === 'dark') {
-            enableDarkMode();
-        } else {
-            enableLightMode();
-        }
+        if (localStorage.getItem('theme') === 'dark') enableDarkMode();
+        else enableLightMode();
 
         themeToggle.addEventListener('click', () => {
             if (body.classList.contains('theme-dark')) {
@@ -638,7 +793,7 @@
         function enableDarkMode() {
             body.classList.remove('theme-light');
             body.classList.add('theme-dark');
-            document.documentElement.classList.add('dark'); // For Tailwind
+            document.documentElement.classList.add('dark');
             sunIcons.forEach(icon => icon.classList.remove('hidden'));
             moonIcons.forEach(icon => icon.classList.add('hidden'));
         }
@@ -646,12 +801,12 @@
         function enableLightMode() {
             body.classList.remove('theme-dark');
             body.classList.add('theme-light');
-            document.documentElement.classList.remove('dark'); // For Tailwind
+            document.documentElement.classList.remove('dark');
             sunIcons.forEach(icon => icon.classList.add('hidden'));
             moonIcons.forEach(icon => icon.classList.remove('hidden'));
         }
 
-        // --- SIDEBAR TOGGLE ---
+        // --- SIDEBAR ---
         const sidebarOpenBtn = document.getElementById('sidebar-open');
         const sidebarCloseBtn = document.getElementById('sidebar-close');
         const sidebarContainer = document.getElementById('sidebar-container');
@@ -661,7 +816,6 @@
 
         function openSidebar() {
             sidebarContainer.classList.remove('hidden');
-            // Allow transitions to happen
             setTimeout(() => {
                 sidebar.classList.remove('-translate-x-full');
                 sidebarOverlay.classList.remove('opacity-0');
@@ -671,7 +825,6 @@
         function closeSidebar() {
             sidebar.classList.add('-translate-x-full');
             sidebarOverlay.classList.add('opacity-0');
-            // Hide after transition
             setTimeout(() => {
                 sidebarContainer.classList.add('hidden');
             }, 300);
@@ -680,159 +833,132 @@
         sidebarOpenBtn.addEventListener('click', openSidebar);
         sidebarCloseBtn.addEventListener('click', closeSidebar);
         sidebarOverlay.addEventListener('click', closeSidebar);
-        sidebarLinks.forEach(link => {
-            link.addEventListener('click', closeSidebar);
-        });
+        sidebarLinks.forEach(link => link.addEventListener('click', closeSidebar));
 
-        // --- PROJECT CARD CREATION ---
+        // --- PROJECT CARDS ---
         const featuredContainer = document.getElementById('featured-projects');
         const hardwareContainer = document.getElementById('hardware-projects');
         const softwareContainer = document.getElementById('software-projects');
         const researchContainer = document.getElementById('research-projects');
         const sidebarProjectList = document.getElementById('sidebar-project-list');
 
-        // Counters for stagger animation
         let featuredCounter = 0;
         let hardwareCounter = 0;
         let softwareCounter = 0;
         let researchCounter = 0;
 
         function createProjectCard(project) {
-            // Determine container
             let container;
             let counter;
 
-            if (project.category === 'hardware') {
-                container = hardwareContainer;
-                counter = ++hardwareCounter;
-            } else if (project.category === 'software') {
-                container = softwareContainer;
-                counter = ++softwareCounter;
-            } else if (project.category === 'research') {
-                container = researchContainer;
-                counter = ++researchCounter;
-            }
+            if (project.category === 'hardware') { container = hardwareContainer; counter = ++hardwareCounter; }
+            else if (project.category === 'software') { container = softwareContainer; counter = ++softwareCounter; }
+            else if (project.category === 'research') { container = researchContainer; counter = ++researchCounter; }
 
             const card = document.createElement('div');
             card.className = `project-card bg-secondary rounded-lg shadow-custom overflow-hidden border border-primary flex flex-col`;
             card.dataset.id = project.id;
+            if (container) card.style.transitionDelay = `${counter * 100}ms`;
 
-            // Add animation delay
-            if (container) {
-                card.style.transitionDelay = `${counter * 100}ms`; // 100ms stagger
-            }
+            const thumbnail = project.images && project.images.length > 0 ? project.images[0] : 'https://placehold.co/600x400';
+            let tagsHtml = project.tags.slice(0, 3).map(tag => `<span class="inline-block bg-accent text-secondary text-xs font-medium px-2 py-0.5 rounded-full">${tag}</span>`).join('');
 
-            let tagsHtml = project.tags.slice(0, 3).map(tag => 
-                `<span class="inline-block bg-accent text-secondary text-xs font-medium px-2 py-0.5 rounded-full">${tag}</span>`
-            ).join('');
+            // Handle image logic for thumbnail (assumes first item is object or string)
+            const firstImage = project.images && project.images.length > 0 ? project.images[0] : 'https://placehold.co/600x400';
+            const thumbnailSrc = typeof firstImage === 'string' ? firstImage : firstImage.src;
 
             card.innerHTML = `
-                <img src="${project.image}" alt="${project.title}" class="w-full h-48 object-cover">
+                <img src="${thumbnailSrc}" alt="${project.title}" class="w-full h-48 object-cover">
                 <div class="p-5 flex-grow flex flex-col">
                     <h3 class="text-xl font-semibold text-primary mb-2">${project.title}</h3>
                     <p class="text-secondary text-sm mb-4 flex-grow">${project.descriptionShort}</p>
-                    <div class="mb-4">
-                        <div class="flex flex-wrap gap-2">
-                            ${tagsHtml}
-                        </div>
-                    </div>
-                    <a href="#" data-id="${project.id}" class="see-more-link text-sm font-medium text-accent hover:underline">
-                        See More &rarr;
-                    </a>
+                    <div class="mb-4"><div class="flex flex-wrap gap-2">${tagsHtml}</div></div>
+                    <a href="#" data-id="${project.id}" class="see-more-link text-sm font-medium text-accent hover:underline">See More &rarr;</a>
                 </div>
             `;
             
-            if (container) {
-                container.appendChild(card);
-            }
+            if (container) container.appendChild(card);
 
-            // Add to featured if applicable
             if (project.featured && featuredContainer) {
-                const featuredCard = card.cloneNode(true); // Clone for featured section
+                const featuredCard = card.cloneNode(true);
                 featuredCard.dataset.id = project.id;
-                // Add animation delay for featured
                 featuredCard.style.transitionDelay = `${featuredCounter * 100}ms`;
                 featuredCounter++;
                 featuredContainer.appendChild(featuredCard);
             }
 
-            // Add to sidebar list
             const listItem = document.createElement('a');
-            listItem.href = `#`; // Will be handled by modal logic
+            listItem.href = `#`;
             listItem.dataset.id = project.id;
             listItem.className = 'sidebar-link text-lg text-primary hover:text-accent p-1 rounded-md block truncate';
             listItem.textContent = project.title;
             sidebarProjectList.appendChild(listItem);
         }
-
         projects.forEach(createProjectCard);
 
-        // --- PROJECT MODAL LOGIC ---
+        // --- MODAL & CAROUSEL ---
         const modal = document.getElementById('project-modal');
         const modalOverlay = modal.querySelector('.modal-overlay');
         const modalCloseBtn = document.getElementById('modal-close');
         const modalTitle = document.getElementById('modal-title');
-        const modalImage = document.getElementById('modal-image');
         const modalDate = document.getElementById('modal-date');
         const modalTags = document.getElementById('modal-tags');
         const modalDescription = document.getElementById('modal-description');
         const modalLinkPrimary = document.getElementById('modal-link-primary');
         const modalLinkSecondary = document.getElementById('modal-link-secondary');
 
+        // Main Carousel Container
+        const mainCarouselContainer = document.getElementById('main-carousel-container');
+
         function openModal(projectId) {
             const project = projects.find(p => p.id === projectId);
             if (!project) return;
-
             currentModalProjectId = projectId;
-            
-            // --- FIX FOR SCROLLBAR SHIFT ---
+
             const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-            const header = document.querySelector('header');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
             document.body.style.paddingRight = `${scrollbarWidth}px`;
-            if (header) {
-                header.style.paddingRight = `${scrollbarWidth}px`;
-            }
-            // --- END FIX ---
+            const header = document.querySelector('header');
+            if (header) header.style.paddingRight = `${scrollbarWidth}px`;
 
             modalTitle.textContent = project.title;
-            modalImage.src = project.image;
-            modalImage.alt = project.title;
             modalDate.textContent = project.date || '';
 
-            modalTags.innerHTML = project.tags.map(tag => 
-                `<span class="inline-block bg-accent text-secondary text-xs font-medium px-3 py-1 rounded-full">${tag}</span>`
-            ).join('');
-            
+            // Setup Main Carousel - NOW INCLUDES ALL IMAGES
+            // If project.images is not set, fallback
+            const carouselImages = project.images || ['https://placehold.co/600x400'];
+            initCarousel(mainCarouselContainer, carouselImages);
+
+            modalTags.innerHTML = project.tags.map(tag => `<span class="inline-block bg-accent text-secondary text-xs font-medium px-3 py-1 rounded-full">${tag}</span>`).join('');
             modalDescription.innerHTML = project.descriptionFull;
 
-            // Handle Primary Link
+            // Setup Inline Carousels (if any)
+            const inlineCarousels = modalDescription.querySelectorAll('.inline-carousel-container');
+            inlineCarousels.forEach(container => {
+                // Read images from hidden data div
+                const dataDiv = container.querySelector('.inline-slides');
+                if (dataDiv) {
+                    try {
+                        const images = JSON.parse(dataDiv.textContent);
+                        initCarousel(container, images);
+                    } catch(e) {
+                        console.error("Failed to parse inline carousel images", e);
+                    }
+                }
+            });
+
             if (project.linkPrimary) {
                 modalLinkPrimary.href = project.linkPrimary;
                 modalLinkPrimary.classList.remove('hidden');
-                // Adjust text based on link content
-                if (project.linkPrimary.includes('github')) {
-                    modalLinkPrimary.textContent = 'View on GitHub';
-                } else if (project.category === 'research') {
-                    modalLinkPrimary.textContent = 'Read Paper';
-                } else {
-                    modalLinkPrimary.textContent = 'View Project';
-                }
-            } else {
-                modalLinkPrimary.classList.add('hidden');
-            }
+                modalLinkPrimary.textContent = project.linkPrimary.includes('github') ? 'View on GitHub' : (project.category === 'research' ? 'Read Paper' : 'View Project');
+            } else modalLinkPrimary.classList.add('hidden');
 
-            // Handle Secondary Link (e.g., Demo Video)
             if (project.linkSecondary) {
                 modalLinkSecondary.href = project.linkSecondary;
                 modalLinkSecondary.classList.remove('hidden');
-            } else {
-                modalLinkSecondary.classList.add('hidden');
-            }
+            } else modalLinkSecondary.classList.add('hidden');
             
             modal.classList.remove('hidden');
-            
-            // Trigger transition
             setTimeout(() => {
                 modal.classList.add('open');
                 modalOverlay.classList.remove('opacity-0');
@@ -842,24 +968,19 @@
         function closeModal() {
             modal.classList.remove('open');
             modalOverlay.classList.add('opacity-0');
-            
             setTimeout(() => {
                 modal.classList.add('hidden');
-                
-                // --- FIX FOR SCROLLBAR SHIFT ---
-                const header = document.querySelector('header');
-                document.body.style.overflow = ''; // Restore scrolling
+                document.body.style.overflow = '';
                 document.body.style.paddingRight = '';
-                if (header) {
-                    header.style.paddingRight = '';
-                }
-                // --- END FIX ---
-
+                const header = document.querySelector('header');
+                if (header) header.style.paddingRight = '';
                 currentModalProjectId = null;
+                // Pause any videos in the modal
+                const videos = modal.querySelectorAll('video');
+                videos.forEach(v => v.pause());
             }, 300);
         }
 
-        // Event listeners for opening modal
         document.addEventListener('click', function(e) {
             const card = e.target.closest('.project-card, .see-more-link, .sidebar-link[data-id]');
             if (card && card.dataset.id) {
@@ -868,37 +989,23 @@
             }
         });
 
-        // Event listeners for closing modal
         modalCloseBtn.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', closeModal);
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && currentModalProjectId) {
-                closeModal();
-            }
+            if (e.key === 'Escape' && currentModalProjectId) closeModal();
         });
 
-        // --- SCROLL ANIMATION (NEW LOGIC) ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // When the container is visible, add 'is-visible' to all its children
                     const cards = entry.target.querySelectorAll('.project-card');
-                    cards.forEach(card => {
-                        card.classList.add('is-visible');
-                    });
-                    observer.unobserve(entry.target); // Stop observing the container
+                    cards.forEach(card => card.classList.add('is-visible'));
+                    observer.unobserve(entry.target);
                 }
             });
-        }, {
-            threshold: 0.1 // Start when 10% of the section is visible
-        });
+        }, { threshold: 0.1 });
 
-        // Observe the containers, not the individual cards
-        document.querySelectorAll('#featured, #hardware, #software, #research').forEach(section => {
-            observer.observe(section);
-        });
-
+        document.querySelectorAll('#featured, #hardware, #software, #research').forEach(section => observer.observe(section));
     </script>
-
 </body>
 </html>
