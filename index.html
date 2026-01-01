@@ -254,7 +254,7 @@
                     <div id="modal-tags" class="flex flex-wrap gap-2"></div>
                 </div>
 
-                <div id="modal-description" class="prose dark:prose-invert max-w-none text-secondary">
+                <div id="modal-description" class="prose dark:prose-invert max-w-none text-secondary space-y-4">
                     <p>Full project description...</p>
                 </div>
             </div>
@@ -307,22 +307,21 @@
                 id: 'motor-testing',
                 title: 'Legacy Solar Car Motor Integration',
                 category: 'hardware',
-                featured: false,
+                featured: true,
                 date: 'Oct. 2025 - Nov. 2025',
                 images: [
                     img('../images/legacy_solar_car_motor_integration/motortesting.png', ''),
                     img('../images/legacy_solar_car_motor_integration/final_setup.jpg', 'Final Testing Setup'),
-                    img('../images/legacy_solar_car_motor_integration/initial_setup_diagram.png', 'Initial Setup Diagram'),
-                    img('../images/legacy_solar_car_motor_integration/inverter_logic_diagram.png', 'Inverter Logic Design'),
+                    //img('../images/legacy_solar_car_motor_integration/initial_setup_diagram.png', 'Initial Setup Diagram'),
+                    //img('../images/legacy_solar_car_motor_integration/inverter_logic_diagram.png', 'Inverter Logic Design'),
                     img('../images/legacy_solar_car_motor_integration/breakout_board.jpg', 'Breakout Board Prototype'),
-                    img('../images/legacy_solar_car_motor_integration/molex_diagram.png', 'Molex Wiring Diagram From Data Sheet'),
+                    //img('../images/legacy_solar_car_motor_integration/molex_diagram.png', 'Molex Wiring Diagram From Data Sheet'),
                     img('../images/legacy_solar_car_motor_integration/final_logic_diagram.png', 'Final Logic Flow'),
                     img('../images/legacy_solar_car_motor_integration/usbtinviewer_ss.png', 'USBTinViewer CAN Bus Showing Proper RPM and No Errors'),
                     img('../images/legacy_solar_car_motor_integration/oscilloscope_120_phases.jpeg', 'Oscilloscope 120° Phase Measurement'),
                     img('../images/legacy_solar_car_motor_integration/final_wavesculptor_setup.jpg', 'Final WaveSculptor Setup')
                 ],
                 descriptionShort: 'Integrated a legacy NGM SCM150 solar car motor with a modern WaveSculptor 22 controller, saving UC Berkeley’s Solar Car team ~$35,000 in motor replacement costs. Solved a critical hardware incompatibility by shifting the Hall sensor phasing and re-mapping CAN-bus signal harnessing.',
-                // Updated to match the provided HTML/Notion format
                 descriptionFull: `
                     <h1>Overview</h1>
                     <p>Integrated a legacy NGM SCM150 solar car motor with a modern WaveSculptor 22 controller, saving UC Berkeley’s Solar Car team ~$35,000 in motor replacement costs. Solved a critical hardware incompatibility by shifting the Hall sensor phasing and re-mapping CAN-bus signal harnessing.</p>
@@ -339,7 +338,7 @@
                         <li>Solved the issue by re-terminating MOLEX interface board harnessing and swapping differential signal (RX+/RX-) pairing.</li>
                     </ul>
 
-                    <h1>Visual Demonstration</h1>
+                    <h1>Final Demonstration</h1>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 items-center">
                         <div>
                             <video controls class="w-full rounded-lg shadow-md border border-primary">
@@ -347,7 +346,7 @@
                                 <source src="../images/legacy_solar_car_motor_integration/motor_spinning.mp4" type="video/quicktime">
                                 Your browser does not support the video tag.
                             </video>
-                            <p class="text-sm text-secondary italic mt-1 text-center">Motor successfully spinning</p>
+                            <p class="text-sm text-secondary italic mt-1 text-center">Motor Successfully Spinning</p>
                         </div>
                         <div>
                             <img src="../images/legacy_solar_car_motor_integration/final_setup.jpg" class="rounded-lg shadow-md w-full border border-primary" alt="Final Setup">
@@ -472,18 +471,138 @@
                 title: 'Eagle Scout Service Project',
                 category: 'hardware',
                 featured: false,
-                date: '2023',
-                images: [img('../images/eagleproject.png', 'Storage Cabinets')],
-                descriptionShort: 'Building outdoor storage cabinets for the CHS Robotics Club.',
+                date: 'Oct. 2023 - Feb. 2024',
+                // Main modal images
+                images: [
+                    img('../images/eagle_scout_project/eagleproject.png', ''),
+                    img('../images/eagle_scout_project/cabinet_finished.jpg', 'Completed Storage Unit'),
+                    img('../images/eagle_scout_project/cabinet_cad_no_door.png', 'CAD Design'),
+                    //img('../images/eagle_scout_project/eagle_project_work_flow.png', 'Project Work Flow'),
+                    img('../images/eagle_scout_project/cabinet_exploded.png', 'Exploded View'),
+                    img('../images/eagle_scout_project/cut_list.png', 'Cut List Optimization'),
+                    img('../images/eagle_scout_project/cutting_wood.jpg', ''),
+                    //img('../images/eagle_scout_project/sanding_d1.jpg', ''),
+                    img('../images/eagle_scout_project/painting_d1.jpg', ''),
+                    //img('../images/eagle_scout_project/painting_d2.jpg', ''),
+                    //img('../images/eagle_scout_project/painted_wood_drying_d2.jpg', 'Wood Drying After Painting'),
+                    //img('../images/eagle_scout_project/asm_step12.png', 'Assembly Manual Step 12'),
+                    //img('../images/eagle_scout_project/asm_step19.png', 'Assembly Manual Step 19'),
+                    //img('../images/eagle_scout_project/asm_explaining_d3.jpg', ''),
+                    img('../images/eagle_scout_project/asm_action_shot_d3.jpg', ''),
+                    img('../images/eagle_scout_project/asm_action_shot2_d3.jpg', ''),
+                    img('../images/eagle_scout_project/asm_action_shot3_d3.jpg', '')
+                ],
+                descriptionShort: 'Led a team of 21 volunteers to design, fund, and construct custom outdoor storage infrastructure for the California High Robotics Club. Managed the entire lifecycle from CAD modeling to final assembly, delivering a durable solution that protects thousands of dollars in robotics equipment.',
                 descriptionFull: `
-                    <p>Led a team of 21 volunteers to design, fundraise for, and construct two large outdoor storage cabinets for the California High Robotics Club, resulting in 300 hours of awarded community service.</p>
+                    <h1>Overview</h1>
+                    <p>Led a team of 21 volunteers to design, fund, and construct custom outdoor storage infrastructure for the California High Robotics Club. Managed the entire lifecycle from CAD modeling to final assembly, delivering a durable solution that protects thousands of dollars in robotics equipment.</p>
+
+                    <h1>The Objective</h1>
+                    <p>The California High Robotics Club lacked indoor storage, forcing them to store expensive metal VEX parts outside where they were degrading due to rust. I was tasked with designing a weather-resistant, secure storage solution that maximized the limited storage area while keeping costs near zero.</p>
+
+                    <h1>What I Did</h1>
                     <ul>
-                        <li>Managed the entire project lifecycle, including collaborating with local businesses to secure $800 worth of donated materials.</li>
-                        <li>Utilized computer-aided design (CAD) to create detailed design proposals and <a href="https://drive.google.com/file/d/1mlDF2Wy1Y2oLxDHLs2jGJp9aAJVpId7l/view?usp=sharing">assembly manuals</a> for the project.</li>
+                        <li>Researched and designed a 2-tier, caster-mounted cabinet system using Onshape (115 hours of planning).</li>
+                        <li>Optimized material usage using CutList Optimizer to generate efficient cutting layouts, reducing plywood waste to &lt;15%.</li>
+                        <li>Fundraised over $900 in value, securing a major lumber donation from Golden State Lumber by presenting professional CAD drawings.</li>
+                        <li>Managed 290+ collective service hours, coordinating logistics across multiple workdays and adapting schedules around adverse weather.</li>
+                    </ul>
+
+                    <h1>Final Deliverable</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-4 items-center">
+                        <div class="md:col-span-1">
+                            <img src="../images/eagle_scout_project/cabinet_finished.jpg" class="rounded-lg shadow-md w-full border border-primary object-cover" alt="Finished Cabinet">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Final Construction</p>
+                        </div>
+                        <div class="md:col-span-2 ">
+                            <img src="../images/eagle_scout_project/cabinet_cad_no_door.png" class="rounded-lg shadow-md w-full border border-primary object-cover" alt="CAD Design">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Onshape CAD Design</p>
+                        </div>
+                    </div>
+
+                    <h1>Project Timeline</h1>
+                    <div class="my-4">
+                        <img src="../images/eagle_scout_project/eagle_project_work_flow.png" class="mx-auto rounded-lg shadow-md max-h-80 object-contain border border-primary" alt="Project Work Flow">
+                    </div>
+
+                    <h1>Design Phase (CAD & Optimization)</h1>
+                    <p>My initial proposal featured a 3-tier frameless cabinet, but after reviewing structural requirements, I pivoted to a 2x4 reinforced frame with a 2-tier layout to support heavy battery loads without warping.</p>
+                    <p>To improve the usability for the robotics team, I modified the design to include 3-inch swivel lock casters, allowing the units to be easily rolled into the workshop for active use and stored outside for security.</p>
+                    <p>With the design completed, I utilized CutList Optimizer to map every panel onto standard 4x8 plywood sheets. This data-driven approach generated a precise Bill of Materials (BOM) and minimized scrap to under 15%, which was crucial for keeping my budget low.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 w-11/12 mx-auto">
+                        <div>
+                            <img src="../images/eagle_scout_project/cabinet_exploded.png" class="rounded-lg shadow-md w-full object-contain border border-primary bg-white" alt="Exploded View">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Exploded Assembly View</p>
+                        </div>
+                        <div>
+                            <img src="../images/eagle_scout_project/cut_list.png" class="rounded-lg shadow-md w-full object-contain border border-primary bg-white" alt="Cut List Optimization">
+                            <p class="text-sm text-secondary italic mt-1 text-center">CutList Optimization Data</p>
+                        </div>
+                    </div>
+
+                    <h1>Logistics & Preparation</h1>
+                    <p>I leveraged my CAD drawing package to pitch the project to local Home Depots and Golden State Lumber. The professional quality of the documentation led to material donations of lumber, paint, and glue. The remaining project’s cash cost of just $100 was covered by the beneficiary.</p>
+                    
+                    <p>Due to rainy weather forcing the cancellation of primary work days, I adjusted to a “mini-workday” model. I coordinated smaller, specialized teams to prepare material (cutting, sanding, painting) in my garage before the final on-site integration.</p>
+                    <p>This decentralized approach allowed us to stay on timeline despite weather delays, ensuring all components were ready for assembly.</p>
+                    
+                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden border border-primary group my-6 bg-secondary">
+                         <div class="inline-slides hidden">
+                             [
+                                {"src": "../images/eagle_scout_project/cutting_wood.jpg", "caption": "Team 1: Cutting Panels to Size"},
+                                {"src": "../images/eagle_scout_project/sanding_d1.jpg", "caption": "Team 2: Sanding Edges"},
+                                {"src": "../images/eagle_scout_project/painting_d1.jpg", "caption": "Team 2: Painting Coat 1"},
+                                {"src": "../images/eagle_scout_project/painting_d2.jpg", "caption": "Team 3: Painting Coat 2"},
+                                {"src": "../images/eagle_scout_project/painted_wood_drying_d2.jpg", "caption": "Curing Process"}
+                             ]
+                         </div>
+                         <div class="inline-carousel-track w-full h-full relative"></div>
+                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
+                    </div>
+
+                    <h1>Construction Execution</h1>
+                    <p>Recognizing that most volunteers were students with no construction experience, I created a 20-page visual assembly guide derived directly from my CAD model. This removed ambiguity, allowing me to step back from “doing” the construction to focus on quality control.</p>
+
+                    <div class="grid grid-cols-2 gap-4 my-4 max-w-2xl mx-auto">
+                        <div>
+                            <img src="../images/eagle_scout_project/asm_step12.png" class="rounded-lg shadow-md w-full border border-primary bg-white" alt="Assembly Step 12">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Assembly Step 12</p>
+                        </div>
+                        <div>
+                            <img src="../images/eagle_scout_project/asm_step19.png" class="rounded-lg shadow-md w-full border border-primary bg-white" alt="Assembly Step 19">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Assembly Step 19</p>
+                        </div>
+                    </div>
+
+                    <p>To manage volunteers efficiently, I implemented a delegated leadership structure, splitting the workforce into two teams (Cabinet A and Cabinet B) and assigning a youth team leader to each. This allowed for parallel execution and doubled our efficiency.</p>
+
+                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden border border-primary group my-5 bg-secondary">
+                         <div class="inline-slides hidden">
+                             [
+                                {"src": "../images/eagle_scout_project/asm_explaining_d3.jpg", "caption": "Briefing the Team"},
+                                {"src": "../images/eagle_scout_project/asm_action_shot_d3.jpg", "caption": "Assembly: Team A"},
+                                {"src": "../images/eagle_scout_project/asm_action_shot2_d3.jpg", "caption": "Assembly: Team B"},
+                                {"src": "../images/eagle_scout_project/asm_action_shot3_d3.jpg", "caption": "Final Assembly Steps"}
+                             ]
+                         </div>
+                         <div class="inline-carousel-track w-full h-full relative"></div>
+                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
+                    </div>
+
+                    <h1>Key Takeaways</h1>
+                    <ul>
+                        <li><b>Design for Manufacturing (DFM):</b> The experience taught me that a “perfect” CAD model is useless if it can’t be assembled. I learned to design with tolerance for human error, ensuring that slight imperfect cuts wouldn’t compromise the final structure.</li>
+                        <li><b>Documentation as a Tool:</b> I leveraged high-quality technical documentation not only to fundraise and keep costs to near-zero, but also to enable unskilled volunteers to produce results without constant supervision.</li>
+                        <li><b>Servant Leadership:</b> I learned that my most valuable role wasn’t building, but thinking ahead—pre-charging batteries, organizing materials, and ensuring safety so the team could work uninterrupted.</li>
                     </ul>
                 `,
-                tags: ['Onshape CAD', 'Design Proposal', 'Project Management', 'Assembly'],
-                linkPrimary: 'https://drive.google.com/file/d/1Naa6zMqsx5Fr_JJbQSE8ZOXwHcVA6yKB/view?usp=sharing',
+                tags: ['Onshape CAD', 'DFM', 'Project Management', 'Eagle Scout Community Service', 'Woodworking'],
+                linkPrimary: 'https://drive.google.com/drive/folders/1pMhobY7NPAyiGbeGavM0LSRfq8P8pkRk?usp=drive_link', // Linked to the Assembly Manual
                 linkSecondary: null
             },
             // SOFTWARE
@@ -511,7 +630,7 @@
                 id: 'smartgen',
                 title: 'SmartGen AI Energy Advisor',
                 category: 'software',
-                featured: true,
+                featured: false,
                 date: '2023',
                 images: [img('../images/smartgen.png', 'Dashboard View')],
                 descriptionShort: 'A web app to help homeowners reduce energy usage using ML and GPT-3.5.',
