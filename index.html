@@ -358,17 +358,11 @@
                     <div class="my-4">
                         <img src="../images/legacy_solar_car_motor_integration/initial_setup_diagram.png" class="mx-auto rounded-lg shadow-md max-h-80 object-contain border border-primary" alt="Initial Setup Diagram">
                     </div>
-                    <ul>
-                        <li>We first diagnosed the issue by manually spinning the motor in increments and recording the USBtinViewer output (CAN error message) and the measured voltage of each Hall Sensor into a table.</li>
-                        <li>After analyzing the data, my team suspected a phase mismatch, as the NGM motor seemed to output Hall Effect signals spaced at 60° phase while the WaveSculptor controller strictly required a 120° phase.</li>
-                        <li>Oscilloscope analysis confirmed that the Hall Sensors were only 60° apart, causing the controller to misfire the commutation sequence.</li>
-                    </ul>
+                    <p>We first diagnosed the issue by manually spinning the motor in increments and recording the USBtinViewer output (CAN error message) and the measured voltage of each Hall Sensor into a table.</p>
+                    <p>After analyzing the data, my team suspected a phase mismatch, as the NGM motor seemed to output Hall Effect signals spaced at 60° phase while the WaveSculptor controller strictly required a 120° phase. Oscilloscope analysis confirmed that the Hall Sensors were only 60° apart, causing the controller to misfire the commutation sequence.</p>
 
                     <h1>Fixing CAN Bus Line (Hall Effects from Motor to Controller)</h1>
-                    <ul>
-                        <li>Our initial solution involved swapping wires and using a transistor on a breakout board to change the phase degrees of each Hall (3 total).</li>
-                        <li>In theory this would result in the proper 120° phases that the motor controller required, though in practice it failed to spin the motor.</li>
-                    </ul>
+                    <p>Our initial solution involved swapping wires and using a transistor on a breakout board to change the phase degrees of each Hall (3 total). In theory this would result in the proper 120° phases that the motor controller required, though in practice it failed to spin the motor.</p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-7/12 mx-auto">
                         <div class="md:col-span-2">
                             <img src="../images/legacy_solar_car_motor_integration/inverter_logic_diagram.png" class="rounded-lg shadow-md w-full object-cover border border-primary" alt="Inverter Logic">
@@ -378,19 +372,14 @@
                             <p class="text-sm text-secondary italic mt-1 text-center">Breakout Board Prototype</p>
                         </div>
                     </div>
-                    <ul>
-                        <li>After more analysis of the data sheet, my team realized that we also needed to invert the differential pairing for Hall 3. Since the RX- and RX+ were already inversions of each other, we swapped the wires directly, removing the need for a breakout board.</li>
-                    </ul>
+                    <p>After more analysis of the data sheet, my team realized that we also needed to invert the differential pairing for Hall 3. Since the RX- and RX+ were already inversions of each other, we swapped the wires directly, removing the need for a breakout board.</p>
                     <div class="my-4 text-center">
                         <img src="../images/legacy_solar_car_motor_integration/molex_diagram.png" class="inline-block rounded-lg shadow-md max-h-60 border border-primary" alt="Molex Diagram">
                         <p class="text-sm text-secondary italic mt-1">Molex Wiring Diagram From Data Sheet</p>
                     </div>
 
                     <h1>Fixing Power Lines (From Controller to Motor)</h1>
-                    <ul>
-                        <li>Because the physical locations of the Hall 2 and Hall 3 outputs were swapped, this also meant that we needed to swap the output terminals of the WaveSculptor that sent movement commands to the motor.</li>
-                        <li>This resulted in the motors finally spinning, and we verified a clean 120° phase shift with the oscilloscope and validated rotation using manual drive commands through the CAN debugger.</li>
-                    </ul>
+                    <p>Because the physical locations of the Hall 2 and Hall 3 outputs were swapped, this also meant that we needed to swap the output terminals of the WaveSculptor that sent movement commands to the motor. This resulted in the motors finally spinning, and we verified a clean 120° phase shift with the oscilloscope and validated rotation using manual drive commands through the CAN debugger.</p>
                     
                     <div class="my-6">
                         <img src="../images/legacy_solar_car_motor_integration/final_logic_diagram.png" class="rounded-lg shadow-md h-96 border border-primary mx-auto" alt="Final Logic Diagram">
@@ -447,23 +436,140 @@
             },
             {
                 id: 'vex-robotics',
-                title: 'VEX Robotics High Stakes Season',
+                title: 'VEX V5RC Robotics "High Stakes": Double-Ring Lady Brown',
                 category: 'hardware',
                 featured: false,
-                date: '2020-2024',
-                images: [img('../images/vex.png', 'Competition Robot')],
-                descriptionShort: 'Led full design cycle for competition robots with manual and automonous control.',
+                date: 'May 2024 - Feb. 2025',
+                images: [
+                    //img('../images/vex_high_stakes/vex.png', ''),
+                    img('../images/vex_high_stakes/robot.png', 'Competition Robot'),
+                    img('../images/vex_high_stakes/robot_cad.png', 'Fusion 360 CAD Model'),
+                    //img('../images/vex_high_stakes/vex_high_stakes_edp.png', 'Engineering Design Process'),
+                    //img('../images/vex_high_stakes/dt_p48.png', 'Drivetrain CAD (p.48)'),
+                    //img('../images/vex_high_stakes/clamp_p151.png', '2-Piston Clamp CAD (p.151)'),
+                    //img('../images/vex_high_stakes/intake_lift_p162.png', 'Flex Wheel Intake + Hook Lift CAD (p.162)'),
+                    //img('../images/vex_high_stakes/lady_brown_p101.png', 'Lady Brown CAD (p.101)'),
+                    img('../images/vex_high_stakes/path_jerryio_map_p210.png', 'Path.jerryio Field Map'),
+                    img('../images/vex_high_stakes/lemlib_pid_p209.png', 'LemLib PID Tuning'),
+                    //img('../images/vex_high_stakes/odometry_p128.png', 'Odometry System (p.128)'),
+                    //img('../images/vex_high_stakes/odometry_wheels_p129.png', 'Odometry Tracking Wheels CAD (p.129)'),
+                    img('../images/vex_high_stakes/color_filtering_p134.png', 'Color Sensor Ring Filtering'),
+                    //img('../images/vex_high_stakes/lady_brown_rotational_code_p191.png', 'Lady Brown Rotational Control (p.191)'),
+                    //img('../images/vex_high_stakes/initial_lady_brown.png', 'Initial Lady Brown (Single-Ring)'),
+                    img('../images/vex_high_stakes/double_lady_brown.png', 'Double-Ring Lady Brown')
+                ],
+                descriptionShort: 'As Team Captain of a VEX V5RC robotics team, I architected the Engineering Notebook and CAD models (Design Award winner), led the mechanical design, and assisted our main programmer in implementing autonomous PID control in PROS (C++) using LemLib for path planning.',
                 descriptionFull: `
-                    <p>Led a team of 6 as captain to design, build, and program robots for VEX competitions across California. Set project deadlines, coordinated manpower, and defined strategy to drive team success.</p>
+                    <h1>Overview</h1>
+                    <p>As Team Captain of a VEX V5RC robotics team, I architected the Engineering Notebook and CAD models (Design Award winner), led the mechanical design, and assisted our main programmer in implementing autonomous PID control in PROS (C++) using LemLib for path planning.</p>
+
+                    <h1>The Objective</h1>
+                    <p>As a competition team, our objective is to build a robot for VEX V5RC’s “High Stakes” game, which included rings which needed to be scored on either wall stakes or mobile goals. This required designing and building a robot from scratch to be played in both driver-controlled and autonomous periods.</p>
+
+                    <h1>What I Did</h1>
                     <ul>
-                        <li>Achieved three State qualifications and secured multiple awards, including 2 Excellence Awards, 3 Design Awards, and 1 Inspire Award, testifying to the team's technical skill and professionalism.</li>
-                        <li>Contributed as a core team member in computer-aided design (Fusion 360), autonomous code development (PROS C++, LemLib), and advanced path planning.</li>
-                        <li>Innovated a novel <strong>double-ring scoring mechanism</strong> for the 2024-25 "High Stakes" season, allowing the robot to score rings twice as fast as single-mechanism competitors.</li>
-                        <li>Documented the entire engineering design process in detailed notebooks, effectively communicating concept ideas, prototypes, and design choices to competition judges.</li>
+                        <li>Led the comprehensive documentation effort, authoring the majority of our Engineering Notebook which secured the Design Award for its detailed technical recording of the iterative design process.</li>
+                        <li>Modeled complex assemblies in Fusion 360 (CAD), including the custom “Double-Ring Lady Brown” mechanism, ensuring adherence to 18”x18” size constraints.</li>
+                        <li>Collaborated on the control strategy and assisted the lead programmer with autonomous code development (PROS C++, LemLib). This included tuning proportional-integral-derivative (PID) implementation and advanced path planning.</li>
+                        <li>Competed as a Drive Team member and secondary driver, providing real-time strategic communication during matches.</li>
+                    </ul>
+
+                    <h1>Competition Robot</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 items-center">
+                        <div>
+                            <img src="../images/vex_high_stakes/robot.png" class="rounded-lg shadow-md w-full border border-primary object-cover" alt="Competition Robot">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Final Build</p>
+                        </div>
+                        <div>
+                            <img src="../images/vex_high_stakes/robot_cad.png" class="rounded-lg shadow-md w-full border border-primary object-cover" alt="Robot CAD">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Fusion 360 CAD Model</p>
+                        </div>
+                    </div>
+
+                    <h1>Designing the Robot</h1>
+                    <p>To maintain the highest build quality, I ensured that all design decisions made by the team regarding the robot went through the entire engineering design process. We also broke down and tackled the robot design by subsystem: drivetrain and ring scoring mechanisms.</p>
+
+                    <div class="my-4">
+                        <img src="../images/vex_high_stakes/vex_high_stakes_edp.png" class="rounded-lg shadow-md h-80 mx-auto border border-primary" alt="Engineering Design Process">
+                    </div>
+
+                    <p>Utilizing this process, our final robot had the following design choices:</p>
+                    <ul>
+                        <li><strong>Drivetrain Structure and Wheels:</strong> We chose a standard drivetrain structure (similar to a normal car) with omni-directional wheels for a mix of traction and maneuverability in all directions.</li>
+                        <li><strong>Motor Cartridge and Gear Ratio:</strong> We chose a blue-cartridge (600 RPM) 6-motor (11 Watt) drivetrain set to a torque gear ratio gives us both high speed and traction, enabling us to move fast while also being able to push other robots around the field.</li>
+                        <li><strong>Mobile Goal Clamp:</strong> We chose a 2 pneumatic piston clamp for a secure grip on goals that can easily be engaged for rapid point scoring.</li>
+                        <li><strong>Ring Intake:</strong> We chose a flex wheel intake that balances both reliability and pick-up speed, letting our robot leverage its speed to gather rings across the field.</li>
+                        <li><strong>Ring Lift:</strong> We chose a hook lift as its space requirements were considerably smaller while still quickly transporting rings from the intake to the mobile goal.</li>
+                        <li><strong>Wall Stake Mechanism:</strong> We chose a “Lady Brown,” which is an extending arm that enables our robot to reach wall stakes and score single rings reliably.</li>
+                    </ul>
+
+                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 lg:h-[500px] rounded-lg overflow-hidden border border-primary group my-4">
+                         <div class="inline-slides hidden">
+                             [
+                                {"src": "../images/vex_high_stakes/dt_p48.png", "caption": "Drivetrain CAD (p.48)"},
+                                {"src": "../images/vex_high_stakes/clamp_p151.png", "caption": "2-Piston Clamp CAD (p.151)"},
+                                {"src": "../images/vex_high_stakes/intake_lift_p162.png", "caption": "Flex Wheel Intake + Hook Lift CAD (p.162)"},
+                                {"src": "../images/vex_high_stakes/lady_brown_p101.png", "caption": "Lady Brown CAD (p.101)"}
+                             ]
+                         </div>
+                         <div class="inline-carousel-track w-full h-full relative">
+                            </div>
+                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
+                    </div>
+
+                    <h1>Autonomous Code</h1>
+                    <p>In a competition game, there is a 15-second autonomous period where robots can score points and move around the field without driver control.</p>
+                    <ul>
+                        <li>Alongside my lead programmer, we accomplished autonomous movement by calculating odometry positioning (tracking wheels and an IMU) and fine-tuning the PID controller through a series of manual tests using the PROS C++ library.</li>
+                        <li>We used Path.jerryio to draw field paths and the LemLib library to match the field paths to a PID controller.</li>
+                        <li>We implemented ring filtering using a color sensor that would eject rings off the top of the lift, ensuring that we only score rings of our team’s color.</li>
+                        <li>To score rings on wall stakes, we used rotational sensors to determine the stopping distance for a ring to land onto the stake. We identified that the heavy arm had significant rotational inertia, requiring a strong Derivative (D) term to dampen movement and prevent overshoot.</li>
+                    </ul>
+
+                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 lg:h-[500px] rounded-lg overflow-hidden border border-primary group my-4">
+                         <div class="inline-slides hidden">
+                             [
+                                {"src": "../images/vex_high_stakes/path_jerryio_map_p210.png", "caption": "Path.jerryio Field Map (p.210)"},
+                                {"src": "../images/vex_high_stakes/lemlib_pid_p209.png", "caption": "LemLib PID Tuning (p.209)"},
+                                {"src": "../images/vex_high_stakes/odometry_p128.png", "caption": "Odometry System (p.128)"},
+                                {"src": "../images/vex_high_stakes/odometry_wheels_p129.png", "caption": "Odometry Tracking Wheels CAD (p.129)"},
+                                {"src": "../images/vex_high_stakes/color_filtering_p134.png", "caption": "Color Sensor Ring Filtering (p.134)"},
+                                {"src": "../images/vex_high_stakes/lady_brown_rotational_code_p191.png", "caption": "Lady Brown Rotational Control (p.191)"}
+                             ]
+                         </div>
+                         <div class="inline-carousel-track w-full h-full relative">
+                            </div>
+                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
+                    </div>
+
+                    <h1>Innovative Design: “Double-Ring Lady Brown”</h1>
+                    <p>Most teams, including ours, had a wall stake mechanism that only scored a single ring at a time, which became a bottleneck in some matches. Thus our team designed a “Double-Ring Lady Brown” mechanism, which doubled our throughput and enabled us to hold two rings at a time.</p>
+                    <p>Though this required retuning our autonomous code and retrofitting our robot, this gave us a competitive advantage in tournaments as we scored at double the rate.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 my-4 w-10/12 mx-auto">
+                        <div class="md:col-span-2">
+                            <img src="../images/vex_high_stakes/initial_lady_brown.png" class="rounded-lg shadow-md h-96 mx-auto object-cover border border-primary" alt="Initial Lady Brown (Single-Ring)">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Initial Lady Brown Design</p>
+                        </div>
+                        <div class="md:col-span-3">
+                            <img src="../images/vex_high_stakes/double_lady_brown.png" class="rounded-lg shadow-md h-96 mx-auto object-cover border border-primary" alt="Double-Ring Lady Brown">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Double-Ring Lady Brown</p>
+                        </div>
+                    </div>
+
+                    <h1>Key Takeaways</h1>
+                    <ul>
+                        <li><strong>Documentation as Engineering:</strong> Winning the Design Award (three consecutive years) reinforced that a robot is only as good as its documentation. Methodically working through ideas forced us to justify every design decision to ensure the most optimal plan.</li>
+                        <li><strong>Value of Simulation:</strong> I learned that CAD is not just for visualization but also validation. By simulating intake geometry in 3D, we avoided extra weeks of trial-and-error fabrication.</li>
+                        <li><strong>Control Systems and PID:</strong> I practiced implementing autonomous functionalities through a combination of mechanical hardware, software, and sensors. By putting it all together, I now understand the fundamental processes that ground self-driving vehicles and smart systems.</li>
                     </ul>
                 `,
-                tags: ['Robotics', 'PROS C++', 'Fusion 360', 'Project Management'],
-                linkPrimary: 'https://drive.google.com/file/d/1Y262yHZ7NgvJ86ycZDFWL33HpLlogBLO/view?usp=sharing',
+                tags: ['Fusion 360', 'PID Autonomous Control', 'PROS C++', 'Engineering Design Process', 'Project Management'],
+                linkPrimary: 'https://drive.google.com/file/d/1Y262yHZ7NgvJ86ycZDFWL33HpLlogBLO/view?usp=sharing', 
                 linkSecondary: null
             },
             {
