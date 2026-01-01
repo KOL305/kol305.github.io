@@ -242,11 +242,22 @@
             </div>
 
             <div id="modal-body" class="flex-grow overflow-y-auto p-6 md:p-8">
-                <div id="main-carousel-container" class="relative w-full h-64 sm:h-80 md:h-96 lg:h-[500px] bg-secondary rounded-md mb-8 overflow-hidden group border border-primary flex-shrink-0">
+                <!-- CAROUSEL CONTAINER (Default) -->
+                <div id="main-carousel-container" class="relative w-full h-64 sm:h-80 md:h-96 lg:h-[60vh] bg-secondary rounded-md mb-8 overflow-hidden group border border-primary flex-shrink-0">
                     <div id="main-carousel-slides" class="w-full h-full relative flex items-center justify-center"></div>
                     <button id="main-carousel-prev" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-10 translate-x-[-10px] group-hover:translate-x-0"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
                     <button id="main-carousel-next" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 z-10 translate-x-[10px] group-hover:translate-x-0"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
                     <div id="main-carousel-indicators" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-10"></div>
+                </div>
+
+                <!-- PDF CONTAINER (Hidden by default) -->
+                <div id="pdf-container" class="hidden w-full h-64 sm:h-80 md:h-96 lg:h-[60vh] bg-gray-100 rounded-md mb-8 border border-primary relative z-30">
+                    <iframe id="pdf-frame" src="" class="w-full h-full rounded-md" frameborder="0"></iframe>
+                </div>
+
+                <!-- VIDEO CONTAINER (Hidden by default) -->
+                <div id="video-container" class="hidden w-full aspect-video bg-black rounded-md mb-8 overflow-hidden border border-primary relative z-30">
+                    <iframe id="video-frame" class="w-full h-full" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </div>
                 
                 <div class="flex items-center justify-between mb-4">
@@ -312,10 +323,7 @@
                 images: [
                     img('../images/legacy_solar_car_motor_integration/motortesting.png', ''),
                     img('../images/legacy_solar_car_motor_integration/final_setup.jpg', 'Final Testing Setup'),
-                    //img('../images/legacy_solar_car_motor_integration/initial_setup_diagram.png', 'Initial Setup Diagram'),
-                    //img('../images/legacy_solar_car_motor_integration/inverter_logic_diagram.png', 'Inverter Logic Design'),
                     img('../images/legacy_solar_car_motor_integration/breakout_board.jpg', 'Breakout Board Prototype'),
-                    //img('../images/legacy_solar_car_motor_integration/molex_diagram.png', 'Molex Wiring Diagram From Data Sheet'),
                     img('../images/legacy_solar_car_motor_integration/final_logic_diagram.png', 'Final Logic Flow'),
                     img('../images/legacy_solar_car_motor_integration/usbtinviewer_ss.png', 'USBTinViewer CAN Bus Showing Proper RPM and No Errors'),
                     img('../images/legacy_solar_car_motor_integration/oscilloscope_120_phases.jpeg', 'Oscilloscope 120° Phase Measurement'),
@@ -412,7 +420,7 @@
                 linkPrimary: null,
                 linkSecondary: null
             },
-             // ... [Rest of projects remain same, abbreviated for brevity] ...
+            // ... [Rest of projects remain same, abbreviated for brevity] ...
             {
                 id: 'smart-home',
                 title: 'Smart Home Automation System',
@@ -441,21 +449,11 @@
                 featured: false,
                 date: 'May 2024 - Feb. 2025',
                 images: [
-                    //img('../images/vex_high_stakes/vex.png', ''),
                     img('../images/vex_high_stakes/robot.png', 'Competition Robot'),
                     img('../images/vex_high_stakes/robot_cad.png', 'Fusion 360 CAD Model'),
-                    //img('../images/vex_high_stakes/vex_high_stakes_edp.png', 'Engineering Design Process'),
-                    //img('../images/vex_high_stakes/dt_p48.png', 'Drivetrain CAD (p.48)'),
-                    //img('../images/vex_high_stakes/clamp_p151.png', '2-Piston Clamp CAD (p.151)'),
-                    //img('../images/vex_high_stakes/intake_lift_p162.png', 'Flex Wheel Intake + Hook Lift CAD (p.162)'),
-                    //img('../images/vex_high_stakes/lady_brown_p101.png', 'Lady Brown CAD (p.101)'),
                     img('../images/vex_high_stakes/path_jerryio_map_p210.png', 'Path.jerryio Field Map'),
                     img('../images/vex_high_stakes/lemlib_pid_p209.png', 'LemLib PID Tuning'),
-                    //img('../images/vex_high_stakes/odometry_p128.png', 'Odometry System (p.128)'),
-                    //img('../images/vex_high_stakes/odometry_wheels_p129.png', 'Odometry Tracking Wheels CAD (p.129)'),
                     img('../images/vex_high_stakes/color_filtering_p134.png', 'Color Sensor Ring Filtering'),
-                    //img('../images/vex_high_stakes/lady_brown_rotational_code_p191.png', 'Lady Brown Rotational Control (p.191)'),
-                    //img('../images/vex_high_stakes/initial_lady_brown.png', 'Initial Lady Brown (Single-Ring)'),
                     img('../images/vex_high_stakes/double_lady_brown.png', 'Double-Ring Lady Brown')
                 ],
                 descriptionShort: 'As Team Captain of a VEX V5RC robotics team, I architected the Engineering Notebook and CAD models (Design Award winner), led the mechanical design, and assisted our main programmer in implementing autonomous PID control in PROS (C++) using LemLib for path planning.',
@@ -583,17 +581,10 @@
                     img('../images/eagle_scout_project/eagleproject.png', ''),
                     img('../images/eagle_scout_project/cabinet_finished.jpg', 'Completed Storage Unit'),
                     img('../images/eagle_scout_project/cabinet_cad_no_door.png', 'CAD Design'),
-                    //img('../images/eagle_scout_project/eagle_project_work_flow.png', 'Project Work Flow'),
                     img('../images/eagle_scout_project/cabinet_exploded.png', 'Exploded View'),
                     img('../images/eagle_scout_project/cut_list.png', 'Cut List Optimization'),
                     img('../images/eagle_scout_project/cutting_wood.jpg', ''),
-                    //img('../images/eagle_scout_project/sanding_d1.jpg', ''),
                     img('../images/eagle_scout_project/painting_d1.jpg', ''),
-                    //img('../images/eagle_scout_project/painting_d2.jpg', ''),
-                    //img('../images/eagle_scout_project/painted_wood_drying_d2.jpg', 'Wood Drying After Painting'),
-                    //img('../images/eagle_scout_project/asm_step12.png', 'Assembly Manual Step 12'),
-                    //img('../images/eagle_scout_project/asm_step19.png', 'Assembly Manual Step 19'),
-                    //img('../images/eagle_scout_project/asm_explaining_d3.jpg', ''),
                     img('../images/eagle_scout_project/asm_action_shot_d3.jpg', ''),
                     img('../images/eagle_scout_project/asm_action_shot2_d3.jpg', ''),
                     img('../images/eagle_scout_project/asm_action_shot3_d3.jpg', '')
@@ -672,10 +663,10 @@
                     <h1>Construction Execution</h1>
                     <p>Recognizing that most volunteers were students with no construction experience, I created a 20-page visual assembly guide derived directly from my CAD model. This removed ambiguity, allowing me to step back from “doing” the construction to focus on quality control.</p>
 
-                    <div class="grid grid-cols-2 gap-4 my-4 max-w-2xl mx-auto">
+                    <div class="grid grid-cols-2 gap-4 my-4 max-w-4xl mx-auto">
                         <div>
-                            <img src="../images/eagle_scout_project/asm_step12.png" class="rounded-lg shadow-md w-full border border-primary bg-white" alt="Assembly Step 12">
-                            <p class="text-sm text-secondary italic mt-1 text-center">Assembly Step 12</p>
+                            <iframe src="https://drive.google.com/file/d/1bERtuQ3REJ2CBVuM65c08glXDJNyI0tP/preview" class="w-full h-80" frameborder="0"></iframe>
+                            <p class="text-sm text-secondary italic mt-1 text-center">Full Assembly Manual</p>
                         </div>
                         <div>
                             <img src="../images/eagle_scout_project/asm_step19.png" class="rounded-lg shadow-md w-full border border-primary bg-white" alt="Assembly Step 19">
@@ -727,6 +718,25 @@
                         <li>Integrated Google Gemini API for advanced natural language processing, enabling the extraction of relevant information from unstructured text in sustainability reports.</li>
                         <li>Implemented a mobile application interface that allows users to input company data and receive a comprehensive sustainability score along with a detailed breakdown analysis.</li>
                     </ul>
+
+                    <!-- EMBED 1: Google Drive Video -->
+                    <h2 class="text-xl font-bold mt-6 mb-2 text-primary">Demo Video (Google Drive)</h2>
+                    <div class="w-full aspect-video my-4 rounded-lg overflow-hidden border border-primary shadow-sm">
+                        <iframe src="https://drive.google.com/file/d/144YSIiQVfv4mO7qh6bYnb1NyxOYBt7jo/preview" class="w-full h-full" allow="autoplay"></iframe>
+                    </div>
+
+                    <!-- EMBED 2: YouTube Video -->
+                    <h2 class="text-xl font-bold mt-6 mb-2 text-primary">Demo Video (YouTube)</h2>
+                    <div class="w-full aspect-video my-4 rounded-lg overflow-hidden border border-primary shadow-sm">
+                        <iframe src="https://www.youtube.com/embed/oN9QqgT4V8g" class="w-full h-full" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+
+                    <!-- EMBED 3: PDF Document -->
+                    <h2 class="text-xl font-bold mt-6 mb-2 text-primary">Research Paper (PDF)</h2>
+                    <div class="w-full h-96 my-4 rounded-lg overflow-hidden border border-primary shadow-sm">
+                        <!-- Note: Using Carbon Capture PDF link for demonstration as the user link was invalid -->
+                        <iframe src="https://drive.google.com/file/d/1DULSiS7sPJoN4xFQr06I3I-8t63uNmmP/preview" class="w-full h-full" frameborder="0"></iframe>
+                    </div>
                 `,
                 tags: ['AI/ML', 'Google Gemini', 'Fuzzy Logic', 'Mobile App', 'Sustainability'],
                 linkPrimary: 'https://github.com/KOL305/GreenGrade',
@@ -861,6 +871,8 @@
                 category: 'research',
                 featured: false,
                 date: '2023',
+                // NEW: Added this property!
+                pdf: 'https://drive.google.com/file/d/1DULSiS7sPJoN4xFQr06I3I-8t63uNmmP/preview',
                 images: [img('../images/pscvsdac.jpg', 'PSC vs DAC Analysis')],
                 descriptionShort: 'TEA of Point Source Capture vs. Direct Air Capture at COSMOS (UCLA).',
                 descriptionFull: `
@@ -1149,10 +1161,36 @@
             modalTitle.textContent = project.title;
             modalDate.textContent = project.date || '';
 
-            // Setup Main Carousel - NOW INCLUDES ALL IMAGES
-            // If project.images is not set, fallback
-            const carouselImages = project.images || ['https://placehold.co/600x400'];
-            initCarousel(mainCarouselContainer, carouselImages);
+            // --- SELECT CONTAINERS ---
+            const pdfContainer = document.getElementById('pdf-container');
+            const videoContainer = document.getElementById('video-container');
+            const carouselContainer = document.getElementById('main-carousel-container');
+            const pdfFrame = document.getElementById('pdf-frame');
+            const videoFrame = document.getElementById('video-frame');
+
+            // --- RESET ALL VIEWS ---
+            carouselContainer.classList.add('hidden');
+            pdfContainer.classList.add('hidden');
+            videoContainer.classList.add('hidden');
+            pdfFrame.src = ''; 
+            videoFrame.src = ''; 
+
+            // --- LOGIC SWITCH ---
+            if (project.pdf) {
+                // CASE 1: Display PDF
+                pdfContainer.classList.remove('hidden');
+                pdfFrame.src = project.pdf;
+            } else if (project.video) {
+                // CASE 2: Display Video
+                videoContainer.classList.remove('hidden');
+                videoFrame.src = project.video;
+            } else {
+                // CASE 3: Display Carousel (Default)
+                carouselContainer.classList.remove('hidden');
+                // Setup Main Carousel
+                const carouselImages = project.images || ['https://placehold.co/600x400'];
+                initCarousel(mainCarouselContainer, carouselImages);
+            }
 
             modalTags.innerHTML = project.tags.map(tag => `<span class="inline-block bg-accent text-secondary text-xs font-medium px-3 py-1 rounded-full">${tag}</span>`).join('');
             modalDescription.innerHTML = project.descriptionFull;
@@ -1203,6 +1241,12 @@
                 // Pause any videos in the modal
                 const videos = modal.querySelectorAll('video');
                 videos.forEach(v => v.pause());
+                
+                // Clear iframes to stop playing
+                const pdfFrame = document.getElementById('pdf-frame');
+                const videoFrame = document.getElementById('video-frame');
+                if(pdfFrame) pdfFrame.src = '';
+                if(videoFrame) videoFrame.src = '';
             }, 300);
         }
 
