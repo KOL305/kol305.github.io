@@ -790,25 +790,82 @@
                 linkPrimary: 'https://github.com/KOL305/GreenGrade',
                 linkSecondary: 'https://drive.google.com/file/d/1LdoTDyLYITMIQiaGK1JF4PlKsopxlKss/preview'
             },
-            {
+{
                 id: 'smartgen',
                 title: 'SmartGen AI Energy Advisor',
                 category: 'software',
                 featured: false,
-                date: '2023',
-                images: [img('../images/smartgen.png', 'Dashboard View')],
-                descriptionShort: 'A web app to help homeowners reduce energy usage using ML and GPT-3.5.',
+                date: 'Aug. 2023 - Dec. 2023',
+                video: 'https://drive.google.com/file/d/1Sfb0Rcs056KwOhBs4RDcgLk6-ezma4hb/preview',
+                images: [
+                    img('../images/smartgen/smartgen.png', 'Dashboard View'), // Keeping original thumbnail
+                    img('../images/smartgen/smartgen_visualization.png', 'System Architecture'),
+                    img('../images/smartgen/data_visualizations.png', 'Data Visualization Dashboard'),
+                    img('../images/smartgen/gpt_recommendations.png', 'GPT Recommendations'),
+                    img('../images/smartgen/comparison.png', 'Impact Metrics')
+                ],
+                descriptionShort: 'SmartGen is a web-based energy management platform that helps homeowners reduce their energy costs and carbon footprint by predicting future energy usage and providing personalized conservation tips. As a Full-Stack Developer, I co-developed the Vue.js dashboard, handling OpenAI API integration and complex predictive model data visualization.',
                 descriptionFull: `
-                    <p>Developed a web application, SmartGen, for the 2023 Congressional App Challenge in a team of 3, aimed at helping homeowners reduce energy usage by providing insights into their energy generation and consumption patterns.</p>
+                    <h1>Overview</h1>
+                    <p>SmartGen is a web-based energy management platform that helps homeowners reduce their energy costs and carbon footprint by predicting future energy usage and providing personalized conservation tips. As a Full-Stack Developer, I co-developed the Vue.js dashboard, handling OpenAI API integration and complex predictive model data visualization.</p>
+
+                    <h1>The Objective</h1>
+                    <p>With rising energy costs and a “duck curve” energy problem (where peak consumption and generation occur at different parts of the day), our goal was to create a user-friendly web application that predicts energy spikes before they happen and provides recommendations on how to prevent them.</p>
+
+                    <h1>What I did</h1>
                     <ul>
-                        <li>Engineered a regression prediction model using LightGBM Gradient-boosting Decision Trees to forecast future energy usage.</li>
-                        <li>Integrated OpenAI GPT-3.5 Turbo to generate personalized, data-driven recommendations for energy conservation.</li>
-                        <li>Designed a user-friendly dashboard that displays daily energy statistics and predicted savings, encouraging continuous mindful consumption.</li>
+                        <li>Co-developed the responsive web application using Vue.js, utilizing Axios and AJAX for asynchronous data fetching to ensure a seamless user experience.</li>
+                        <li>Integrated the OpenAI API (GPT-3.5 Turbo), engineering system prompts to function as a “Virtual Energy Analyst” that translates raw consumption data into natural-language recommendations.</li>
+                        <li>Visualized LightGBM predictive model outputs and home energy data, by rendering backend-generated Plotly charts, including interactive line plots for consumption/generation, pie charts for area-specific usage, and correlation matrices to identify energy drains.</li>
+                        <li>Designed the “Impact Statistics” page, calculating and displaying tangible environmental metrics (e.g. # of trees planted, CO2 emissions prevented) based on available US/UN data to incentivized user behavior.</li>
+                    </ul>
+
+                    <h1>Technical Implementation</h1>
+                    <div class="my-4 text-center">
+                        <img src="../images/smartgen/smartgen_visualization.png" class="inline-block rounded-lg shadow-md h-96 border border-primary" alt="System Architecture">
+                    </div>
+
+                    <h2>Data Visualization and Analytics</h2>
+                    <p>Because our backend regression model (LightGBM) outputted complex datasets, I needed a way to display home energy statistics in a user-friendly way.</p>
+                    <p>I implemented a pipeline where the Python backend generated interactive charts using Plotly. On the frontend, I used Axios to fetch these pre-rendered chart objects, ensuring memory-intensive processing stayed on the server.</p>
+                    <ul>
+                        <li>Forecasting: A dual-axis line plot comparing historic energy consumption and generation against the model’s 24-hour prediction.</li>
+                        <li>Attribution: A pie chart breaking down consumption by home area (HVAC, Kitchen, etc.) to identify high load zones.</li>
+                        <li>Correlation Matrix: A heatmap revealing hidden relationships between variables (e.g., “outside temperature” vs. “AC power draw”).</li>
+                    </ul>
+
+                    <h2>Generative AI Integration</h2>
+                    <p>To provide energy-saving recommendations, I built a service that aggregates the household’s top consumption vectors and feeds them into a prompt-engineered GPT-3.5 Turbo agent. This model generates responses using real-time information from both the internet and our datasets.</p>
+                    <p>Instead of just seeing spikes on a graph, the user receives actionable advice (e.g., “your AC usage is predicted to peak at 6pm. Pre-cool your home now to leverage lower rates”).</p>
+
+                    <h2>Gamified Impact Metrics</h2>
+                    <p>To drive behavioral change, I created a “Statistics” page that converts abstract Kilowatt-hours (kWh) saved into tangible environmental impact.</p>
+                    <p>I wrote utility functions to calculate real-time equivalencies, displaying metrics like “Trees Planted” and “Lbs of CO2 Saved” based on the user’s energy savings.</p>
+
+                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden border border-primary group my-6 bg-secondary">
+                         <div class="inline-slides hidden">
+                             [
+                                {"src": "../images/smartgen/data_visualizations.png", "caption": "Interactive Plotly Dashboard"},
+                                {"src": "../images/smartgen/gpt_recommendations.png", "caption": "AI-Generated Recommendations"},
+                                {"src": "../images/smartgen/comparison.png", "caption": "Impact Metrics"}
+                             ]
+                         </div>
+                         <div class="inline-carousel-track w-full h-full relative"></div>
+                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
+                    </div>
+
+                    <h1>Key Takeaways</h1>
+                    <ul>
+                        <li><strong>Data Visualization:</strong> To users, raw model accuracy matters means nothing when the output is near impossible to understand. Learning how to visualize data in graphs as well as in tangible impacts enables users to really connect with the application and continue using it.</li>
+                        <li><strong>API Integration:</strong> Third-party APIs such as OpenAI require managing many variables that affect token efficiency and page reactiveness. By being intentional about API requests and framework loading, our app avoided timeouts and rate limiting while remaining responsive.</li>
+                        <li><strong>Full-Stack Synergy:</strong> Building both frontend and backend components while working with our data engineer taught me how to design systems holistically with machine learning models in consideration. Understanding server limitations influenced my frontend choices, resulting in a smoother user experience overall.</li>
                     </ul>
                 `,
-                tags: ['AI/ML', 'LightGBM', 'OpenAI', 'Python', 'Web App'],
+                tags: ['Vue.js', 'OpenAI', 'LightGBM', 'Plotly', 'Flask'],
                 linkPrimary: 'https://github.com/KOL305/smart-gen',
-                linkSecondary: 'https://youtu.be/Aekci3r5V8A?si=KYZFIJLS2oHUSIPP'
+                linkSecondary: 'https://drive.google.com/file/d/1Sfb0Rcs056KwOhBs4RDcgLk6-ezma4hb/preview'
             },
             {
                 id: 'georepair',
