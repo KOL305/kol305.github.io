@@ -203,7 +203,7 @@
                         <a href="https://github.com/KOL305" target="_blank" rel="noopener noreferrer" class="text-secondary hover:text-primary transition-colors duration-200" title="GitHub"><svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.492.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.03-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.818c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.003 10.003 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path></svg></a>
                         <a href="https://www.linkedin.com/in/kadon-liang/" target="_blank" rel="noopener noreferrer" class="text-secondary hover:text-primary transition-colors duration-200" title="LinkedIn"><svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.783-1.75-1.75s.784-1.75 1.75-1.75 1.75.783 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg></a>
                         <a href="mailto:kadon_liang@berkeley.edu" class="text-secondary hover:text-primary transition-colors duration-200" title="Email"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M3 18h18V6H3v12z"></path></svg></a>
-                        <a href="https://drive.google.com/file/d/1qNa4AiCQ9f2UaSBW0KC7MlWW4iab49ca/view?usp=sharing" target="_blank" class="text-secondary hover:text-primary transition-colors duration-200" title="Download Resume"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></a>
+                        <a href="https://drive.google.com/file/d/1clb_GDPa-eSsH6D7bL29JPZTL1zfRdqK/view?usp=sharing" target="_blank" class="text-secondary hover:text-primary transition-colors duration-200" title="Download Resume"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></a>
                     </div>
                 </div>
             </div>
@@ -292,25 +292,61 @@
 
         const projects = [
             // HARDWARE
-            {
+{
                 id: 'dashboard',
-                title: 'Dashboard PCB',
+                title: 'Mixed-Signal Dashboard PCB',
                 category: 'hardware',
                 featured: true,
                 date: 'Ongoing',
                 images: [
-                    img('../images/dashboard.png', 'PCB Layout Design')
-                ], 
-                descriptionShort: 'PCB design with custom ESP32 dev board and I²C display for Gen 11 Solar Car.',
+                    img('../images/dashboard/layout.png', 'PCB Layout'),
+                    img('../images/dashboard/schematic.png', 'KiCad Schematic'),
+                    img('../images/dashboard/oled_display_visualization.png', 'Display Architecture')
+                ],
+                descriptionShort: 'Designed a 2-layer, mixed-signal Dashboard PCB for the UC Berkeley Solar Car Team. Integrated a custom ESP32 Dev Board to display persistent telemetry data fed through CAN Bus to I2C peripherals, routing power and signals to critical subsystems like the OLED display and solar array inputs for driver interface.',
                 descriptionFull: `
-                    <p>Leading a team of 3 to develop a dashboard PCB with custom ESP32 dev board and I²C display for the UC Berkeley Solar Car Racing Team's Gen 11 car.</p>
+                    <h1>Overview</h1>
+                    <p>Designed a 2-layer, mixed-signal Dashboard PCB for the UC Berkeley Solar Car Team.</p>
+                    <p>Integrated a custom ESP32 Dev Board to display persistent telemetry data fed through CAN Bus to I2C peripherals, routing power and signals to critical subsystems like the OLED display and solar array inputs for driver interface.</p>
+
+                    <h1>The Objective</h1>
+                    <p>For Cal Sol’s Gen 11 Solar Vehicle, the driver needs a centralized control hub to toggle lights, solar arrays, and cruise control while viewing real-time telemetry (speed, current draw).</p>
+                    <p>My objective was to lead a team to create a robust carrier board that routes these inputs to the main microcontroller (ESP32) while protecting signal integrity.</p>
+
+                    <h1>What I Did</h1>
                     <ul>
-                        <li>Finished product will house buttons, switches, and sliders for the driver that will control various car functionalities (solar arrays, fans, etc.) and an OLED display for persistent data (subsystem statuses, speedometer, etc.)</li>
-                        <li>Currently generating schematic and layout using KiCad. Ensuring proper integration between OLED display, switches and buttons, and ESP32 board.</li>
-                        <li>Worked cross-team to generate PCB requirements and criteria, documenting design details and setting deadlines on Confluence.</li>
+                        <li>Designed the full schematic and layout in KiCad (v8), implementing a 2-layer stack up with a dedicated ground pour to minimize return loop inductance and minimize board size.</li>
+                        <li>Implemented hardware-level debouncing for all 13 digital and 3 analog inputs (switches and buttons) using low-pass RC filters, ensuring clean signals inputs for microcontroller firmware.</li>
+                        <li>Authored technical documentation on Confluence, conducted design reviews with Cal Sol alumni, and carefully selected components to ensure consistent and proper build quality.</li>
                     </ul>
+
+                    <h1>Technical Implementation</h1>
+                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden border border-primary group my-6 bg-secondary">
+                         <div class="inline-slides hidden">
+                             [
+                                {"src": "../images/dashboard/schematic.png", "caption": "Full KiCad Schematic"},
+                                {"src": "../images/dashboard/layout.png", "caption": "PCB Layout (2-Layer)"},
+                                {"src": "../images/dashboard/oled_display_visualization.png", "caption": "I2C Display Architecture"}
+                             ]
+                         </div>
+                         <div class="inline-carousel-track w-full h-full relative"></div>
+                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
+                    </div>
+
+                    <h2>I2C Signal Grouping</h2>
+                    <p>Our team decided on an I2C OLED Display (NHD-0420CW-AB3) to display necessary persistent data (fed through CAN Bus) as it had simple integration and only ran on a standard 3.3V.</p>
+                    <p>In layout, I took proper consideration to ensure that the I2C signal lines did not cross other traces and stayed unobstructed from the GND layer to reduce signal noise.</p>
+
+                    <h2>Molex Layout Optimization</h2>
+                    <p>Our board consists of 2 layers (top: 3.3V, bottom: GND) with a centralized ESP32 and Molex connectors surrounding it for various buttons and switches.</p>
+                    <p>Molex connectors were chosen to enable buttons to be wired away from the board itself, allowing components to seamlessly fit with the dashboard frame.</p>
+                    <p>I also took consideration to modularize and group sections of buttons and switches to provide an easier user experience for the driver and for ease of future debugging.</p>
+                    <h2>Bring Up and Verification</h2>
+                    <p>For the Spring 2026 semester the plan is to solder and assemble the board. Future updates will be posted here.</p>
                 `,
-                tags: ['PCB Design', 'I²C', 'ESP32', 'Embedded Systems', 'KiCad'],
+                tags: ['PCB Design', 'KiCad', 'ESP32', 'I2C', 'CAN Bus'],
                 linkPrimary: 'https://github.com/CalSol/Gen11-HW/tree/dashboard',
                 linkSecondary: null
             },
@@ -437,6 +473,7 @@
                         <li>Integrated an IR receiver to enable manual control via a remote, allowing users to set timers or switch to automatic mode for added flexibility.</li>
                         <li>Currently developing a mobile application to provide a user-friendly interface for monitoring and toggling devices, expanding the system's functionality and accessibility.</li>
                     </ul>
+                    <h2> Page Still Under Construction </h2>
                 `,
                 tags: ['Raspberry Pi', 'MQTT', 'IoT', 'Embedded Systems', 'Python'],
                 linkPrimary: null,
