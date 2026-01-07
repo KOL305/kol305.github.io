@@ -271,7 +271,7 @@
             </div>
 
             <div class="flex-none flex items-center justify-end p-5 border-t border-primary space-x-3 z-20 bg-secondary">
-                <a id="modal-link-secondary" href="#" target="_blank" rel="noopener noreferrer" class="py-2 px-4 rounded-md text-primary bg-accent hover:bg-opacity-80 transition-colors">Demo Video</a>
+                <a id="modal-link-secondary" href="#" target="_blank" rel="noopener noreferrer" class="py-2 px-4 rounded-md text-primary bg-accent hover:bg-opacity-80 transition-colors">Demo</a>
                 <a id="modal-link-primary" href="#" target="_blank" rel="noopener noreferrer" class="py-2 px-4 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">View Project</a>
             </div>
         </div>
@@ -904,24 +904,69 @@
                 linkPrimary: 'https://github.com/KOL305/smart-gen',
                 linkSecondary: 'https://drive.google.com/file/d/1Sfb0Rcs056KwOhBs4RDcgLk6-ezma4hb/preview'
             },
-            {
+{
                 id: 'georepair',
                 title: 'GeoRepair Infrastructure Reporter',
                 category: 'software',
                 featured: false,
                 date: '2021',
-                images: [img('../images/georepair.png', 'App Screenshot')],
-                descriptionShort: 'Full-stack app for citizens to report and geotag damaged infrastructure.',
+                images: [
+                    img('../images/georepair/georepair.png', ''),
+                    img('../images/georepair/georepair_visualization.png', '')
+                ],
+                descriptionShort: 'GeoRepair is an open-source cross-device platform that empowers communities to crowdsource infrastructure maintenance As a Frontend Developer, I built the user and admin dashboards, integrated interactive geographical visualizations using Leaflet.js, and developed a “NextDoor-style” social feed to foster community engagement around local repairs.',
                 descriptionFull: `
-                    <p>Developed a full-stack, open-source application with both web-based and mobile components to enable citizens to report and geotag damaged infrastructure in their communities.</p>
+                    <h1>Overview</h1>
+                    <p>GeoRepair is an open-source cross-device platform that empowers communities to crowdsource infrastructure maintenance As a Frontend Developer, I built the user and admin dashboards, integrated interactive geographical visualizations using Leaflet.js, and developed a “NextDoor-style” social feed to foster community engagement around local repairs.</p>
+
+                    <h1>The Objective</h1>
+                    <p>Local governments often lack real-time data on infrastructure issues like potholes, broken streetlights, or illegal dumping. Together with a team at YoungWonks Coding School, our goal was to design a decentralized, social-first application that incentivizes residents to report issues and allows municipalities to track them efficiently.</p>
+
+                    <h1>What I Did</h1>
                     <ul>
-                        <li>Engineered a social media platform within the application that allowed community members to upvote and comment on reported issues, fostering a collaborative approach to urban repair.</li>
-                        <li>Designed an administrative dashboard that provided authorities with a geographical visualization of all reported issues, enabling them to create a more efficient and data-driven response.</li>
+                        <li>Developed the responsive frontend architecture using Vue.js, utilizing Bootstrap 3 for rapid UI component styling and mobile responsiveness.</li>
+                        <li>Implemented interactive mapping features with Leaflet.js, allowing users to drop “Issue Pins” with precise geotags and view a map of local infrastructure problems.</li>
+                        <li>Engineered the social feed functionality, enabling users to upvote and post reported issues to prioritize community needs.</li>
+                        <li>Visualized community engagement metrics using Chart.js, creating dynamic graphs for the admin dashboard that track reporting frequency and resolution times.</li>
+                        <li>Connected the frontend to the backend REST API using Axios, managing asynchronous data states for real-time issue updates and status tracking.</li>
+                    </ul>
+
+                    <h1 class="text-xl font-bold mt-6 mb-2 text-primary">Demo Video</h1>
+                    <div class="w-full aspect-video my-4 rounded-lg overflow-hidden border border-primary shadow-sm">
+                        <iframe src="https://drive.google.com/file/d/1qRSxTZIt7eOYy2oPSfKmIhT203XaelQh/preview" class="w-full h-full" allow="autoplay" frameborder="0"></iframe>
+                    </div>
+
+                    <h1>Technical Implementation</h1>
+                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden border border-primary group my-6 bg-secondary">
+                         <div class="inline-slides hidden">
+                             [
+                                {"src": "../images/georepair/georepair_visualization.png", "caption": ""}
+                             ]
+                         </div>
+                         <div class="inline-carousel-track w-full h-full relative"></div>
+                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
+                    </div>
+
+                    <h2>Interactive Geolocation</h2>
+                    <p>The core challenge of any reporting tool is turning a vague complaint like "pothole on Main St" into actionable data. I solved this by integrating Leaflet.js to render a dynamic, high-fidelity map to turn reports into clickable, interactive pins.</p>
+                    <p>To ensure accuracy for repair crews, I utilized the browser's Geolocation API to auto-fill the user's precise coordinates the moment they open the report form, reducing friction and increasing data reliability.</p>
+
+                    <h2>Social Engagement & Dashboarding</h2>
+                    <p>To prevent "reporting fatigue," I wanted the platform to feel less like a government form and more like a community hub. I built a social layer where users can "Watch" issues and upvote critical problems.</p>
+                    <p>This required managing complex state in Vue.js to update posts and upvote counts live (the UI updates instantly for the user while Axios handles the backend request in the background).</p>
+
+                    <h1>Key Takeaways</h1>
+                    <ul>
+                        <li><strong>State Management:</strong> Building a social feed taught me the complexity of keeping the UI in sync with the database. I learned how to optimistically update the UI (showing the "Like" instantly) while the Axios request processed in the background.</li>
+                        <li><strong>Geospatial Data:</strong> I gained experience handling GeoJSON data structures and rendering them performantly on a Leaflet map, a skill that bridges web development and data visualization.</li>
+                        <li><strong>User-Centric Design:</strong> By adding the social element ("NextDoor" style), we transformed a boring reporting tool into a community hub. I learned that engagement features are just as critical as utility features for civic tech apps.</li>
                     </ul>
                 `,
-                tags: ['Full-Stack', 'Mobile App', 'Web App', 'Firebase', 'Open Source'],
+                tags: ['Javascript', 'Leaflet.js', 'MongoDB', 'Axios', 'Open Source'],
                 linkPrimary: 'https://github.com/KOL305/geo-repair',
-                linkSecondary: null
+                linkSecondary: 'https://docs.google.com/presentation/d/1AcM4VOznrfrdAu8CplcXl8Au8cST9IYoaSsHZRNUGyw/edit?usp=sharing'
             },
             {
                 id: 'nutrimood',
