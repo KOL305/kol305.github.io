@@ -52,6 +52,9 @@
         /* Sidebar styles */
         #sidebar {
             transition: transform 0.3s ease-in-out;
+            /* Wider sidebar as requested */
+            width: 100%;
+            max-width: 450px; 
         }
 
         #sidebar-overlay {
@@ -69,6 +72,20 @@
         .project-card.is-visible {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Hackathon Card Specifics */
+        .hackathon-card {
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        
+        .hackathon-card:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         /* Modal styles */
@@ -162,7 +179,8 @@
 
     <div id="sidebar-container" class="fixed inset-0 z-50 hidden">
         <div id="sidebar-overlay" class="absolute inset-0 bg-black/50 opacity-0"></div>
-        <div id="sidebar" class="relative bg-secondary h-full w-64 sm:w-80 shadow-xl -translate-x-full">
+        <!-- Sidebar width modified in CSS -->
+        <div id="sidebar" class="relative bg-secondary h-full shadow-xl -translate-x-full">
             <div class="flex items-center justify-between p-4 border-b border-primary">
                 <h2 class="text-lg font-semibold text-primary">Project Navigation</h2>
                 <button id="sidebar-close" class="p-2 rounded-md">
@@ -177,11 +195,11 @@
                         <li><a href="#featured" class="sidebar-link text-lg font-medium text-primary hover:text-accent flex items-center p-2 rounded-md"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118L2.98 9.112c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>Featured</a></li>
                         <li><a href="#hardware" class="sidebar-link text-lg font-medium text-primary hover:text-accent flex items-center p-2 rounded-md"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>Hardware</a></li>
                         <li><a href="#software" class="sidebar-link text-lg font-medium text-primary hover:text-accent flex items-center p-2 rounded-md"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m-4 4l4 4-4 4M6 16v-4m-2-2h4"></path></svg>Software</a></li>
-                        <li><a href="#research" class="sidebar-link text-lg font-medium text-primary hover:text-accent flex items-center p-2 rounded-md"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.363-.472a6 6 0 00-5.232 5.232l.472 2.363a2 2 0 00.547 1.022l3.956 3.956a2 2 0 002.828 0l2.828-2.828a2 2 0 000-2.828l-3.956-3.956zM14 6a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>Research</a></li>
+                        <li><a href="#research" class="sidebar-link text-lg font-medium text-primary hover:text-accent flex items-center p-2 rounded-md"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.363-.472a6 6 0 00-5.232 5.232l.472 2.363a2 2 0 00.547 1.022l3.956 3.956a2 2 0 002.828 0l2.828-2.828a2 2 0 000-2.828l-3.956-3.956zM14 6a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>Research & Other</a></li>
+                        <li><a href="#hackathon" class="sidebar-link text-lg font-medium text-primary hover:text-accent flex items-center p-2 rounded-md"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3M3.343 15.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>Hackathon Archive</a></li>
                     </ul>
                     <div class="border-t border-primary my-4"></div>
-                    <h3 class="text-sm font-medium text-secondary uppercase mb-2">All Projects</h3>
-                    <div id="sidebar-project-list" class="flex flex-col space-y-1"></div>
+                    <div id="sidebar-project-list" class="flex flex-col"></div>
                 </div>
             </div>
         </div>
@@ -223,8 +241,13 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="software-projects"></div>
             </section>
             <section id="research">
-                <h2 class="text-2xl font-bold text-primary mb-6">Research & Technical Analysis</h2>
+                <h2 class="text-2xl font-bold text-primary mb-6">Research & Other Projects</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="research-projects"></div>
+            </section>
+            <section id="hackathon">
+                <h2 class="text-2xl font-bold text-primary mb-6">Hackathon Archive</h2>
+                <!-- Tighter grid for smaller tiles -->
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4" id="hackathon-projects"></div>
             </section>
         </div>
     </main>
@@ -607,138 +630,6 @@
                 linkPrimary: 'https://drive.google.com/file/d/1Y262yHZ7NgvJ86ycZDFWL33HpLlogBLO/view?usp=sharing', 
                 linkSecondary: null
             },
-            {
-                id: 'eagle-scout-project',
-                title: 'Eagle Scout Service Project',
-                category: 'hardware',
-                featured: false,
-                date: 'Oct. 2023 - Feb. 2024',
-                // Main modal images
-                images: [
-                    img('../images/eagle_scout_project/eagleproject.png', ''),
-                    img('../images/eagle_scout_project/cabinet_finished.jpg', 'Completed Storage Unit'),
-                    img('../images/eagle_scout_project/cabinet_cad_no_door.png', 'CAD Design'),
-                    img('../images/eagle_scout_project/cabinet_exploded.png', 'Exploded View'),
-                    img('../images/eagle_scout_project/cut_list.png', 'Cut List Optimization'),
-                    img('../images/eagle_scout_project/cutting_wood.jpg', ''),
-                    img('../images/eagle_scout_project/painting_d1.jpg', ''),
-                    img('../images/eagle_scout_project/asm_action_shot_d3.jpg', ''),
-                    img('../images/eagle_scout_project/asm_action_shot2_d3.jpg', ''),
-                    img('../images/eagle_scout_project/asm_action_shot3_d3.jpg', '')
-                ],
-                descriptionShort: 'Led a team of 21 volunteers to design, fund, and construct custom outdoor storage infrastructure for the California High Robotics Club. Managed the entire lifecycle from CAD modeling to final assembly, delivering a durable solution that protects thousands of dollars in robotics equipment.',
-                descriptionFull: `
-                    <h1>Overview</h1>
-                    <p>Led a team of 21 volunteers to design, fund, and construct custom outdoor storage infrastructure for the California High Robotics Club. Managed the entire lifecycle from CAD modeling to final assembly, delivering a durable solution that protects thousands of dollars in robotics equipment.</p>
-
-                    <h1>The Objective</h1>
-                    <p>The California High Robotics Club lacked indoor storage, forcing them to store expensive metal VEX parts outside where they were degrading due to rust. I was tasked with designing a weather-resistant, secure storage solution that maximized the limited storage area while keeping costs near zero.</p>
-
-                    <h1>What I Did</h1>
-                    <ul>
-                        <li>Researched and designed a 2-tier, caster-mounted cabinet system using Onshape (115 hours of planning).</li>
-                        <li>Optimized material usage using CutList Optimizer to generate efficient cutting layouts, reducing plywood waste to &lt;15%.</li>
-                        <li>Fundraised over $900 in value, securing a major lumber donation from Golden State Lumber by presenting professional CAD drawings.</li>
-                        <li>Managed 290+ collective service hours, coordinating logistics across multiple workdays and adapting schedules around adverse weather.</li>
-                    </ul>
-
-                    <h1>Final Deliverable</h1>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-4 items-center">
-                        <div class="md:col-span-1">
-                            <img src="../images/eagle_scout_project/cabinet_finished.jpg" class="rounded-lg shadow-md w-full border border-primary object-cover" alt="Finished Cabinet">
-                            <p class="text-sm text-secondary italic mt-1 text-center">Final Construction</p>
-                        </div>
-                        <div class="md:col-span-2 ">
-                            <img src="../images/eagle_scout_project/cabinet_cad_no_door.png" class="rounded-lg shadow-md w-full border border-primary object-cover" alt="CAD Design">
-                            <p class="text-sm text-secondary italic mt-1 text-center">Onshape CAD Design</p>
-                        </div>
-                    </div>
-
-                    <h1>Project Timeline</h1>
-                    <div class="my-4">
-                        <img src="../images/eagle_scout_project/eagle_project_work_flow.png" class="mx-auto rounded-lg shadow-md max-h-80 object-contain border border-primary" alt="Project Work Flow">
-                    </div>
-
-                    <h1>Design Phase (CAD & Optimization)</h1>
-                    <p>My initial proposal featured a 3-tier frameless cabinet, but after reviewing structural requirements, I pivoted to a 2x4 reinforced frame with a 2-tier layout to support heavy battery loads without warping.</p>
-                    <p>To improve the usability for the robotics team, I modified the design to include 3-inch swivel lock casters, allowing the units to be easily rolled into the workshop for active use and stored outside for security.</p>
-                    <p>With the design completed, I utilized CutList Optimizer to map every panel onto standard 4x8 plywood sheets. This data-driven approach generated a precise Bill of Materials (BOM) and minimized scrap to under 15%, which was crucial for keeping my budget low.</p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 w-11/12 mx-auto">
-                        <div>
-                            <img src="../images/eagle_scout_project/cabinet_exploded.png" class="rounded-lg shadow-md w-full object-contain border border-primary bg-white" alt="Exploded View">
-                            <p class="text-sm text-secondary italic mt-1 text-center">Exploded Assembly View</p>
-                        </div>
-                        <div>
-                            <img src="../images/eagle_scout_project/cut_list.png" class="rounded-lg shadow-md w-full object-contain border border-primary bg-white" alt="Cut List Optimization">
-                            <p class="text-sm text-secondary italic mt-1 text-center">CutList Optimization Data</p>
-                        </div>
-                    </div>
-
-                    <h1>Logistics & Preparation</h1>
-                    <p>I leveraged my CAD drawing package to pitch the project to local Home Depots and Golden State Lumber. The professional quality of the documentation led to material donations of lumber, paint, and glue. The remaining project’s cash cost of just $100 was covered by the beneficiary.</p>
-                    
-                    <p>Due to rainy weather forcing the cancellation of primary work days, I adjusted to a “mini-workday” model. I coordinated smaller, specialized teams to prepare material (cutting, sanding, painting) in my garage before the final on-site integration.</p>
-                    <p>This decentralized approach allowed us to stay on timeline despite weather delays, ensuring all components were ready for assembly.</p>
-                    
-                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden border border-primary group my-6 bg-secondary">
-                         <div class="inline-slides hidden">
-                             [
-                                {"src": "../images/eagle_scout_project/cutting_wood.jpg", "caption": "Team 1: Cutting Panels to Size"},
-                                {"src": "../images/eagle_scout_project/sanding_d1.jpg", "caption": "Team 2: Sanding Edges"},
-                                {"src": "../images/eagle_scout_project/painting_d1.jpg", "caption": "Team 2: Painting Coat 1"},
-                                {"src": "../images/eagle_scout_project/painting_d2.jpg", "caption": "Team 3: Painting Coat 2"},
-                                {"src": "../images/eagle_scout_project/painted_wood_drying_d2.jpg", "caption": "Curing Process"}
-                             ]
-                         </div>
-                         <div class="inline-carousel-track w-full h-full relative"></div>
-                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
-                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
-                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
-                    </div>
-
-                    <h1>Construction Execution</h1>
-                    <p>Recognizing that most volunteers were students with no construction experience, I created a 20-page visual assembly guide derived directly from my CAD model. This removed ambiguity, allowing me to step back from “doing” the construction to focus on quality control.</p>
-
-                    <div class="grid grid-cols-2 gap-4 my-4 max-w-4xl mx-auto">
-                        <div>
-                            <iframe src="https://drive.google.com/file/d/1bERtuQ3REJ2CBVuM65c08glXDJNyI0tP/preview" class="w-full h-80" frameborder="0"></iframe>
-                            <p class="text-sm text-secondary italic mt-1 text-center">Full Assembly Manual</p>
-                        </div>
-                        <div>
-                            <img src="../images/eagle_scout_project/asm_step19.png" class="rounded-lg shadow-md w-full border border-primary bg-white" alt="Assembly Step 19">
-                            <p class="text-sm text-secondary italic mt-1 text-center">Assembly Step 19</p>
-                        </div>
-                    </div>
-
-                    <p>To manage volunteers efficiently, I implemented a delegated leadership structure, splitting the workforce into two teams (Cabinet A and Cabinet B) and assigning a youth team leader to each. This allowed for parallel execution and doubled our efficiency.</p>
-
-                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden border border-primary group my-5 bg-secondary">
-                         <div class="inline-slides hidden">
-                             [
-                                {"src": "../images/eagle_scout_project/asm_explaining_d3.jpg", "caption": "Briefing the Team"},
-                                {"src": "../images/eagle_scout_project/asm_action_shot_d3.jpg", "caption": "Assembly: Team A"},
-                                {"src": "../images/eagle_scout_project/asm_action_shot2_d3.jpg", "caption": "Assembly: Team B"},
-                                {"src": "../images/eagle_scout_project/asm_action_shot3_d3.jpg", "caption": "Final Assembly Steps"}
-                             ]
-                         </div>
-                         <div class="inline-carousel-track w-full h-full relative"></div>
-                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
-                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
-                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
-                    </div>
-
-                    <h1>Key Takeaways</h1>
-                    <ul>
-                        <li><b>Design for Manufacturing (DFM):</b> The experience taught me that a “perfect” CAD model is useless if it can’t be assembled. I learned to design with tolerance for human error, ensuring that slight imperfect cuts wouldn’t compromise the final structure.</li>
-                        <li><b>Documentation as a Tool:</b> I leveraged high-quality technical documentation not only to fundraise and keep costs to near-zero, but also to enable unskilled volunteers to produce results without constant supervision.</li>
-                        <li><b>Servant Leadership:</b> I learned that my most valuable role wasn’t building, but thinking ahead—pre-charging batteries, organizing materials, and ensuring safety so the team could work uninterrupted.</li>
-                    </ul>
-                `,
-                tags: ['Onshape CAD', 'DFM', 'Project Management', 'Eagle Scout Community Service', 'Woodworking'],
-                linkPrimary: 'https://drive.google.com/drive/folders/1pMhobY7NPAyiGbeGavM0LSRfq8P8pkRk?usp=drive_link', // Linked to the Assembly Manual
-                linkSecondary: null
-            },
             // SOFTWARE
             {
                 id: 'greengrade',
@@ -968,87 +859,88 @@
                 linkPrimary: 'https://github.com/KOL305/geo-repair',
                 linkSecondary: 'https://docs.google.com/presentation/d/1AcM4VOznrfrdAu8CplcXl8Au8cST9IYoaSsHZRNUGyw/edit?usp=sharing'
             },
-            {
-                id: 'nutrimood',
-                title: 'Nutrimood Calorie Tracker',
-                category: 'software',
-                featured: false,
-                date: '2022',
-                images: [img('../images/nutrimood.png', 'App Screens')],
-                descriptionShort: 'A mobile calorie and macronutrient tracker app built with Flutter.',
-                descriptionFull: `
-                    <p>Developed a calorie and macronutrient tracker mobile application, Nutrimood, for the 2022 Congressional App Challenge.</p>
-                    <ul>
-                        <li>Utilized the USDA Food Data Central API to provide comprehensive food data, enabling users to log and monitor their dietary intake.</li>
-                        <li>Integrated animated sprites to visually represent the user's dietary habits, with the health and mood of the pet directly tied to the user's nutrient and calorie intake.</li>
-                        <li>Designed the user interface (UI) using Flutter, creating an intuitive and engaging experience that motivated users to make healthier dietary choices.</li>
-                    </ul>
-                `,
-                tags: ['Mobile App', 'Flutter', 'API', 'UI/UX'],
-                linkPrimary: 'https://github.com/KOL305/nutrimood-mobile',
-                linkSecondary: 'https://drive.google.com/file/d/1vtqJMKKQ9kR_QasBJNJIcKIkQYfMwH3V/view?usp=sharing'
-            },
-            {
-                id: 'task-manager-slimes',
-                title: 'Task Manager with Slimes',
-                category: 'software',
-                featured: false,
-                date: '2022',
-                images: [img('../images/taskmanagerwithslimes.png', 'Game Interface')],
-                descriptionShort: 'A web-based task manager that incentivized productivity with a virtual pet.',
-                descriptionFull: `
-                    <p>Developed a web-based task manager that incentivized productivity by allowing users to earn coins for a virtual pet, winning <strong>2nd place at the 2022 San Ramon Hackathon</strong>.</p>
-                    <p>By completing tasks, users gained coins, which were used to purchase accessories and decorations for their slimes. A dashboard displays their metrics and enables users to better understand their work patterns.</p>
-                `,
-                tags: ['Hackathon', 'Web App', 'JavaScript', 'Gamification'],
-                linkPrimary: 'https://github.com/KOL305/task-manager-with-slimes',
-                linkSecondary: null
-            },
-            {
-                id: 'wordcloud',
-                title: 'WordCloud Generator',
-                category: 'software',
-                featured: false,
-                date: '2022',
-                images: [img('../images/wordcloud.png', 'Word Cloud Output')],
-                descriptionShort: 'A web GUI for generating word clouds with client and server-side options.',
-                descriptionFull: `
-                    <p>Engineered a web-based word cloud generator GUI with both client-side (Javascript) and server-side (Python) functionality, earning <strong>2nd place at the 2022 AT&T Junior Labs Hackathon</strong>.</p>
-                `,
-                tags: ['Hackathon', 'Web App', 'Python', 'JavaScript'],
-                linkPrimary: 'https://github.com/KOL305/word-cloud',
-                linkSecondary: null
-            },
+            // HACKATHONS
             {
                 id: 'overhaul',
                 title: 'Overhaul Fishery Simulator',
-                category: 'software',
+                category: 'hackathon',
                 featured: false,
-                date: '2023',
+                date: 'Jun. 2023',
                 images: [img('../images/overhaul.png', 'Gameplay')],
                 descriptionShort: 'A p5.js game simulating fishery management to educate on overfishing.',
                 descriptionFull: `
                     <p>Created a web-based fishery management simulator using the p5.js library, highlighting the risks of overfishing, winning <strong>3rd place at the 2023 San Ramon Hackathon</strong>.</p>
                     <p>Random in-game events, such as rapid eutrophication, would cause players to decide between overfishing their pond or being unable to pay rent. Instructional messages accompanied events to reinforce the learning experience.</p>
                 `,
-                tags: ['Hackathon', 'Game Dev', 'p5.js', 'Sustainability'],
+                tags: ['Game Dev', 'p5.js', 'Sustainability'],
                 linkPrimary: 'https://github.com/KOL305/overhaul',
                 linkSecondary: null
             },
             {
+                id: 'nutrimood',
+                title: 'Nutrimood Calorie Tracker',
+                category: 'hackathon',
+                featured: false,
+                date: 'Oct. 2022 - Dec. 2022',
+                images: [img('../images/nutrimood.png', 'App Screens')],
+                descriptionShort: 'A mobile calorie and macronutrient tracker app built with Flutter.',
+                descriptionFull: `
+                    <p>Dev  eloped a calorie and macronutrient tracker mobile application, Nutrimood, for the 2022 Congressional App Challenge.</p>
+                    <ul>
+                        <li>Utilized the USDA Food Data Central API to provide comprehensive food data, enabling users to log and monitor their dietary intake.</li>
+                        <li>Integrated animated sprites to visually represent the user's dietary habits, with the health and mood of the pet directly tied to the user's nutrient and calorie intake.</li>
+                        <li>Designed the user interface (UI) using Flutter, creating an intuitive and engaging experience that motivated users to make healthier dietary choices.</li>
+                    </ul>
+                `,
+                tags: ['Flutter', 'USDA API', 'Health'],
+                linkPrimary: 'https://github.com/KOL305/nutrimood-mobile',
+                linkSecondary: 'https://drive.google.com/file/d/1vtqJMKKQ9kR_QasBJNJIcKIkQYfMwH3V/view?usp=sharing'
+            },
+            {
                 id: 'cloud-nine',
                 title: 'Cloud 9 Sleep Tracker',
-                category: 'software',
+                category: 'hackathon',
                 featured: false,
-                date: '2022',
+                date: 'Jul. 2022',
                 images: [img('../images/cloudnine.png', 'App Dashboard')],
                 descriptionShort: 'A sleep-tracking web application with a white noise collection and drawing pad.',
                 descriptionFull: `
                     <p>Designed and built a sleep-tracking web application with features including a white noise collection and drawing pad, achieving <strong>finalist designation at the 2022 TeenTech SF Hackathon</strong>.</p>
                     <p>The app enabled users to log and track sleep patterns and sleep cycles, informing them to make better sleep decisions.</p>
                 `,
-                tags: ['Hackathon', 'Web App', 'JavaScript'],
+                tags: ['Web App', 'Wellness', 'Audio Integration'],
                 linkPrimary: 'https://github.com/KOL305/cloud-nine',
+                linkSecondary: null
+            },
+            {
+                id: 'task-manager-slimes',
+                title: 'Task Manager with Slimes',
+                category: 'hackathon',
+                featured: false,
+                date: 'Jun. 2022',
+                images: [img('../images/taskmanagerwithslimes.png', 'Game Interface')],
+                descriptionShort: 'A web-based task manager that incentivized productivity with a virtual pet.',
+                descriptionFull: `
+                    <p>Developed a web-based task manager that incentivized productivity by allowing users to earn coins for a virtual pet, winning <strong>2nd place at the 2022 San Ramon Hackathon</strong>.</p>
+                    <p>By completing tasks, users gained coins, which were used to purchase accessories and decorations for their slimes. A dashboard displays their metrics and enables users to better understand their work patterns.</p>
+                `,
+                tags: ['Full Stack', 'MongoDB', 'Productivity'],
+                linkPrimary: 'https://github.com/KOL305/task-manager-with-slimes',
+                linkSecondary: null
+            },
+            {
+                id: 'wordcloud',
+                title: 'WordCloud Generator',
+                category: 'hackathon',
+                featured: false,
+                date: 'Jun. 2022',
+                images: [img('../images/wordcloud.png', 'Word Cloud Output')],
+                descriptionShort: 'A web GUI for generating word clouds with client and server-side options.',
+                descriptionFull: `
+                    <p>Engineered a web-based word cloud generator GUI with both client-side (Javascript) and server-side (Python) functionality, earning <strong>2nd place at the 2022 AT&T Junior Labs Hackathon</strong>.</p>
+                `,
+                tags: ['Javascript', 'Python', 'AT&T Labs'],
+                linkPrimary: 'https://github.com/KOL305/word-cloud',
                 linkSecondary: null
             },
             // RESEARCH
@@ -1072,6 +964,139 @@
                 `,
                 tags: ['Research', 'TEA', 'Sustainability', 'COSMOS'],
                 linkPrimary: 'https://drive.google.com/file/d/1DULSiS7sPJoN4xFQr06I3I-8t63uNmmP/view?usp=sharing',
+                linkSecondary: null
+            },
+            {
+                id: 'eagle-scout-project',
+                title: 'Eagle Scout Service Project',
+                // CHANGED: Moved to Research & Other Projects
+                category: 'research',
+                featured: false,
+                date: 'Oct. 2023 - Feb. 2024',
+                // Main modal images
+                images: [
+                    img('../images/eagle_scout_project/eagleproject.png', ''),
+                    img('../images/eagle_scout_project/cabinet_finished.jpg', 'Completed Storage Unit'),
+                    img('../images/eagle_scout_project/cabinet_cad_no_door.png', 'CAD Design'),
+                    img('../images/eagle_scout_project/cabinet_exploded.png', 'Exploded View'),
+                    img('../images/eagle_scout_project/cut_list.png', 'Cut List Optimization'),
+                    img('../images/eagle_scout_project/cutting_wood.jpg', ''),
+                    img('../images/eagle_scout_project/painting_d1.jpg', ''),
+                    img('../images/eagle_scout_project/asm_action_shot_d3.jpg', ''),
+                    img('../images/eagle_scout_project/asm_action_shot2_d3.jpg', ''),
+                    img('../images/eagle_scout_project/asm_action_shot3_d3.jpg', '')
+                ],
+                descriptionShort: 'Led a team of 21 volunteers to design, fund, and construct custom outdoor storage infrastructure for the California High Robotics Club. Managed the entire lifecycle from CAD modeling to final assembly, delivering a durable solution that protects thousands of dollars in robotics equipment.',
+                descriptionFull: `
+                    <h1>Overview</h1>
+                    <p>Led a team of 21 volunteers to design, fund, and construct custom outdoor storage infrastructure for the California High Robotics Club. Managed the entire lifecycle from CAD modeling to final assembly, delivering a durable solution that protects thousands of dollars in robotics equipment.</p>
+
+                    <h1>The Objective</h1>
+                    <p>The California High Robotics Club lacked indoor storage, forcing them to store expensive metal VEX parts outside where they were degrading due to rust. I was tasked with designing a weather-resistant, secure storage solution that maximized the limited storage area while keeping costs near zero.</p>
+
+                    <h1>What I Did</h1>
+                    <ul>
+                        <li>Researched and designed a 2-tier, caster-mounted cabinet system using Onshape (115 hours of planning).</li>
+                        <li>Optimized material usage using CutList Optimizer to generate efficient cutting layouts, reducing plywood waste to &lt;15%.</li>
+                        <li>Fundraised over $900 in value, securing a major lumber donation from Golden State Lumber by presenting professional CAD drawings.</li>
+                        <li>Managed 290+ collective service hours, coordinating logistics across multiple workdays and adapting schedules around adverse weather.</li>
+                    </ul>
+
+                    <h1>Final Deliverable</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-4 items-center">
+                        <div class="md:col-span-1">
+                            <img src="../images/eagle_scout_project/cabinet_finished.jpg" class="rounded-lg shadow-md w-full border border-primary object-cover" alt="Finished Cabinet">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Final Construction</p>
+                        </div>
+                        <div class="md:col-span-2 ">
+                            <img src="../images/eagle_scout_project/cabinet_cad_no_door.png" class="rounded-lg shadow-md w-full border border-primary object-cover" alt="CAD Design">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Onshape CAD Design</p>
+                        </div>
+                    </div>
+
+                    <h1>Project Timeline</h1>
+                    <div class="my-4">
+                        <img src="../images/eagle_scout_project/eagle_project_work_flow.png" class="mx-auto rounded-lg shadow-md max-h-80 object-contain border border-primary" alt="Project Work Flow">
+                    </div>
+
+                    <h1>Design Phase (CAD & Optimization)</h1>
+                    <p>My initial proposal featured a 3-tier frameless cabinet, but after reviewing structural requirements, I pivoted to a 2x4 reinforced frame with a 2-tier layout to support heavy battery loads without warping.</p>
+                    <p>To improve the usability for the robotics team, I modified the design to include 3-inch swivel lock casters, allowing the units to be easily rolled into the workshop for active use and stored outside for security.</p>
+                    <p>With the design completed, I utilized CutList Optimizer to map every panel onto standard 4x8 plywood sheets. This data-driven approach generated a precise Bill of Materials (BOM) and minimized scrap to under 15%, which was crucial for keeping my budget low.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 w-11/12 mx-auto">
+                        <div>
+                            <img src="../images/eagle_scout_project/cabinet_exploded.png" class="rounded-lg shadow-md w-full object-contain border border-primary bg-white" alt="Exploded View">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Exploded Assembly View</p>
+                        </div>
+                        <div>
+                            <img src="../images/eagle_scout_project/cut_list.png" class="rounded-lg shadow-md w-full object-contain border border-primary bg-white" alt="Cut List Optimization">
+                            <p class="text-sm text-secondary italic mt-1 text-center">CutList Optimization Data</p>
+                        </div>
+                    </div>
+
+                    <h1>Logistics & Preparation</h1>
+                    <p>I leveraged my CAD drawing package to pitch the project to local Home Depots and Golden State Lumber. The professional quality of the documentation led to material donations of lumber, paint, and glue. The remaining project’s cash cost of just $100 was covered by the beneficiary.</p>
+                    
+                    <p>Due to rainy weather forcing the cancellation of primary work days, I adjusted to a “mini-workday” model. I coordinated smaller, specialized teams to prepare material (cutting, sanding, painting) in my garage before the final on-site integration.</p>
+                    <p>This decentralized approach allowed us to stay on timeline despite weather delays, ensuring all components were ready for assembly.</p>
+                    
+                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden border border-primary group my-6 bg-secondary">
+                         <div class="inline-slides hidden">
+                             [
+                                {"src": "../images/eagle_scout_project/cutting_wood.jpg", "caption": "Team 1: Cutting Panels to Size"},
+                                {"src": "../images/eagle_scout_project/sanding_d1.jpg", "caption": "Team 2: Sanding Edges"},
+                                {"src": "../images/eagle_scout_project/painting_d1.jpg", "caption": "Team 2: Painting Coat 1"},
+                                {"src": "../images/eagle_scout_project/painting_d2.jpg", "caption": "Team 3: Painting Coat 2"},
+                                {"src": "../images/eagle_scout_project/painted_wood_drying_d2.jpg", "caption": "Curing Process"}
+                             ]
+                         </div>
+                         <div class="inline-carousel-track w-full h-full relative"></div>
+                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
+                    </div>
+
+                    <h1>Construction Execution</h1>
+                    <p>Recognizing that most volunteers were students with no construction experience, I created a 20-page visual assembly guide derived directly from my CAD model. This removed ambiguity, allowing me to step back from “doing” the construction to focus on quality control.</p>
+
+                    <div class="grid grid-cols-2 gap-4 my-4 max-w-4xl mx-auto">
+                        <div>
+                            <iframe src="https://drive.google.com/file/d/1bERtuQ3REJ2CBVuM65c08glXDJNyI0tP/preview" class="w-full h-80" frameborder="0"></iframe>
+                            <p class="text-sm text-secondary italic mt-1 text-center">Full Assembly Manual</p>
+                        </div>
+                        <div>
+                            <img src="../images/eagle_scout_project/asm_step19.png" class="rounded-lg shadow-md w-full border border-primary bg-white" alt="Assembly Step 19">
+                            <p class="text-sm text-secondary italic mt-1 text-center">Assembly Step 19</p>
+                        </div>
+                    </div>
+
+                    <p>To manage volunteers efficiently, I implemented a delegated leadership structure, splitting the workforce into two teams (Cabinet A and Cabinet B) and assigning a youth team leader to each. This allowed for parallel execution and doubled our efficiency.</p>
+
+                    <div class="inline-carousel-container relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden border border-primary group my-5 bg-secondary">
+                         <div class="inline-slides hidden">
+                             [
+                                {"src": "../images/eagle_scout_project/asm_explaining_d3.jpg", "caption": "Briefing the Team"},
+                                {"src": "../images/eagle_scout_project/asm_action_shot_d3.jpg", "caption": "Assembly: Team A"},
+                                {"src": "../images/eagle_scout_project/asm_action_shot2_d3.jpg", "caption": "Assembly: Team B"},
+                                {"src": "../images/eagle_scout_project/asm_action_shot3_d3.jpg", "caption": "Final Assembly Steps"}
+                             ]
+                         </div>
+                         <div class="inline-carousel-track w-full h-full relative"></div>
+                         <button class="inline-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                         <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                         <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
+                    </div>
+
+                    <h1>Key Takeaways</h1>
+                    <ul>
+                        <li><b>Design for Manufacturing (DFM):</b> The experience taught me that a “perfect” CAD model is useless if it can’t be assembled. I learned to design with tolerance for human error, ensuring that slight imperfect cuts wouldn’t compromise the final structure.</li>
+                        <li><b>Documentation as a Tool:</b> I leveraged high-quality technical documentation not only to fundraise and keep costs to near-zero, but also to enable unskilled volunteers to produce results without constant supervision.</li>
+                        <li><b>Servant Leadership:</b> I learned that my most valuable role wasn’t building, but thinking ahead—pre-charging batteries, organizing materials, and ensuring safety so the team could work uninterrupted.</li>
+                    </ul>
+                `,
+                tags: ['Onshape CAD', 'DFM', 'Project Management', 'Eagle Scout Community Service', 'Woodworking'],
+                linkPrimary: 'https://drive.google.com/drive/folders/1pMhobY7NPAyiGbeGavM0LSRfq8P8pkRk?usp=drive_link', // Linked to the Assembly Manual
                 linkSecondary: null
             }
         ];
@@ -1259,43 +1284,58 @@
         sidebarOverlay.addEventListener('click', closeSidebar);
         sidebarLinks.forEach(link => link.addEventListener('click', closeSidebar));
 
-        // --- PROJECT CARDS ---
+        // --- PROJECT CARDS & GENERATION ---
         const featuredContainer = document.getElementById('featured-projects');
         const hardwareContainer = document.getElementById('hardware-projects');
         const softwareContainer = document.getElementById('software-projects');
         const researchContainer = document.getElementById('research-projects');
+        const hackathonContainer = document.getElementById('hackathon-projects');
         const sidebarProjectList = document.getElementById('sidebar-project-list');
 
         let featuredCounter = 0;
         let hardwareCounter = 0;
         let softwareCounter = 0;
         let researchCounter = 0;
+        let hackathonCounter = 0;
 
         function createProjectCard(project) {
             let container;
             let counter;
+            let isHackathon = false;
 
             if (project.category === 'hardware') { container = hardwareContainer; counter = ++hardwareCounter; }
             else if (project.category === 'software') { container = softwareContainer; counter = ++softwareCounter; }
             else if (project.category === 'research') { container = researchContainer; counter = ++researchCounter; }
+            else if (project.category === 'hackathon') { container = hackathonContainer; counter = ++hackathonCounter; isHackathon = true; }
 
             const card = document.createElement('div');
-            card.className = `project-card bg-secondary rounded-lg shadow-custom overflow-hidden border border-primary flex flex-col`;
+            // Base classes
+            let classes = `project-card bg-secondary rounded-lg shadow-custom overflow-hidden border border-primary flex flex-col`;
+            
+            // Add specific class for Hackathon tiles
+            if (isHackathon) {
+                classes += ` hackathon-card`;
+            }
+            
+            card.className = classes;
             card.dataset.id = project.id;
             if (container) card.style.transitionDelay = `${counter * 100}ms`;
 
-            const thumbnail = project.images && project.images.length > 0 ? project.images[0] : 'https://placehold.co/600x400';
-            let tagsHtml = project.tags.slice(0, 3).map(tag => `<span class="inline-block bg-accent text-secondary text-xs font-medium px-2 py-0.5 rounded-full">${tag}</span>`).join('');
-
-            // Handle image logic for thumbnail (assumes first item is object or string)
             const firstImage = project.images && project.images.length > 0 ? project.images[0] : 'https://placehold.co/600x400';
             const thumbnailSrc = typeof firstImage === 'string' ? firstImage : firstImage.src;
+            
+            let tagsHtml = project.tags.slice(0, 3).map(tag => `<span class="inline-block bg-accent text-secondary text-xs font-medium px-2 py-0.5 rounded-full">${tag}</span>`).join('');
+
+            // For Hackathon cards, we make the image height smaller and adjust text
+            const imageHeight = isHackathon ? 'h-32' : 'h-48';
+            const titleClass = isHackathon ? 'text-lg font-semibold text-primary mb-1' : 'text-xl font-semibold text-primary mb-2';
+            const descClass = isHackathon ? 'text-secondary text-xs mb-3 flex-grow' : 'text-secondary text-sm mb-4 flex-grow';
 
             card.innerHTML = `
-                <img src="${thumbnailSrc}" alt="${project.title}" class="w-full h-48 object-cover">
+                <img src="${thumbnailSrc}" alt="${project.title}" class="w-full ${imageHeight} object-cover">
                 <div class="p-5 flex-grow flex flex-col">
-                    <h3 class="text-xl font-semibold text-primary mb-2">${project.title}</h3>
-                    <p class="text-secondary text-sm mb-4 flex-grow">${project.descriptionShort}</p>
+                    <h3 class="${titleClass}">${project.title}</h3>
+                    <p class="${descClass}">${project.descriptionShort}</p>
                     <div class="mb-4"><div class="flex flex-wrap gap-2">${tagsHtml}</div></div>
                     <a href="#" data-id="${project.id}" class="see-more-link text-sm font-medium text-accent hover:underline">See More &rarr;</a>
                 </div>
@@ -1305,20 +1345,82 @@
 
             if (project.featured && featuredContainer) {
                 const featuredCard = card.cloneNode(true);
+                // Remove hackathon styling if a hackathon project is ever featured
+                featuredCard.classList.remove('hackathon-card'); 
+                // Restore standard sizes for featured section
+                const img = featuredCard.querySelector('img');
+                if(img) { img.classList.remove('h-32'); img.classList.add('h-48'); }
+                
                 featuredCard.dataset.id = project.id;
                 featuredCard.style.transitionDelay = `${featuredCounter * 100}ms`;
                 featuredCounter++;
                 featuredContainer.appendChild(featuredCard);
             }
-
-            const listItem = document.createElement('a');
-            listItem.href = `#`;
-            listItem.dataset.id = project.id;
-            listItem.className = 'sidebar-link text-lg text-primary hover:text-accent p-1 rounded-md block truncate';
-            listItem.textContent = project.title;
-            sidebarProjectList.appendChild(listItem);
         }
+        
+        // Populate projects
         projects.forEach(createProjectCard);
+
+        // --- POPULATE SIDEBAR WITH HEADERS ---
+        function populateSidebar() {
+            const sidebarProjectList = document.getElementById('sidebar-project-list');
+            sidebarProjectList.innerHTML = ''; 
+
+            const categories = [
+                { id: 'hardware', title: 'Hardware & Robotics' },
+                { id: 'software', title: 'Software' },
+                { id: 'research', title: 'Research & Other Projects' },
+                { id: 'hackathon', title: 'Hackathon Archive' }
+            ];
+
+            let isFirstCategory = true;
+
+            categories.forEach(cat => {
+                const catProjects = projects.filter(p => p.category === cat.id);
+                
+                if (catProjects.length > 0) {
+                    // 1. CREATE HEADER
+                    const header = document.createElement('h4');
+                    
+                    // Logic: 
+                    // First header = mt-6 (24px) top space
+                    // Others = mt-10 (40px) top space
+                    // ALL = mb-2 (8px) bottom space to push the first link down
+                    const topMargin = isFirstCategory ? 'mt-6' : 'mt-6';
+                    
+                    // Changed mb-3 to mb-2 to align with the new explicit spacing
+                    header.className = `text-xs font-bold text-primary uppercase ${topMargin} mb-2 pl-2 tracking-wider`;
+                    header.textContent = cat.title;
+                    sidebarProjectList.appendChild(header);
+
+                    // 2. CREATE LINKS
+                    catProjects.forEach(p => {
+                        const listItem = document.createElement('a');
+                        listItem.href = `#`;
+                        listItem.dataset.id = p.id;
+                        
+                        // Added 'mb-1' here to replace the removed 'space-y-1'
+                        listItem.className = 'sidebar-link text-lg text-primary hover:text-accent p-1 pl-3 mb-1 rounded-md block truncate transition-colors duration-200';
+                        listItem.textContent = p.title;
+                        sidebarProjectList.appendChild(listItem);
+                    });
+
+                    isFirstCategory = false;
+                }
+            });
+            
+            // Re-attach event listeners for the new links
+             const newSidebarLinks = sidebarProjectList.querySelectorAll('.sidebar-link');
+             newSidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    closeSidebar();
+                    // Open modal handled by global click listener
+                });
+             });
+        }
+        
+        // Call the function to build the sidebar
+        populateSidebar();
 
         // --- MODAL & CAROUSEL ---
         const modal = document.getElementById('project-modal');
@@ -1451,17 +1553,27 @@
             if (e.key === 'Escape' && currentModalProjectId) closeModal();
         });
 
+        // --- UPDATED OBSERVER ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const cards = entry.target.querySelectorAll('.project-card');
-                    cards.forEach(card => card.classList.add('is-visible'));
+                    cards.forEach(card => {
+                        card.classList.add('is-visible');
+                        
+                        // NEW: Remove the transition-delay after the entrance animation finishes.
+                        // We wait 1000ms (1 second) which is enough time for the longest stagger to complete.
+                        setTimeout(() => {
+                            card.style.transitionDelay = '0s';
+                        }, 1000); 
+                    });
                     observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('#featured, #hardware, #software, #research').forEach(section => observer.observe(section));
+        // Updated observer list to include new hackathon section
+        document.querySelectorAll('#featured, #hardware, #software, #research, #hackathon').forEach(section => observer.observe(section));
     </script>
 </body>
 </html>
