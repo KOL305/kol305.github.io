@@ -467,7 +467,7 @@
                          <button class="inline-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity z-20"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
                          <div class="inline-indicators absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
                     </div>
-                    <h1>Key Learnings</h1>
+                    <h1>Key Takeaways</h1>
                     <ul>
                         <li><b>Verifying Datasheets and Rigorously Testing Everything:</b> The documentation was ambiguous about phase alignment; only manual testing and direct oscilloscope measurement revealed the root cause.</li>
                         <li><b>CAN Bus Decoding:</b> Understanding how to decode CAN bus messages using USBtinViewer was crucial for diagnosing communication issues between the motor and controller.</li>
@@ -479,27 +479,92 @@
                 linkPrimary: null,
                 linkSecondary: null
             },
-            // ... [Rest of projects remain same, abbreviated for brevity] ...
             {
-                id: 'smart-home',
-                title: 'Smart Home Automation System',
+                id: 'distributed-iot-network',
+                title: 'Distributed 3-Node IoT Network',
                 category: 'hardware',
-                featured: false,
-                date: 'Ongoing',
-                images: [img('../images/smarthome.jpg', 'System Overview')],
-                descriptionShort: 'A custom home automation system to control devices and reduce energy consumption.',
+                featured: true,
+                date: 'Jun. 2025 - Aug. 2025',
+                images: [
+                    img('../images/iot_network/iot_network.jpg', ''),
+                    img('../images/iot_network/distributed_node_visualization.png', 'Distributed 3-Node Architecture')
+                ],
+                descriptionShort: 'Designed and deployed a multi-node distributed IoT system using Raspberry Pi microcontrollers to automate household appliances. The system integrates localized environmental sensing with a centralized MQTT control logic to reduce standby power consumption.',
                 descriptionFull: `
-                    <p>Designed and implemented a custom home automation system to automate lights, fans, and various devices within my room, as a pilot for a larger smart home project to reduce energy consumption.</p>
+                    <h1>Overview</h1>
+                    <p>I designed and deployed a multi-node distributed IoT system using Raspberry Pi microcontrollers to automate household appliances. The system integrates localized environmental sensing with a centralized MQTT control logic to reduce standby power consumption.</p>
+
+                    <h1>The Objective</h1>
+                    <p>As part of a larger AI-powered home automation system, the goal was to create a responsive, power-efficient automation hub that could:</p>
                     <ul>
-                        <li>Utilized Raspberry Pi microcontrollers with integrated relays, thermal, and ultrasonic sensors to gather environmental data and control devices.</li>
-                        <li>Implemented a robust messaging system using the MQTT (Mosquitto) protocol to ensure seamless and reliable communication between all hardware components.</li>
-                        <li>Integrated an IR receiver to enable manual control via a remote, allowing users to set timers or switch to automatic mode for added flexibility.</li>
-                        <li>Currently developing a mobile application to provide a user-friendly interface for monitoring and toggling devices, expanding the system's functionality and accessibility.</li>
+                        <li>Detect occupancy via thermal sensors to toggle power-heavy devices like fans and lights.</li>
+                        <li>Provide low-latency manual overrides using Infrared (IR) remote controls.</li>
+                        <li>Ensure reliable communication across a distributed local network to prevent single-point failures.</li>
                     </ul>
-                    <h2> Page Still Under Construction </h2>
+
+                    <h1>What I Did</h1>
+                    <ul>
+                        <li>Architected a distributed network by implementing a Pub/Sub communication model using the MQTT (Mosquitto) protocol, allowing the central controller to aggregate asynchronous data from remote sensor nodes.</li>
+                        <li>Developed embedded Python control logic by building a robust state machine in Python to handle complex mode switching between Manual (Timer/Presets) and Automatic (Presence-based) states.</li>
+                        <li>Engineered a Custom IR Bridge to solve a critical kernel-driver incompatibility by developing a background "Bridge" script that bypassed faulty “evdev” layers, reading directly from the “lirc” subprocess to translate IR signals into system-wide commands.</li>
+                        <li>Interfaced 5V relay actuators with 3.3V GPIO pins on the Raspberry Pi, implementing safety-first wiring for high-voltage fan control circuits.</li>
+                    </ul>
+
+                    <h1>Final Prototype Demonstration</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 my-4 items-center">
+                        <div class="md:col-span-3">
+                            <video controls class="w-full rounded-lg shadow-md border border-primary">
+                                <source src="../images/iot_network/presence_switch_demo.mp4" type="video/mp4">
+                                <source src="../images/iot_network/presence_switch_demo.mp4" type="video/quicktime">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p class="text-sm text-secondary italic mt-1 text-center">Presence Detection</p>
+                        </div>
+                        <div class="md:col-span-1">
+                            <video controls class="w-full rounded-lg shadow-md border border-primary">
+                                <source src="../images/iot_network/ir_controller_demo.mp4" type="video/mp4">
+                                <source src="../images/iot_network/ir_controller_demo.mp4" type="video/quicktime">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p class="text-sm text-secondary italic mt-1 text-center">Custom IR remote control</p>
+                        </div>
+                    </div>
+
+                    <h1>Technical Architecture</h1>
+                    <div class="my-4">
+                        <img src="../images/iot_network/distributed_node_visualization.png" class="mx-auto rounded-lg shadow-md max-h-80 object-contain border border-primary" alt="Distributed Node Visualization">
+                    </div>
+
+                    <h2>Hardware: Relay & Signal Isolation</h2>
+                    <p>A core challenge was safely interfacing the Raspberry Pi’s 3.3V logic with high-current AC appliances. I implemented active-low relay modules with built-in optocouplers to provide physical isolation and protect the microcontroller from inductive flyback spikes.</p>
+
+                    <h2>The “IRW Bridge” Workaround</h2>
+                    <p>To solve a critical kernel-driver incompatibility where the standard <code>gpio-ir</code> driver failed, I engineered a custom background “Bridge” script:</p>
+                    <ul>
+                        <li><strong>The Problem:</strong> The kernel recognized the hardware but refused to create a standard input event node.</li>
+                        <li><strong>The Solution:</strong> I used Python’s <code>subprocess</code> and <code>select</code> modules to read raw text from the <code>irw</code> utility directly, achieving sub-10ms latency for remote commands.</li>
+                    </ul>
+
+                    <h2>MQTT Pub/Sub Model</h2>
+                    <p>The system employs a Pub/Sub architecture using MQTT to decouple sensor nodes from the central controller—presence detection (thermal/ultrasonic) is separated from the actuation (relays).</p>
+                    <p>I also implemented logic to stay subscribed to MQTT topics even when nodes are “Powered Off," ensuring that the system immediately knows if a room is occupied the moment it is turned back on.</p>
+
+                    <h2>Temporal Logic & Presets</h2>
+                    <p>I designed a non-blocking timer system as part of a custom IR remote that allows for manual automation:</p>
+                    <ul>
+                        <li>Supports 15-minute incremental adjustments and 1-9 hour quick-presets.</li>
+                        <li>Utilizes the <code>select</code> module for non-blocking I/O, allowing the system to monitor timers and MQTT messages simultaneously without hanging the CPU.</li>
+                    </ul>
+
+                    <h1>Key Takeaways</h1>
+                    <ul>
+                        <li><strong>Kernel Interfacing:</strong> I gained experience with Linux Device Tree Overlays, LIRC configs, and how to customize the Linux Input Subsystem.</li>
+                        <li><strong>Network Reliability:</strong> I learned how to handle asynchronous data streams and implement secure MQTT authentication.</li>
+                        <li><strong>Systems Integration:</strong> As one of my first independent projects in the IoT and automation space, this project taught me how both physical and software systems merge to create robust "smart" applications.</li>
+                    </ul>
                 `,
-                tags: ['Raspberry Pi', 'MQTT', 'IoT', 'Embedded Systems', 'Python'],
-                linkPrimary: null,
+                tags: ['Embedded Systems', 'MQTT', 'Raspberry Pi', 'IoT', 'Python'],
+                linkPrimary: null, 
                 linkSecondary: null
             },
             {
@@ -944,27 +1009,72 @@
                 linkSecondary: null
             },
             // RESEARCH
-            {
+{
                 id: 'carbon-capture-tea',
-                title: 'Techno-economic Analysis of Carbon Capture',
+                title: 'Techno-Economic Analysis of Carbon Capture',
                 category: 'research',
                 featured: false,
-                date: '2023',
-                // NEW: Added this property!
+                date: 'Summer 2023',
+                // Keeps the Infographic as the main "PDF" view
                 pdf: 'https://drive.google.com/file/d/1DULSiS7sPJoN4xFQr06I3I-8t63uNmmP/preview',
-                images: [img('../images/pscvsdac.jpg', 'PSC vs DAC Analysis')],
-                descriptionShort: 'TEA of Point Source Capture vs. Direct Air Capture at COSMOS (UCLA).',
+                images: [
+                    img('../images/pscvsdac.jpg', 'Thermodynamic Comparison'),
+                ],
+                descriptionShort: 'Performed a comprehensive techno-economic analysis comparing Direct Air Capture (DAC) and Point Source Capture (PSC). Modeled thermodynamic efficiency using Unisim simulations and Peng-Robinson equations to demonstrate PSC’s superior economic viability.',
                 descriptionFull: `
-                    <p>Performed a techno-economic analysis of two distinct carbon capture technologies: Point Source Capture (PSC) and Direct Air Capture (DAC) at the California State Summer School for Mathematics and Science at UCLA.</p>
+                    <h1>Overview</h1>
+                    <p>Performed a comprehensive techno-economic analysis comparing Direct Air Capture (DAC) and Point Source Capture (PSC). Modeled thermodynamic efficiency using Unisim simulations and Peng-Robinson equations to demonstrate PSC’s superior economic viability. This research was the culminating project for the 4-week UCLA COSMOS program (Cluster 6).</p>
+
+                    <h1>The Objective</h1>
+                    <p>While Direct Air Capture (DAC) receives significant media attention, the literature often overlooks the immediate efficiency of Point Source Capture (PSC). My team's objective was to mathematically quantify the trade-offs between the two, focusing on thermodynamic limits (Minimum Work) and economic scalability (CAPEX/OPEX) to determine the most viable path for rapid decarbonization.</p>
+
+                    <h1>What I Did</h1>
                     <ul>
-                        <li>Collaborated in a team of 6 to investigate production costs, capture processes, and method efficiency to determine the scalability and viability of each system.</li>
-                        <li>Presented findings to students and professors on the future economic and environmental impact of these technologies, concluding that PSC is more cost-effective and has a lower energy requirement than DAC.</li>
-                        <li>Integrated findings on the increased in U.S. manufacturing to demonstrate how PSC can be adopted into new facilities to enhance sustainability.</li>
+                        <li>Led a team of 6, focusing specifically on the mathematical modeling of capital (CAPEX) and operating (OPEX) costs.</li>
+                        <li>Utilized Unisim and Excel to simulate process flows and determine thermodynamic properties. Applied the Peng-Robinson Equation of State to prove that PSC requires pumping ~10x less air volume per mole of CO₂ captured compared to DAC.</li>
+                        <li>Conducted technical literature reviews on chemical solvents (amines vs. solid sorbents) to evaluate capture efficiency and regeneration energy requirements.</li>
+                        <li>Presented findings in a final poster session, concluding that PSC is currently 2-6x more energetically efficient than DAC.</li>
+                    </ul>
+
+                    <h1>Techno-Economic Analysis (TEA)</h1>
+                    <p>My core contribution was the "Technical" and "Economic" quantification of the two methods. We moved beyond qualitative descriptions to prove why one method was superior using engineering principles.</p>
+
+                    <h2>1. Thermodynamic Analysis (Peng-Robinson)</h2>
+                    <p>To capture 1kg of CO₂, we needed to calculate the volume of air required for both systems. I utilized the Peng-Robinson equation of state to solve for molar volumes at specific temperatures and pressures:</p>
+                    
+                    <div class="my-4 p-4 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md overflow-x-auto border border-primary font-mono text-xs md:text-sm">
+                        <p>P(T,V) = (RT / (V - b)) - (a(T) / ((V + εb)(V + σb)))</p>
+                    </div>
+                    <p><strong>The Results:</strong></p>
+                    <ul>
+                        <li><strong>DAC Requirement:</strong> Due to low atmospheric concentration (~419 ppm), DAC requires pumping <strong>~5.12 × 10⁴ m³</strong> of air per mole of CO₂.</li>
+                        <li><strong>PSC Requirement:</strong> With flue gas concentrations (~4000+ ppm), PSC only requires <strong>~5.10 × 10³ m³</strong>.</li>
+                        <li><strong>Conclusion:</strong> The minimum work for PSC is thermodynamically <strong>2 to 6 times lower</strong> than DAC, translating to massive energy savings.</li>
+                    </ul>
+
+                    <h2>2. CAPEX & OPEX Modeling</h2>
+                    <p>We broke down the Levelized Cost of Production (LCOP) by analyzing specific sub-systems (Air Contactors, Pellet Reactors, Steam Slakers) based on Carbon Engineering's plant schematics.</p>
+                    
+                    <p><strong>Resource Cost Analysis:</strong></p>
+                    <ul>
+                        <li><strong>Energy:</strong> Modeled using Texas solar rates ($30-60/MWh).</li>
+                        <li><strong>Water Usage:</strong> Calculated evaporation losses at ~57.49 tons/hour, costing ~$1.24 per ton of CO₂.</li>
+                        <li><strong>Capital Expenditures (CAPEX):</strong> Estimated specific CAPEX at ~$497 Million for a 0.1 Mt CO₂/y capacity plant.</li>
+                    </ul>
+
+                    <p><strong>Final Economic Verdict:</strong></p>
+                    <p>After factoring in the weighted average cost of capital (WACC) and emissions costs, we calculated the LCOP for DAC to be between <strong>$128.90 - $195.33 USD/ton</strong>. In contrast, our analysis placed PSC significantly lower ($36-$91 USD/ton), validating that resources should be prioritized for PSC retrofitting in the near term.</p>
+
+                    <h1>Key Takeaways</h1>
+                    <ul>
+                        <li><strong>Data-Driven Engineering:</strong> This project taught me how to use equations of state (EOS) to validate high-level claims. I learned that "green tech" must ultimately pass the test of thermodynamics and economics to be scalable.</li>
+                        <li><strong>Complex Systems Analysis:</strong> By breaking down a massive chemical plant into its unit operations (calciner, slaker, compressor), I gained experience in process engineering and estimating system-wide efficiency.</li>
+                        <li><strong>Technical Communication:</strong> Translating complex chemical engineering concepts (like supercritical fluid behavior) into actionable economic insights for our final poster presentation was a key leadership experience.</li>
                     </ul>
                 `,
-                tags: ['Research', 'TEA', 'Sustainability', 'COSMOS'],
-                linkPrimary: 'https://drive.google.com/file/d/1DULSiS7sPJoN4xFQr06I3I-8t63uNmmP/view?usp=sharing',
-                linkSecondary: null
+                tags: ['Unisim', 'Peng-Robinson EOS', 'Thermodynamics', 'Cost Analysis', 'Research'],
+                linkPrimary: 'https://drive.google.com/file/d/1DULSiS7sPJoN4xFQr06I3I-8t63uNmmP/view?usp=sharing', // Infographic/Poster
+                linkSecondary: null 
             },
             {
                 id: 'eagle-scout-project',
@@ -1502,7 +1612,7 @@
             if (project.linkPrimary) {
                 modalLinkPrimary.href = project.linkPrimary;
                 modalLinkPrimary.classList.remove('hidden');
-                modalLinkPrimary.textContent = project.linkPrimary.includes('github') ? 'View on GitHub' : (project.category === 'research' ? 'Read Paper' : 'View Project');
+                modalLinkPrimary.textContent = project.linkPrimary.includes('github') ? 'View on GitHub' : 'View Project';
             } else modalLinkPrimary.classList.add('hidden');
 
             if (project.linkSecondary) {
