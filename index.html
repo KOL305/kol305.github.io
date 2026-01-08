@@ -408,7 +408,7 @@
                     <h1>Final Demonstration</h1>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 items-center">
                         <div>
-                            <video controls class="w-full rounded-lg shadow-md border border-primary">
+                            <video controls loop class="w-full rounded-lg shadow-md border border-primary">
                                 <source src="../images/legacy_solar_car_motor_integration/motor_spinning.mp4" type="video/mp4">
                                 <source src="../images/legacy_solar_car_motor_integration/motor_spinning.mp4" type="video/quicktime">
                                 Your browser does not support the video tag.
@@ -483,7 +483,7 @@
                 id: 'distributed-iot-network',
                 title: 'Distributed 3-Node IoT Network',
                 category: 'hardware',
-                featured: true,
+                featured: false,
                 date: 'Jun. 2025 - Aug. 2025',
                 images: [
                     img('../images/iot_network/iot_network.jpg', ''),
@@ -693,6 +693,98 @@
                 `,
                 tags: ['Fusion 360', 'PID Autonomous Control', 'PROS C++', 'Engineering Design Process', 'Project Management'],
                 linkPrimary: 'https://drive.google.com/file/d/1Y262yHZ7NgvJ86ycZDFWL33HpLlogBLO/view?usp=sharing', 
+                linkSecondary: null
+            },
+            {
+                id: 'roomba-collector',
+                title: 'Autonomous Debris-Collecting Robot',
+                category: 'hardware',
+                featured: false,
+                date: 'Apr. 2025 - May. 2025',
+                images: [
+                    img('../images/roomba/roomba.png', ''),
+                    img('../images/roomba/roomba_cad.png', ''),
+                    img('../images/roomba/pid_code.png', '')
+                ],
+                descriptionShort: 'Led a team to design and build a remote-controlled robot tasked with autonomously collecting and sorting debris (screws and nuts). I spearheaded the mechanical design of the chassis and intake system and programmed the PID control loops using PROS (C++) library for precise navigation.',
+                descriptionFull: `
+                    <h1>Overview</h1>
+                    <p>In my Principles of Engineering class, I led a team of three to design and build a remote-controlled robot tasked with autonomously collecting and sorting debris (screws and nuts). I spearheaded the mechanical design of the chassis and intake system and programmed PID control loops using the PROS (C++) library for precise navigation.</p>
+
+                    <h1>The Objective</h1>
+                    <p>The challenge was to engineer a robot capable of navigating a field to collect specific metallic objects while avoiding obstacles. The system required a robust intake mechanism to pick up small, irregular objects (screws) and a detachable storage container for easy disposal.</p>
+
+                    <h1>What I Did</h1>
+                    <ul>
+                        <li>Led the mechanical design (Onshape CAD) and rapid prototyping of the robot chassis and intake assembly using both VEX structural components.</li>
+                        <li>Designed a chain-driven intake system with custom-spaced sprockets to reliably grab loose screws and deposit them into a 3D-printed hopper.</li>
+                        <li>Programmed the robot’s drive train and autonomous routines in C++ using the PROS kernel, implementing a PID controller for accurate turning and distance tracking.</li>
+                        <li>Integrated sensor feedback (encoders and IMUs) to allow for semi-autonomous “collection modes” that assisted the driver.</li>
+                    </ul>
+
+                    <h1>Final Demonstration</h1>
+                    <div class="grid grid-cols-2 gap-6 my-6">
+                        <div class="col-span-1">
+                            <video controls loop class="w-96 mx-auto rounded-lg shadow-md border border-primary">
+                                <source src="../images/roomba/pickup.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p class="text-sm text-secondary italic mt-2 text-center">Final Collection Test</p>
+                        </div>
+                        <div class="col-span-1">
+                            <video controls loop class="w-96 mx-auto rounded-lg shadow-md border border-primary">
+                                <source src="../images/roomba/roomba_position_correction.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p class="text-sm text-secondary italic mt-2 text-center">Autonomous 90° Turn and Correction</p>
+                        </div>
+                    </div>
+
+                    <h1>Mechanical Design: Frame and Intake</h1>
+                    <p><strong>Chassis Architecture:</strong> I designed a rigid U-channel frame to house the intake mechanism while maintaining a low center of gravity. This prevented tipping during rapid acceleration and direction changes.</p>
+                    <p><strong>Chain Intake System:</strong> I prototyped multiple sprocket configurations before finalizing a dual-chain system with flexible flaps and adjusted weights. This allowed the robot to “sweep” the floor effectively, picking up both flat washers and standing screws without jamming.</p>
+                    <p><strong>3D-Printed Hopper:</strong> To facilitate easy debris disposal, I designed a custom 3D-printed hopper that could be detached from the robot. This allowed for quick emptying between collection runs.</p>
+
+                    <div class="grid grid-cols-3 gap-6 my-6">
+                        <div class="flex flex-col justify-center md:col-span-2">
+                            <img src="../images/roomba/roomba_cad.png" class="rounded-lg shadow-md border border-primary" alt="Onshape CAD Model">
+                            <p class="text-sm text-secondary italic mt-2 text-center">Onshape CAD Assembly</p>
+                        </div>
+                        <div class="flex flex-col justify-center md:col-span-1">
+                            <video controls muted autoplay loop class="w-full rounded-lg shadow-md border border-primary">
+                                <source src="../images/roomba/reloading.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p class="text-sm text-secondary italic mt-2 text-center">Removable Hopper</p>
+                        </div>
+                    </div>
+
+                    <h1>Sensors and PID Tuning</h1>
+                    <div class="grid grid-cols-2 gap-6 my-6 items-start">
+                        <div>
+                            <p><strong>Control Strategy:</strong> As standard “tank drive” controls were too jerky for precision collection, I implemented a PID (Proportional-Integral-Derivative) controller to smooth out the motor voltage.</p>
+                            <ul>
+                                <li><strong>P (Proportional):</strong> Tuned to get the robot to the target distance quickly.</li>
+                                <li><strong>I (Integral):</strong> Added to correct for small steady-state errors (e.g. stopping inches short due to friction).</li>
+                                <li><strong>D (Derivative):</strong> Adjusted to dampen the momentum and prevent the robot from oscillating (overshooting) the target.</li>
+                            </ul>
+                            <p><strong>Sensor Integration:</strong> To determine relative positioning, I utilized shaft encoders on the drive wheels combined with an Inertial Measurement Unit (IMU) to ensure the robot drove in perfectly straight lines, correcting for wheel slippage on my classroom’s smooth floor.</p>
+                        </div>
+                    <div>
+                        <img src="../images/roomba/pid_code.png" class="h-96 mx-auto rounded-lg shadow-md border border-primary" alt="PID Implementation Code">
+                        <p class="text-sm text-secondary italic mt-2 text-center">C++ PID Logic with PROS Kernel (<a href="https://github.com/KOL305/poe_roomba">Github Link</a>)</p>
+                    </div>
+                    </div>
+
+                    <h1>Key Takeaways</h1>
+                    <ul>
+                        <li><strong>Mechanical-Software Integration:</strong> I learned that software cannot fix bad hardware. No amount of PID tuning could fix a jamming intake; we had to iterate on chain tension first before the code could work effectively.</li>
+                        <li><strong>Rapid Prototyping:</strong> We went through three iterations of the intake flaps in one week. This taught me to “fail fast” and use low-fidelity prototypes (cardboard/tape) before committing to final assembly.</li>
+                        <li><strong>Control Theory:</strong> Implementing PID from scratch (rather than using pre-built blocks) gave me a fundamental understanding of how error-correction algorithms actually work in embedded systems.</li>
+                    </ul>
+                `,
+                tags: ['Onshape', 'Autonomous Error Correction', '3D Print', 'PID Autonomous Control', 'PROS C++'],
+                linkPrimary: 'https://drive.google.com/file/d/1hIgtQQ3B3M3V1Ri9VcbcA4687rMKeTjs/view?usp=sharing',
                 linkSecondary: null
             },
             // SOFTWARE
@@ -939,7 +1031,7 @@
                 `,
                 tags: ['Game Dev', 'p5.js', 'Sustainability'],
                 linkPrimary: 'https://github.com/KOL305/overhaul',
-                linkSecondary: null
+                linkSecondary: 'https://docs.google.com/presentation/d/1thscge0eoUuxX8CmoGYqC9hPGbIthVNOuTPj6HSL7Jo/edit?usp=sharing'
             },
             {
                 id: 'nutrimood',
@@ -959,7 +1051,7 @@
                 `,
                 tags: ['Flutter', 'USDA API', 'Health'],
                 linkPrimary: 'https://github.com/KOL305/nutrimood-mobile',
-                linkSecondary: 'https://drive.google.com/file/d/1vtqJMKKQ9kR_QasBJNJIcKIkQYfMwH3V/view?usp=sharing'
+                linkSecondary: 'https://drive.google.com/file/d/1vtqJMKKQ9kR_QasBJNJIcKIkQYfMwH3V/view?usp=drive_link'
             },
             {
                 id: 'cloud-nine',
@@ -975,7 +1067,7 @@
                 `,
                 tags: ['Web App', 'Wellness', 'Audio Integration'],
                 linkPrimary: 'https://github.com/KOL305/cloud-nine',
-                linkSecondary: null
+                linkSecondary: 'https://docs.google.com/presentation/d/1dRAIhc4VF3DS5SAFx5-4m3YdiDXZsSEB7Ao5ztyizSQ/edit?usp=sharing'
             },
             {
                 id: 'task-manager-slimes',
@@ -1006,7 +1098,7 @@
                 `,
                 tags: ['Javascript', 'Python', 'AT&T Labs'],
                 linkPrimary: 'https://github.com/KOL305/word-cloud',
-                linkSecondary: null
+                linkSecondary: 'https://docs.google.com/presentation/d/1r3O2dLOmrF2yjf5nssr3tstsznP9oI4KvxVLAL_W1WY/edit?usp=sharing'
             },
             // RESEARCH
 {
@@ -1014,7 +1106,7 @@
                 title: 'Techno-Economic Analysis of Carbon Capture',
                 category: 'research',
                 featured: false,
-                date: 'Summer 2023',
+                date: 'Jul. 2023 - Aug. 2023',
                 // Keeps the Infographic as the main "PDF" view
                 pdf: 'https://drive.google.com/file/d/1DULSiS7sPJoN4xFQr06I3I-8t63uNmmP/preview',
                 images: [
@@ -1205,7 +1297,7 @@
                         <li><b>Servant Leadership:</b> I learned that my most valuable role wasn’t building, but thinking ahead—pre-charging batteries, organizing materials, and ensuring safety so the team could work uninterrupted.</li>
                     </ul>
                 `,
-                tags: ['Onshape CAD', 'DFM', 'Project Management', 'Eagle Scout Community Service', 'Woodworking'],
+                tags: ['Onshape', 'DFM', 'Woodworking', 'Eagle Scout Community Service', 'Project Management'],
                 linkPrimary: 'https://drive.google.com/drive/folders/1pMhobY7NPAyiGbeGavM0LSRfq8P8pkRk?usp=drive_link', // Linked to the Assembly Manual
                 linkSecondary: null
             }
